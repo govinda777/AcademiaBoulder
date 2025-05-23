@@ -44,6 +44,18 @@ export default {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
+        // Academia Boulder custom colors
+        boulder: {
+          blue: "hsl(var(--boulder-blue))",
+          dark: "hsl(var(--boulder-dark))",
+          white: "hsl(var(--boulder-white))",
+          gold: "hsl(var(--boulder-gold))",
+          gray: "hsl(var(--boulder-gray))",
+          gradient: {
+            start: "hsl(var(--boulder-gradient-start))",
+            end: "hsl(var(--boulder-gradient-end))",
+          },
+        },
         chart: {
           "1": "hsl(var(--chart-1))",
           "2": "hsl(var(--chart-2))",

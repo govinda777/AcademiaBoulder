@@ -3,49 +3,70 @@
 @tailwind utilities;
 
 :root {
-  --background: 0 0% 100%;
-  --foreground: 20 14.3% 4.1%;
-  --muted: 60 4.8% 95.9%;
-  --muted-foreground: 25 5.3% 44.7%;
+  /* Academia Boulder Color Scheme - Light Mode */
+  --background: 0 0% 100%;  /* Branco para light mode */
+  --foreground: 0 0% 7.1%;  /* Preto/cinza escuro para texto */
+  --muted: 0 0% 96.1%;
+  --muted-foreground: 0 0% 45.1%;
   --popover: 0 0% 100%;
-  --popover-foreground: 20 14.3% 4.1%;
+  --popover-foreground: 0 0% 7.1%;
   --card: 0 0% 100%;
-  --card-foreground: 20 14.3% 4.1%;
-  --border: 20 5.9% 90%;
-  --input: 20 5.9% 90%;
-  --primary: 16 83% 54%;  /* E05A2B - orange/coral */
-  --primary-foreground: 211 100% 99%;
-  --secondary: 212 34% 26%;  /* 2B4057 - deep blue */
-  --secondary-foreground: 0 0% 98%;
-  --accent: 93 50% 48%;  /* 7CB342 - green */
-  --accent-foreground: 0 0% 9%;
+  --card-foreground: 0 0% 7.1%;
+  --border: 0 0% 20%;  /* #333333 - bordas e divisores */
+  --input: 0 0% 89.8%;
+  --primary: 207 77% 54%;  /* #1E88E5 - Azul Principal */
+  --primary-foreground: 0 0% 100%;  /* Branco */
+  --secondary: 0 0% 20%;  /* #333333 - Cinza para elementos secundários */
+  --secondary-foreground: 0 0% 100%;
+  --accent: 51 100% 50%;  /* #FFD700 - Amarelo/Dourado */
+  --accent-foreground: 0 0% 7.1%;
   --destructive: 0 84.2% 60.2%;
-  --destructive-foreground: 60 9.1% 97.8%;
-  --ring: 20 14.3% 4.1%;
+  --destructive-foreground: 0 0% 98%;
+  --ring: 207 77% 54%;  /* Azul principal para focus */
   --radius: 0.5rem;
+  
+  /* Cores customizadas da Academia Boulder */
+  --boulder-blue: 207 77% 54%;  /* #1E88E5 */
+  --boulder-dark: 0 0% 7.1%;   /* #121212 */
+  --boulder-white: 0 0% 100%;   /* #FFFFFF */
+  --boulder-gold: 51 100% 50%;  /* #FFD700 */
+  --boulder-gray: 0 0% 20%;     /* #333333 */
+  --boulder-gradient-start: 288 65% 41%;  /* #8E24AA - Roxo */
+  --boulder-gradient-end: 340 82% 52%;    /* #E91E63 - Rosa */
 }
 
 .dark {
-  --background: 220 34% 15%;
-  --foreground: 0 0% 98%;
-  --muted: 220 34% 20%;
-  --muted-foreground: 240 5% 64.9%;
-  --popover: 220 34% 15%;
-  --popover-foreground: 0 0% 98%;
-  --card: 220 34% 15%;
-  --card-foreground: 0 0% 98%;
-  --border: 220 34% 20%;
-  --input: 220 34% 20%;
-  --primary: 16 83% 54%;  /* E05A2B - orange/coral */
-  --primary-foreground: 211 100% 99%;
-  --secondary: 212 34% 26%;  /* 2B4057 - deep blue */
-  --secondary-foreground: 0 0% 98%;
-  --accent: 93 50% 48%;  /* 7CB342 - green */
-  --accent-foreground: 0 0% 98%;
+  /* Academia Boulder Color Scheme - Dark Mode (Principal) */
+  --background: 0 0% 7.1%;  /* #121212 - Preto/cinza escuro principal */
+  --foreground: 0 0% 100%;  /* #FFFFFF - Branco para textos */
+  --muted: 0 0% 15%;
+  --muted-foreground: 0 0% 64.9%;
+  --popover: 0 0% 7.1%;
+  --popover-foreground: 0 0% 100%;
+  --card: 0 0% 10%;  /* Ligeiramente mais claro que o fundo */
+  --card-foreground: 0 0% 100%;
+  --border: 0 0% 20%;  /* #333333 - bordas e divisores */
+  --input: 0 0% 15%;
+  --primary: 207 77% 54%;  /* #1E88E5 - Azul Principal */
+  --primary-foreground: 0 0% 100%;  /* Branco */
+  --secondary: 0 0% 20%;  /* #333333 - Cinza para elementos secundários */
+  --secondary-foreground: 0 0% 100%;
+  --accent: 51 100% 50%;  /* #FFD700 - Amarelo/Dourado */
+  --accent-foreground: 0 0% 7.1%;
   --destructive: 0 62.8% 30.6%;
   --destructive-foreground: 0 0% 98%;
-  --ring: 212 34% 26%;
+  --ring: 207 77% 54%;  /* Azul principal para focus */
   --radius: 0.5rem;
+  
+  /* Sidebar específico para dark mode */
+  --sidebar-background: 0 0% 7.1%;
+  --sidebar-foreground: 0 0% 100%;
+  --sidebar-primary: 207 77% 54%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 51 100% 50%;
+  --sidebar-accent-foreground: 0 0% 7.1%;
+  --sidebar-border: 0 0% 20%;
+  --sidebar-ring: 207 77% 54%;
 }
 
 @layer base {
@@ -58,11 +79,43 @@
   }
 
   body {
-    @apply font-sans antialiased bg-background text-foreground;
+    @apply bg-background text-foreground;
   }
 }
 
 @layer components {
+  /* Academia Boulder gradient backgrounds */
+  .boulder-gradient {
+    background: linear-gradient(135deg, hsl(var(--boulder-gradient-start)), hsl(var(--boulder-gradient-end)));
+  }
+  
+  .boulder-gradient-text {
+    background: linear-gradient(135deg, hsl(var(--boulder-gradient-start)), hsl(var(--boulder-gradient-end)));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* High contrast buttons for accessibility */
+  .btn-boulder-primary {
+    @apply bg-boulder-blue text-boulder-white hover:bg-boulder-blue/90 transition-colors;
+  }
+  
+  .btn-boulder-accent {
+    @apply bg-boulder-gold text-boulder-dark hover:bg-boulder-gold/90 transition-colors;
+  }
+  
+  /* Card styles with Boulder theme */
+  .card-boulder {
+    @apply bg-card border-boulder-gray shadow-lg;
+  }
+  
+  /* Navigation styles */
+  .nav-boulder {
+    @apply bg-boulder-dark border-b border-boulder-gray;
+  }
+  
+  /* Existing components */
   .hero-video-overlay {
     @apply absolute inset-0 z-10 bg-gradient-to-b from-black/40 to-black/60;
   }
