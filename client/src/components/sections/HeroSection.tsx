@@ -4,14 +4,30 @@ import { ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import VideoBackground from "@/components/ui/video-background";
 import { motion } from "framer-motion";
+import { useHeroSection } from "@/hooks/useSanity";
+import { urlFor } from "@/lib/sanity";
 
 const HeroSection = () => {
+  const { data: heroData, isLoading } = useHeroSection();
+
+  // Fallback content while loading or if no CMS data
+  const fallbackContent = {
+    title: "Evolua Além dos Limites",
+    subtitle: "Centro de excelência em escalada boulder com metodologias avançadas para todos os níveis",
+    ctaButtons: [
+      { text: "Agendar Visita", link: "#agendamento", variant: "primary" },
+      { text: "Conhecer Programas", link: "#programas", variant: "secondary" }
+    ]
+  };
+
+  const content = heroData || fallbackContent;
+
   return (
     <section className="relative h-screen">
       {/* Video Background with Overlay */}
       <VideoBackground 
         videoUrl="https://player.vimeo.com/external/370331493.sd.mp4?s=e90dcaba73c19e0e36f03406b47bbd6992dd6c1c&profile_id=139&oauth2_token_id=57447761" 
-        fallbackImg="https://pixabay.com/get/gc3b07c52abb69dbeee4c5a7267a0fc5ae5607da4a82c78e1a9aa3f2075b1f0eadee36fd16cc3e49f87b1b56ba2c55e39_1280.jpg"
+        fallbackImg={heroData?.backgroundImage ? urlFor(heroData.backgroundImage).url() : "https://pixabay.com/get/gc3b07c52abb69dbeee4c5a7267a0fc5ae5607da4a82c78e1a9aa3f2075b1f0eadee36fd16cc3e49f87b1b56ba2c55e39_1280.jpg"}
       />
 
       {/* Hero Content */}
@@ -22,32 +38,33 @@ const HeroSection = () => {
           transition={{ duration: 0.8 }}
         >
           <h1 className="text-4xl md:text-6xl font-bold text-white mb-4 font-sans">
-            Evolua Além dos <span className="text-primary">Limites</span>
+            {content.title}
           </h1>
-          <p className="text-xl text-white mb-8 max-w-2xl">
-            Centro de excelência em escalada boulder com metodologias 
-            avançadas para todos os níveis
-          </p>
+          {content.subtitle && (
+            <p className="text-xl text-white mb-8 max-w-2xl">
+              {content.subtitle}
+            </p>
+          )}
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button
-              asChild
-              size="lg"
-              className="bg-primary hover:bg-primary/90 text-white"
-            >
-              <Link href="#agendamento">
-                Agendar Visita
-              </Link>
-            </Button>
-            <Button
-              asChild
-              size="lg" 
-              variant="outline"
-              className="bg-white/20 hover:bg-white/30 text-white border border-white/40 backdrop-blur-sm"
-            >
-              <Link href="#programas">
-                Conhecer Programas
-              </Link>
-            </Button>
+            {content.ctaButtons?.map((button: any, index: number) => (
+              <Button
+                key={index}
+                asChild
+                size="lg"
+                className={
+                  button.variant === 'primary' 
+                    ? "bg-primary hover:bg-primary/90 text-white"
+                    : button.variant === 'accent'
+                    ? "bg-boulder-gold hover:bg-boulder-gold/90 text-boulder-dark"
+                    : "bg-white/20 hover:bg-white/30 text-white border border-white/40 backdrop-blur-sm"
+                }
+                variant={button.variant === 'primary' ? "default" : "outline"}
+              >
+                <Link href={button.link}>
+                  {button.text}
+                </Link>
+              </Button>
+            ))}
           </div>
         </motion.div>
 

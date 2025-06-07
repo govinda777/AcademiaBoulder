@@ -4,46 +4,24 @@ import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { CheckCircle } from "lucide-react";
 import { motion } from "framer-motion";
 import { Progress } from "@/components/ui/progress";
+import { usePrograms } from "@/hooks/useSanity";
+import { urlFor } from "@/lib/sanity";
 
-const programs = [
+// Fallback data only as backup
+const fallbackPrograms = [
   {
-    id: "escalada",
+    _id: "escalada",
     title: "Escalada Esportiva",
-    description: "Desenvolva habilidades técnicas de escalada com nosso currículo estruturado em 5 níveis.",
-    image: "https://images.unsplash.com/photo-1516592673884-4a382d1124c2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=500",
+    shortDescription: "Desenvolva habilidades técnicas de escalada com nosso currículo estruturado em 5 níveis.",
+    image: null,
     progress: 80,
     progressLabel: "Nível 4 de 5",
     features: [
       "Técnicas fundamentais de movimento",
       "Estratégias de solução de problemas",
       "Avaliação de progresso mensal"
-    ]
-  },
-  {
-    id: "crosstraining",
-    title: "Cross Training",
-    description: "Programa de condicionamento físico especializado para escaladores com periodização.",
-    image: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=500",
-    progress: 60,
-    progressLabel: "Fase 3 de 5",
-    features: [
-      "Força específica para escalada",
-      "Mobilidade e prevenção de lesões",
-      "Integração com wearables"
-    ]
-  },
-  {
-    id: "instrutores",
-    title: "Formação de Instrutores",
-    description: "Torne-se um instrutor certificado com nossa formação reconhecida nacionalmente.",
-    image: "https://images.unsplash.com/photo-1521336575822-6da63fb45455?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=500",
-    progress: 100,
-    progressLabel: "Certificação",
-    features: [
-      "Metodologia de ensino",
-      "Segurança e prevenção",
-      "Programa de residência técnica"
-    ]
+    ],
+    slug: { current: "escalada" }
   }
 ];
 
@@ -63,6 +41,9 @@ const item = {
 };
 
 const ProgramsSection = () => {
+  const { data: programsData, isLoading } = usePrograms();
+  const programs = programsData || fallbackPrograms;
+
   return (
     <section id="programas" className="py-16 bg-white">
       <div className="container mx-auto px-4">
