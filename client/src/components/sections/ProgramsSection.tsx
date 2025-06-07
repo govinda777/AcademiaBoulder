@@ -67,12 +67,12 @@ const ProgramsSection = () => {
           whileInView="show"
           viewport={{ once: true }}
         >
-          {programs.map((program) => (
-            <motion.div key={program.id} variants={item} id={program.id} className="program-card">
+          {programs.map((program: any) => (
+            <motion.div key={program._id || program.id} variants={item} id={program._id || program.id} className="program-card">
               <Card className="h-full overflow-hidden border border-neutral-200">
                 <div className="relative h-48 overflow-hidden">
                   <img 
-                    src={program.image} 
+                    src={program.image ? urlFor(program.image).url() : "https://images.unsplash.com/photo-1516592673884-4a382d1124c2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=500"} 
                     alt={program.title} 
                     className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                   />
@@ -83,29 +83,33 @@ const ProgramsSection = () => {
                 <CardContent className="pb-0">
                   <div className="mb-4">
                     <p className="text-neutral-700 mb-2">
-                      {program.description}
+                      {program.shortDescription || program.description}
                     </p>
                     
-                    <div className="flex items-center mt-3">
-                      <div className="w-full mr-2">
-                        <Progress value={program.progress} className="h-2" />
+                    {(program.progress || program.progressLabel) && (
+                      <div className="flex items-center mt-3">
+                        <div className="w-full mr-2">
+                          <Progress value={program.progress || 0} className="h-2" />
+                        </div>
+                        <span className="text-sm text-neutral-600 whitespace-nowrap">{program.progressLabel}</span>
                       </div>
-                      <span className="text-sm text-neutral-600 whitespace-nowrap">{program.progressLabel}</span>
-                    </div>
+                    )}
                   </div>
                   
-                  <div className="space-y-2 mb-6">
-                    {program.features.map((feature, index) => (
-                      <div key={index} className="flex items-start">
-                        <CheckCircle className="h-5 w-5 text-accent mr-2 mt-0.5 flex-shrink-0" />
-                        <p className="text-neutral-700 text-sm">{feature}</p>
-                      </div>
-                    ))}
-                  </div>
+                  {program.features && program.features.length > 0 && (
+                    <div className="space-y-2 mb-6">
+                      {program.features.map((feature: string, index: number) => (
+                        <div key={index} className="flex items-start">
+                          <CheckCircle className="h-5 w-5 text-accent mr-2 mt-0.5 flex-shrink-0" />
+                          <p className="text-neutral-700 text-sm">{feature}</p>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </CardContent>
                 <CardFooter className="pt-2 pb-6">
                   <Button asChild className="bg-secondary hover:bg-secondary/90">
-                    <Link href={`/programas/${program.id}`}>
+                    <Link href={`/programas/${program.slug?.current || program.id}`}>
                       Detalhes do Programa
                     </Link>
                   </Button>

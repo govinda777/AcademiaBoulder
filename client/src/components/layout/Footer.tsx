@@ -1,45 +1,60 @@
 import { Link } from "wouter";
 import { Facebook, Instagram, Youtube, Phone, Clock, Mail, MapPin } from "lucide-react";
+import { useSiteSettings } from "@/hooks/useSanity";
 
 const Footer = () => {
+  const { data: siteSettings } = useSiteSettings();
+
+  // Use CMS data with fallback to default values
+  const siteName = siteSettings?.siteName || "Academia Boulder";
+  const siteDescription = siteSettings?.siteDescription || "Centro de excelência em escalada boulder com metodologias avançadas para todos os níveis.";
+  const contactInfo = siteSettings?.contactInfo || {};
+  const socialMedia = siteSettings?.socialMedia || {};
+
   return (
     <footer className="bg-secondary text-white py-12">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* About Column */}
           <div>
-            <h3 className="text-xl font-semibold mb-4">Academia Boulder</h3>
+            <h3 className="text-xl font-semibold mb-4">{siteName}</h3>
             <p className="text-neutral-300 mb-4">
-              Centro de excelência em escalada boulder com metodologias avançadas para todos os níveis.
+              {siteDescription}
             </p>
             <div className="flex space-x-4">
-              <a 
-                href="https://web.facebook.com/academiaboulder" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-neutral-300 hover:text-white transition duration-300"
-                aria-label="Facebook"
-              >
-                <Facebook className="h-5 w-5" />
-              </a>
-              <a 
-                href="https://www.instagram.com/academiaboulder" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-neutral-300 hover:text-white transition duration-300"
-                aria-label="Instagram"
-              >
-                <Instagram className="h-5 w-5" />
-              </a>
-              <a 
-                href="#" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-neutral-300 hover:text-white transition duration-300"
-                aria-label="YouTube"
-              >
-                <Youtube className="h-5 w-5" />
-              </a>
+              {socialMedia.facebook && (
+                <a 
+                  href={socialMedia.facebook} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-neutral-300 hover:text-white transition duration-300"
+                  aria-label="Facebook"
+                >
+                  <Facebook className="h-5 w-5" />
+                </a>
+              )}
+              {socialMedia.instagram && (
+                <a 
+                  href={socialMedia.instagram} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-neutral-300 hover:text-white transition duration-300"
+                  aria-label="Instagram"
+                >
+                  <Instagram className="h-5 w-5" />
+                </a>
+              )}
+              {socialMedia.youtube && (
+                <a 
+                  href={socialMedia.youtube} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-neutral-300 hover:text-white transition duration-300"
+                  aria-label="YouTube"
+                >
+                  <Youtube className="h-5 w-5" />
+                </a>
+              )}
             </div>
           </div>
           
@@ -111,25 +126,30 @@ const Footer = () => {
           <div>
             <h3 className="text-xl font-semibold mb-4">Contato</h3>
             <ul className="space-y-2">
-              <li className="flex items-start">
-                <MapPin className="h-5 w-5 mt-1 mr-2 flex-shrink-0" />
-                <span className="text-neutral-300">Av. Exemplo, 1234 - Centro, São Paulo - SP</span>
-              </li>
-              <li className="flex items-start">
-                <Phone className="h-5 w-5 mt-1 mr-2 flex-shrink-0" />
-                <span className="text-neutral-300">(11) 5555-1234</span>
-              </li>
-              <li className="flex items-start">
-                <Mail className="h-5 w-5 mt-1 mr-2 flex-shrink-0" />
-                <span className="text-neutral-300">contato@academiaboulder.com.br</span>
-              </li>
-              <li className="flex items-start">
-                <Clock className="h-5 w-5 mt-1 mr-2 flex-shrink-0" />
-                <span className="text-neutral-300">
-                  Seg-Sex: 07h às 22h<br/>
-                  Sáb-Dom: 08h às 20h
-                </span>
-              </li>
+              {contactInfo.address && (
+                <li className="flex items-start">
+                  <MapPin className="h-5 w-5 mt-1 mr-2 flex-shrink-0" />
+                  <span className="text-neutral-300">{contactInfo.address}</span>
+                </li>
+              )}
+              {contactInfo.phone && (
+                <li className="flex items-start">
+                  <Phone className="h-5 w-5 mt-1 mr-2 flex-shrink-0" />
+                  <span className="text-neutral-300">{contactInfo.phone}</span>
+                </li>
+              )}
+              {contactInfo.email && (
+                <li className="flex items-start">
+                  <Mail className="h-5 w-5 mt-1 mr-2 flex-shrink-0" />
+                  <span className="text-neutral-300">{contactInfo.email}</span>
+                </li>
+              )}
+              {contactInfo.hours && (
+                <li className="flex items-start">
+                  <Clock className="h-5 w-5 mt-1 mr-2 flex-shrink-0" />
+                  <span className="text-neutral-300">{contactInfo.hours}</span>
+                </li>
+              )}
             </ul>
           </div>
         </div>
