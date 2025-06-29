@@ -97,21 +97,42 @@ export const queries = {
   }`,
   
   about: `*[_type == "aboutSection"][0]{
-    title,
-    description,
-    mission,
-    vision,
-    values[],
-    teamMembers[]->{
-      name,
-      role,
-      bio,
-      image
+    mainSection {
+      title,
+      description,
+      mission,
+      vision,
+      values[],
+      "mainImageUrl": mainImage.asset->url
     },
-    facilities[]{
+    teamSection {
+      title,
+      members[] {
+        name,
+        role,
+        bio,
+        "imageUrl": image.asset->url
+      }
+    },
+    safetySection {
+      title,
+      description,
+      stats[] {
+        value,
+        label,
+        description
+      },
+      buttonText
+    },
+    highlights[] {
+      title,
+      description,
+      icon
+    },
+    facilities[] {
       name,
       description,
-      image
+      "imageUrl": image.asset->url
     }
   }`,
   
@@ -149,5 +170,19 @@ export const queries = {
       hours
     },
     mapEmbed
+  }`,
+  
+  scheduling: `*[_type == "schedulingSection"][0]{
+    title,
+    description,
+    buttonText,
+    modalTitle,
+    modalDescription,
+    calendarUrl,
+    availableSlots[]{
+      day,
+      timeSlots
+    },
+    notes
   }`
 }

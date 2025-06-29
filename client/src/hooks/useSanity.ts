@@ -64,3 +64,11 @@ export function useContactSection() {
     staleTime: 1000 * 60 * 5,
   })
 }
+
+export function useSchedulingSection() {
+  return useQuery({
+    queryKey: ['sanity', 'scheduling'],
+    queryFn: () => client.fetch(queries.scheduling),
+    staleTime: 1000 * 60 * 5,
+  })
+}

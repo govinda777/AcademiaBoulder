@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { format } from "date-fns";
+import { format, isToday, isBefore, isAfter, parse } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { Calendar } from "@/components/ui/calendar";
 import { Button } from "@/components/ui/button";
@@ -13,10 +13,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
-
-const timeSlots = [
-  "09:00", "10:00", "11:00", "14:00", "15:00", "16:00", "17:00", "18:00"
-];
+import { useSchedulingSection } from "@/hooks/useSanity";
 
 const formSchema = z.object({
   name: z.string().min(2, { message: "Nome deve ter pelo menos 2 caracteres" }),
@@ -28,9 +25,72 @@ const formSchema = z.object({
 
 const SchedulingWidget = () => {
   const [date, setDate] = useState<Date | undefined>(new Date());
-  const [selectedTime, setSelectedTime] = useState("11:00");
+  const [selectedTime, setSelectedTime] = useState<string>("");
   const [activeTab, setActiveTab] = useState("aula-experimental");
+  const [availableTimeSlots, setAvailableTimeSlots] = useState<string[]>([]);
   const { toast } = useToast();
+  
+  // Buscar dados do Sanity
+  const { data: schedulingData, isLoading } = useSchedulingSection();
+
+  // Obter os horários disponíveis para o dia selecionado
+  const getAvailableSlotsForDay = (selectedDate: Date) => {
+    if (!schedulingData?.availableSlots) return [];
+    
+    const dayOfWeek = getDayOfWeek(selectedDate);
+    const slotsForDay = schedulingData.availableSlots.find(
+      (slot: any) => slot.day.toLowerCase() === dayOfWeek
+    )?.timeSlots || [];
+    
+    // Se for hoje, filtrar horários que ainda não passaram
+    if (isToday(selectedDate)) {
+      const now = new Date();
+      const currentHour = now.getHours();
+      const currentMinute = now.getMinutes();
+      
+      return slotsForDay.filter((time: string) => {
+        const [hours, minutes] = time.split(':').map(Number);
+        return hours > currentHour || (hours === currentHour && minutes > currentMinute);
+      });
+    }
+    
+    return slotsForDay;
+  };
+
+  // Atualizar timeSlots disponíveis quando a data ou dados do Sanity mudarem
+  useEffect(() => {
+    if (date) {
+      const slots = getAvailableSlotsForDay(date);
+      setAvailableTimeSlots(slots);
+      
+      // Resetar o horário selecionado se não estiver mais disponível
+      if (selectedTime && !slots.includes(selectedTime)) {
+        setSelectedTime("");
+      }
+    }
+  }, [date, schedulingData]);
+
+  // Função auxiliar para obter o dia da semana em inglês
+  const getDayOfWeek = (date: Date) => {
+    return date.toLocaleDateString('en-US', { weekday: 'long' }).toLowerCase();
+  };
+  
+  // Verificar se a data está desabilitada (fim de semana ou sem horários disponíveis)
+  const isDateDisabled = (date: Date) => {
+    const dayOfWeek = getDayOfWeek(date);
+    const hasAvailableSlots = schedulingData?.availableSlots?.some(
+      (slot: any) => slot.day.toLowerCase() === dayOfWeek && slot.timeSlots?.length > 0
+    );
+    
+    return !hasAvailableSlots;
+  };
+  
+  // Obter o título do serviço selecionado
+  const getServiceTitle = () => {
+    return activeTab === 'aula-experimental' 
+      ? 'Aula Experimental Gratuita' 
+      : 'Avaliação de Nível';
+  };
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -44,10 +104,30 @@ const SchedulingWidget = () => {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
+    if (!selectedTime) {
+      toast({
+        variant: "destructive",
+        title: "Horário não selecionado",
+        description: "Por favor, selecione um horário disponível para o agendamento.",
+      });
+      return;
+    }
+
+    // Aqui você pode adicionar a lógica para enviar os dados para sua API
+    console.log({
+      ...values,
+      date: date ? format(date, 'yyyy-MM-dd') : null,
+      time: selectedTime,
+      serviceType: activeTab
+    });
+
+    // Exemplo de mensagem de sucesso
     toast({
       title: "Agendamento confirmado!",
-      description: `${values.name}, seu agendamento para ${format(date!, 'dd/MM/yyyy')} às ${selectedTime} foi confirmado. Enviaremos a confirmação por email.`,
+      description: `${values.name}, seu agendamento para ${date ? format(date, 'dd/MM/yyyy') : ''} às ${selectedTime} foi confirmado. Enviaremos a confirmação por email.`,
     });
+    
+    // Resetar o formulário
     form.reset();
   }
 
@@ -105,10 +185,19 @@ const SchedulingWidget = () => {
                     mode="single"
                     selected={date}
                     onSelect={setDate}
+                    className="rounded-md border"
                     locale={ptBR}
-                    className="border rounded-md p-3"
-                    classNames={{
-                      day_selected: "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground",
+                    fromDate={new Date()}
+                    disabled={isDateDisabled}
+                    modifiers={{
+                      disabled: [
+                        (date) => isDateDisabled(date)
+                      ]
+                    }}
+                    modifiersClassNames={{
+                      disabled: 'text-muted-foreground opacity-50',
+                      selected: 'bg-primary text-primary-foreground hover:bg-primary/90',
+                      today: 'font-bold'
                     }}
                   />
                   
@@ -122,18 +211,33 @@ const SchedulingWidget = () => {
                 {/* Step 2: Select Time */}
                 <div>
                   <h3 className="font-semibold mb-3 text-secondary">Selecione o Horário</h3>
-                  <div className="grid grid-cols-2 gap-2">
-                    {timeSlots.map((time) => (
-                      <Button
-                        key={time}
-                        type="button"
-                        variant={selectedTime === time ? "default" : "outline"}
-                        className={selectedTime === time ? "bg-primary text-white" : ""}
-                        onClick={() => setSelectedTime(time)}
-                      >
-                        {time}
-                      </Button>
-                    ))}
+                  <div className="mb-4">
+                    <h4 className="text-sm font-medium mb-2">Horários disponíveis:</h4>
+                    {isLoading ? (
+                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+                        {[...Array(4)].map((_, i) => (
+                          <div key={i} className="h-10 bg-muted rounded-md animate-pulse"></div>
+                        ))}
+                      </div>
+                    ) : availableTimeSlots.length > 0 ? (
+                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+                        {availableTimeSlots.map((time: string) => (
+                          <Button
+                            key={time}
+                            type="button"
+                            variant={selectedTime === time ? "default" : "outline"}
+                            className={`py-2 ${selectedTime === time ? 'bg-primary text-primary-foreground' : ''}`}
+                            onClick={() => setSelectedTime(time)}
+                          >
+                            {time}
+                          </Button>
+                        ))}
+                      </div>
+                    ) : (
+                      <p className="text-sm text-muted-foreground">
+                        Nenhum horário disponível para este dia. Por favor, selecione outra data.
+                      </p>
+                    )}
                   </div>
                   
                   <div className="mt-4">
@@ -234,9 +338,10 @@ const SchedulingWidget = () => {
                       
                       <Button 
                         type="submit" 
-                        className="w-full bg-primary hover:bg-primary/90"
+                        className="w-full"
+                        disabled={!selectedTime || availableTimeSlots.length === 0}
                       >
-                        Confirmar Agendamento
+                        {schedulingData?.buttonText || 'Confirmar Agendamento'}
                       </Button>
                     </form>
                   </Form>
