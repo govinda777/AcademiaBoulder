@@ -184,5 +184,20 @@ export const queries = {
       timeSlots
     },
     notes
+  }`,
+
+  virtualTourSection: `*[_type == "virtualTourSection"][0]{
+    title,
+    description,
+    fallbackImage,
+    tourHotspots[]{
+      _key,
+      id,
+      label,
+      title,
+      position
+    },
+    tourAreas[],
+    videoUrl
   }`
 }
