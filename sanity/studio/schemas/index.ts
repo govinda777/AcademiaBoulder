@@ -8,6 +8,7 @@ import communitySection from './communitySection'
 import faqSection from './faqSection'
 import contactSection from './contactSection'
 import schedulingSection from './schedulingSection'
+import virtualTourSection from './virtualTourSection'
 
 export const schemaTypes = [
   siteSettings,
@@ -19,5 +20,6 @@ export const schemaTypes = [
   communitySection,
   faqSection,
   contactSection,
-  schedulingSection
+  schedulingSection,
+  virtualTourSection
 ]
