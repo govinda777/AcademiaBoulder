@@ -139,10 +139,38 @@ export const queries = {
   community: `*[_type == "communitySection"][0]{
     title,
     description,
-    instagramFeed[]{
-      image,
-      caption,
-      link
+    ambassadorProgram {
+      title,
+      description,
+      buttonText,
+      benefits[] {
+        icon,
+        title,
+        description
+      }
+    },
+    instagramSection {
+      hashtag,
+      profileUrl,
+      feedTitle,
+      posts[] {
+        image,
+        caption,
+        link
+      }
+    },
+    forumSection {
+      title,
+      description,
+      buttonText,
+      topics[] {
+        title,
+        preview,
+        commentsCount,
+        authorName,
+        authorAvatar,
+        timestamp
+      }
     },
     testimonials[]{
       name,
