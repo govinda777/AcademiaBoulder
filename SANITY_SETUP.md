@@ -53,7 +53,7 @@ sanity dev
 
 1. No painel do Sanity, vá em **API** > **CORS Origins**
 2. Adicione as seguintes origens:
-   - `http://localhost:5000` (desenvolvimento)
+   - `http://localhost:3000` (desenvolvimento)
    - `https://seu-dominio.com` (produção)
 
 ## Estrutura de Conteúdo
