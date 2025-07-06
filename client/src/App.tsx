@@ -8,10 +8,20 @@ import EventDetails from "@/pages/event-details";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import BackToTop from "@/components/ui/back-to-top";
+import { useLocationProperty, navigate } from "wouter/use-location";
+
+// Configuração do base path para GitHub Pages
+const useHashLocation = () => {
+  const location = useLocationProperty((state) => {
+    const path = state.replace(/^\/AcademiaBoulder/, "");
+    return path || "/";
+  });
+  return [location, navigate];
+};
 
 function Router() {
   return (
-    <Switch>
+    <Switch hook={useHashLocation}>
       <Route path="/" component={Home} />
       <Route path="/programas/:id" component={ProgramDetails} />
       <Route path="/eventos/:id" component={EventDetails} />

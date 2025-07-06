@@ -1,0 +1,43 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment: github-pages
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Dependencies
+        run: |
+          cd client
+          npm ci
+
+      - name: Build
+        run: |
+          cd client
+          npm run build
+        env:
+          VITE_SANITY_PROJECT_ID: ${{ vars.SANITY_PROJECT_ID }}
+          VITE_SANITY_DATASET: ${{ vars.SANITY_DATASET }}
+          VITE_SANITY_TOKEN: ${{ secrets.SANITY_TOKEN }}
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./client/dist 
