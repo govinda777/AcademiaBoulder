@@ -14,10 +14,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Menu, ChevronDown } from "lucide-react";
 import { useNavigation } from "@/hooks/use-navigation";
+import { useSiteSettings } from "@/hooks/useSanity";
+import { urlFor } from "@/lib/sanity";
 
 const Header = () => {
   const { currentPath, getPath, navigate } = useNavigation();
   const [programsOpen, setProgramsOpen] = useState(false);
+  const { data: siteSettings } = useSiteSettings();
 
   const navigationItems = [
     { name: "Home", path: "/" },
@@ -42,10 +45,17 @@ const Header = () => {
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center py-4">
           <div className="flex items-center">
-            <button onClick={() => navigate("/")} className="flex items-center">
+            <button onClick={() => navigate("/")} className="flex items-center gap-3">
+              {siteSettings?.logo ? (
+                <img 
+                  src={urlFor(siteSettings.logo).url()} 
+                  alt={siteSettings?.siteName || "Academia Boulder"}
+                  className="h-20 w-auto"
+                />
+              ) : null}
               <span className="text-2xl font-bold font-sans">
-                <span className="text-primary">Academia</span>
-                <span className="text-secondary">Boulder</span>
+                <span className="text-primary">{siteSettings?.siteName?.split(' ')[0] || "Academia"}</span>
+                <span className="text-secondary">{' '}{siteSettings?.siteName?.split(' ')[1] || "Boulder"}</span>
               </span>
             </button>
           </div>

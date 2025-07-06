@@ -11,7 +11,7 @@ import BackToTop from "@/components/ui/back-to-top";
 import { useState, useEffect } from "react";
 
 // Hook personalizado para lidar com o base path
-const useBasePath = () => {
+const useBasePath = (): [string, (to: string) => void] => {
   const [base, setBase] = useState("");
   const [location, setLocation] = useState("");
 
@@ -40,7 +40,7 @@ const useBasePath = () => {
     setLocation(to);
   };
 
-  return [location, navigate] as const;
+  return [location, navigate];
 };
 
 function Router() {
