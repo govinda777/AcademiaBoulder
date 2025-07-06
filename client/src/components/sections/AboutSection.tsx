@@ -91,6 +91,9 @@ const AboutSection = () => {
         >
           <div>
             <h3 className="text-2xl font-semibold text-secondary mb-4">Nossa Filosofia</h3>
+            <p className="text-neutral-700 mb-4">
+              {mainSection?.philosophy}
+            </p>
             <div className="space-y-4 mb-6">
               <div>
                 <h4 className="font-medium text-secondary mb-2">Missão</h4>

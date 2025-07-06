@@ -2,6 +2,11 @@
 
 Sistema de gerenciamento completo para academias e clubes de escalada, construído com tecnologias modernas e focado em experiência do usuário.
 
+## Urls
+
+- Site: https://govinda777.github.io/AcademiaBoulder/ (deploy)
+- CMS: https://academia-boulder.sanity.studio (sanity studio)
+
 ## 🚀 Tecnologias Utilizadas
 
 - **Frontend**: React + TypeScript

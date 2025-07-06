@@ -19,9 +19,12 @@ export default {
       name: 'backgroundImage',
       title: 'Imagem de Fundo',
       type: 'image',
+      description: 'Imagem de fundo para a seção hero. Recomendado: 1920x1080px ou maior.',
       options: {
-        hotspot: true
-      }
+        hotspot: true,
+        metadata: ['lqip'],
+      },
+      validation: (Rule: any) => Rule.required().error('A imagem de fundo é obrigatória')
     },
     {
       name: 'ctaButtons',

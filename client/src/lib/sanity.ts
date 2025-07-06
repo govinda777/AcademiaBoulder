@@ -100,6 +100,7 @@ export const queries = {
     mainSection {
       title,
       description,
+      philosophy,
       mission,
       vision,
       values[],

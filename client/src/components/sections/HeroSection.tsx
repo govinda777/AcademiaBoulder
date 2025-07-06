@@ -1,34 +1,64 @@
 import { useEffect, useRef } from "react";
 import { Link } from "wouter";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Trophy, Users, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import VideoBackground from "@/components/ui/video-background";
 import { motion } from "framer-motion";
 import { useHeroSection } from "@/hooks/useSanity";
 import { urlFor } from "@/lib/sanity";
+import { cn } from "@/lib/utils";
 
 const HeroSection = () => {
   const { data: heroData, isLoading } = useHeroSection();
 
   // Fallback content while loading or if no CMS data
   const fallbackContent = {
-    title: "Evolua Além dos Limites",
-    subtitle: "Centro de excelência em escalada boulder com metodologias avançadas para todos os níveis",
+    title: "Descubra Seus Limites.",
+    subtitle: "Escalada esportiva e cross training em Sorocaba",
     ctaButtons: [
-      { text: "Agendar Visita", link: "#agendamento", variant: "primary" },
-      { text: "Conhecer Programas", link: "#programas", variant: "secondary" }
+      { text: "Comece Agora", link: "#agendamento", variant: "primary" },
+      { text: "Saiba Mais", link: "#sobre", variant: "secondary" }
     ]
   };
 
   const content = heroData || fallbackContent;
 
+  const features = [
+    {
+      icon: <Trophy className="w-8 h-8 text-blue-300" />,
+      title: "Experiência",
+      description: "Mais de 10 anos"
+    },
+    {
+      icon: <Users className="w-8 h-8 text-blue-300" />,
+      title: "Comunidade",
+      description: "500+ atletas"
+    },
+    {
+      icon: <Award className="w-8 h-8 text-blue-300" />,
+      title: "Qualidade",
+      description: "Instrutores certificados"
+    }
+  ];
+
   return (
-    <section className="relative h-screen">
-      {/* Video Background with Overlay */}
-      <VideoBackground 
-        videoUrl="https://player.vimeo.com/external/370331493.sd.mp4?s=e90dcaba73c19e0e36f03406b47bbd6992dd6c1c&profile_id=139&oauth2_token_id=57447761" 
-        fallbackImg={heroData?.backgroundImage ? urlFor(heroData.backgroundImage).url() : "https://pixabay.com/get/gc3b07c52abb69dbeee4c5a7267a0fc5ae5607da4a82c78e1a9aa3f2075b1f0eadee36fd16cc3e49f87b1b56ba2c55e39_1280.jpg"}
-      />
+    <section className="relative h-screen overflow-hidden bg-[#020B2D]">
+      {/* Background Image with Overlay */}
+      <div className="absolute inset-0 z-0">
+        {heroData?.backgroundImage && (
+          <img
+            src={urlFor(heroData.backgroundImage)
+              .width(1920)
+              .height(1080)
+              .quality(90)
+              .url()}
+            alt=""
+            className="object-cover w-full h-full opacity-50 mix-blend-soft-light"
+          />
+        )}
+        {/* Gradient overlays */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#020B2D]/40 via-[#020B2D]/30 to-[#020B2D]/50" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#020B2D]/40 via-transparent to-[#020B2D]/40" />
+      </div>
 
       {/* Hero Content */}
       <div className="relative z-20 h-full flex flex-col justify-center items-center text-center px-4">
@@ -36,12 +66,14 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
+          className="max-w-4xl mx-auto"
         >
-          <h1 className="text-4xl md:text-6xl font-bold text-white mb-4 font-sans">
-            {content.title}
+          <h1 className="text-5xl md:text-7xl font-bold text-white mb-4">
+            <span className="text-white">{content.title.split(" ").slice(0, -1).join(" ")} </span>
+            <span className="text-[#5B9BD5]">{content.title.split(" ").pop()}</span>
           </h1>
           {content.subtitle && (
-            <p className="text-xl text-white mb-8 max-w-2xl">
+            <p className="text-xl md:text-2xl text-white/90 mb-12">
               {content.subtitle}
             </p>
           )}
@@ -51,14 +83,12 @@ const HeroSection = () => {
                 key={index}
                 asChild
                 size="lg"
-                className={
+                className={cn(
+                  "text-lg px-8 py-6 rounded-full font-medium",
                   button.variant === 'primary' 
-                    ? "bg-primary hover:bg-primary/90 text-white"
-                    : button.variant === 'accent'
-                    ? "bg-boulder-gold hover:bg-boulder-gold/90 text-boulder-dark"
-                    : "bg-white/20 hover:bg-white/30 text-white border border-white/40 backdrop-blur-sm"
-                }
-                variant={button.variant === 'primary' ? "default" : "outline"}
+                    ? "bg-[#2B7FE0] hover:bg-[#2B7FE0]/90 text-white"
+                    : "bg-transparent hover:bg-white/5 text-white border border-white/30"
+                )}
               >
                 <Link href={button.link}>
                   {button.text}
@@ -68,25 +98,23 @@ const HeroSection = () => {
           </div>
         </motion.div>
 
-        {/* Quick Stats */}
+        {/* Feature Cards */}
         <motion.div 
-          className="flex flex-wrap justify-center gap-8 mt-12"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          className="flex flex-wrap justify-center gap-8 mt-16"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.8 }}
         >
-          <div className="text-center">
-            <p className="text-3xl font-bold text-white font-sans">+500m²</p>
-            <p className="text-white/80">Área de Escalada</p>
-          </div>
-          <div className="text-center">
-            <p className="text-3xl font-bold text-white font-sans">+100</p>
-            <p className="text-white/80">Problemas</p>
-          </div>
-          <div className="text-center">
-            <p className="text-3xl font-bold text-white font-sans">8</p>
-            <p className="text-white/80">Instrutores IFSC</p>
-          </div>
+          {features.map((feature, index) => (
+            <div
+              key={index}
+              className="flex flex-col items-center p-6 rounded-xl bg-[#020B2D]/80 backdrop-blur-sm border border-white/10 w-[280px]"
+            >
+              {feature.icon}
+              <h3 className="text-xl font-semibold text-white mt-3">{feature.title}</h3>
+              <p className="text-white/80 text-sm">{feature.description}</p>
+            </div>
+          ))}
         </motion.div>
       </div>
 
@@ -100,8 +128,8 @@ const HeroSection = () => {
           ease: "easeInOut" 
         }}
       >
-        <Link href="#agendamento" className="text-white">
-          <ChevronDown className="h-6 w-6" />
+        <Link href="#sobre" className="text-white/40 hover:text-white/60 transition-colors">
+          <ChevronDown className="h-8 w-8" />
         </Link>
       </motion.div>
     </section>

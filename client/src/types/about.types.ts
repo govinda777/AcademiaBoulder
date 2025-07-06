@@ -26,6 +26,7 @@ export interface Facility {
 export interface MainSection {
   title: string;
   description: any[]; // Sanity block content
+  philosophy: string;
   mission: string;
   vision: string;
   values: string[];
