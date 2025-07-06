@@ -17,14 +17,6 @@ export function useHeroSection() {
   })
 }
 
-export function useVirtualTourSection() {
-  return useQuery({
-    queryKey: ['sanity', 'virtualTourSection'],
-    queryFn: () => client.fetch(queries.virtualTourSection),
-    staleTime: 1000 * 60 * 5,
-  })
-}
-
 export function usePrograms() {
   return useQuery({
     queryKey: ['sanity', 'programs'],
