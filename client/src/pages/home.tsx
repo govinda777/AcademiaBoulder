@@ -4,7 +4,6 @@ import HeroSection from "@/components/sections/HeroSection";
 import SchedulingWidget from "@/components/sections/SchedulingWidget";
 import EventsSection from "@/components/sections/EventsSection";
 import ProgramsSection from "@/components/sections/ProgramsSection";
-import VirtualTourSection from "@/components/sections/VirtualTourSection";
 import CommunitySection from "@/components/sections/CommunitySection";
 import AboutSection from "@/components/sections/AboutSection";
 import ContactSection from "@/components/sections/ContactSection";
@@ -62,7 +61,6 @@ const Home = () => {
       <SchedulingWidget />
       <EventsSection />
       <ProgramsSection />
-      <VirtualTourSection />
       <CommunitySection />
       <AboutSection />
       <ContactSection />
