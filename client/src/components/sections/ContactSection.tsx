@@ -203,7 +203,7 @@ const ContactSection = () => {
                   </div>
                   <div>
                     <h4 className="font-medium">Endereço</h4>
-                    <p className="text-neutral-300">Av. Exemplo, 1234 - Centro, São Paulo - SP</p>
+                    <p className="text-neutral-300">Avenida Getúlio Vargas, 475 - Jardim São Paulo, Sorocaba - SP</p>
                   </div>
                 </div>
                 
@@ -213,7 +213,7 @@ const ContactSection = () => {
                   </div>
                   <div>
                     <h4 className="font-medium">Telefone</h4>
-                    <p className="text-neutral-300">(11) 5555-1234</p>
+                    <p className="text-neutral-300">+55 15 99186-9689</p>
                   </div>
                 </div>
                 
@@ -223,7 +223,7 @@ const ContactSection = () => {
                   </div>
                   <div>
                     <h4 className="font-medium">E-mail</h4>
-                    <p className="text-neutral-300">contato@academiaboulder.com.br</p>
+                    <p className="text-neutral-300">academiaboulder@gmail.com</p>
                   </div>
                 </div>
                 
@@ -233,8 +233,8 @@ const ContactSection = () => {
                   </div>
                   <div>
                     <h4 className="font-medium">Horário de Funcionamento</h4>
-                    <p className="text-neutral-300">Seg-Sex: 07h às 22h</p>
-                    <p className="text-neutral-300">Sáb-Dom: 08h às 20h</p>
+                    <p className="text-neutral-300">Seg-Sex: 06h às 11h</p>
+                    <p className="text-neutral-300">Sáb: 09h às 13h</p>
                   </div>
                 </div>
               </div>
@@ -287,16 +287,16 @@ const ContactSection = () => {
             
             {/* Map */}
             <div className="rounded-lg overflow-hidden h-64 bg-white/10">
-              <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3657.1976082759226!2d-46.65390492467796!3d-23.56507126162643!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce59c8da0aa315%3A0xd59f9431f2c9776a!2sAv.%20Paulista%20-%20Bela%20Vista%2C%20S%C3%A3o%20Paulo%20-%20SP!5e0!3m2!1spt-BR!2sbr!4v1682964119683!5m2!1spt-BR!2sbr" 
-                width="100%" 
-                height="100%" 
-                style={{ border: 0 }} 
-                allowFullScreen 
-                loading="lazy" 
-                referrerPolicy="no-referrer-when-downgrade"
-                title="Localização da Academia Boulder"
-              ></iframe>
+            <iframe 
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3678.057179892493!2d-47.495606!3d-23.5227955!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce579b8b8b8b8b%3A0xd59f9431f2c9776a!2sAv.+Get%C3%BAlio+Vargas%2C+475+-+Jardim+S%C3%A3o+Paulo%2C+Sorocaba+-+SP!5e0!3m2!1spt-BR!2sbr!4v1732750000000!5m2!1spt-BR!2sbr" 
+              width="100%" 
+              height="100%" 
+              style={{ border: 0 }} 
+              allowFullScreen 
+              loading="lazy" 
+              referrerPolicy="no-referrer-when-downgrade"
+              title="Localização da Academia Boulder"
+            />
             </div>
           </motion.div>
         </div>
