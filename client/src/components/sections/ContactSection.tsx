@@ -287,7 +287,8 @@ const ContactSection = () => {
             
             {/* Map */}
             <div className="rounded-lg overflow-hidden h-64 bg-white/10">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3658.2684509596247!2d-47.49819742522334!3d-23.52284517882626!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94c58b1bab524bcd%3A0x2537fb85c4b1116d!2sAv.%20Get%C3%BAlio%20Vargas%2C%20475%20-%20Jardim%20Sao%20Paulo%2C%20Sorocaba%20-%20SP%2C%2018051-480!5e0!3m2!1spt-BR!2sbr!4v1764295502390!5m2!1spt-BR!2sbr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3658.2684509596247!2d-47.49819742522334!3d-23.52284517882626!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94c58b1bab524bcd%3A0x2537fb85c4b1116d!2sAv.%20Get%C3%BAlio%20Vargas%2C%20475%20-%20Jardim%20Sao%20Paulo%2C%20Sorocaba%20-%20SP%2C%2018051-480!5e0!3m2!1spt-BR!2sbr!4v1764295502390!5m2!1spt-BR!2sbr" width="600" height="450" style="border:0;" loading="lazy">
+            </iframe>
             </div>
           </motion.div>
         </div>
