@@ -4,6 +4,7 @@ import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { Calendar, ArrowRight } from "lucide-react";
 import CountdownTimer from "@/components/ui/countdown-timer";
 import { motion } from "framer-motion";
+import { ImageWithFallback } from "@/components/ui/ImageWithFallback";
 
 const events = [
   {
@@ -75,9 +76,10 @@ const EventsSection = () => {
             <motion.div key={event.id} variants={item}>
               <Card className="h-full hover:shadow-lg transition-shadow overflow-hidden">
                 <div className="relative h-48 overflow-hidden">
-                  <img 
-                    src={event.image} 
-                    alt={event.title} 
+                  <ImageWithFallback
+                    src={event.image}
+                    fallbackSrc="/placeholder-image.jpg"
+                    alt={event.title}
                     className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                   />
                 </div>

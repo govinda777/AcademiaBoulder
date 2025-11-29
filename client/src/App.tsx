@@ -17,7 +17,7 @@ const useBasePath = (): [string, (to: string) => void] => {
 
   useEffect(() => {
     // Obtém o base path do Vite em produção
-    const basePath = import.meta.env.BASE_URL;
+    const basePath = import.meta.env.VITE_BASE_PATH || import.meta.env.BASE_URL;
     setBase(basePath);
 
     // Atualiza a localização inicial

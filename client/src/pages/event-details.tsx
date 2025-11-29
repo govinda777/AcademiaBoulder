@@ -10,6 +10,7 @@ import { format, parseISO } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { useQuery } from "@tanstack/react-query";
 import CountdownTimer from "@/components/ui/countdown-timer";
+import { ImageWithFallback } from "@/components/ui/ImageWithFallback";
 
 // Event data structure
 interface EventCategory {
@@ -562,9 +563,10 @@ const EventDetails = () => {
                     <Card key={index} className="overflow-hidden">
                       <div className="flex flex-col md:flex-row">
                         <div className="md:w-1/3">
-                          <img 
-                            src={speaker.image} 
-                            alt={speaker.name} 
+                          <ImageWithFallback
+                            src={speaker.image}
+                            fallbackSrc="/placeholder-image.jpg"
+                            alt={speaker.name}
                             className="w-full h-full object-cover aspect-square"
                           />
                         </div>

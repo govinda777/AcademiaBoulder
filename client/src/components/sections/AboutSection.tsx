@@ -3,7 +3,14 @@ import { Users, GraduationCap, ShieldCheck } from "lucide-react";
 import { motion } from "framer-motion";
 import { useAboutSection } from "@/hooks/useSanity";
 import { SanityBlockContent } from "@/components/ui/SanityBlockContent";
+import { ImageWithFallback } from "@/components/ui/ImageWithFallback";
 import { AboutSectionData } from "@/types/about.types";
+
+const FALLBACK_IMAGES = {
+  main: "https://images.unsplash.com/photo-1522163182402-834f871fd851?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+  team: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+  facility: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+};
 
 const container = {
   hidden: { opacity: 0 },
@@ -134,11 +141,11 @@ const AboutSection = () => {
           {/* Imagem Principal */}
           <div className="h-full flex items-center">
             {mainSection?.mainImageUrl && (
-              <img 
-                src={mainSection.mainImageUrl} 
-                alt="Academia Boulder" 
+              <ImageWithFallback
+                src={mainSection.mainImageUrl}
+                fallbackSrc={FALLBACK_IMAGES.main}
+                alt="Academia Boulder"
                 className="rounded-lg shadow-lg w-full h-auto max-h-[500px] object-cover"
-                loading="lazy"
               />
             )}
           </div>
@@ -171,11 +178,11 @@ const AboutSection = () => {
                   className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 text-center"
                 >
                   {member.imageUrl && (
-                    <img 
-                      src={member.imageUrl} 
-                      alt={member.name} 
+                    <ImageWithFallback
+                      src={member.imageUrl}
+                      fallbackSrc={FALLBACK_IMAGES.team}
+                      alt={member.name}
                       className="w-32 h-32 rounded-full mx-auto mb-4 object-cover border-4 border-primary/10"
-                      loading="lazy"
                     />
                   )}
                   <h4 className="font-semibold text-secondary text-lg">{member.name}</h4>
@@ -250,11 +257,11 @@ const AboutSection = () => {
                   className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300"
                 >
                   {facility.imageUrl && (
-                    <img 
-                      src={facility.imageUrl} 
+                    <ImageWithFallback
+                      src={facility.imageUrl}
+                      fallbackSrc={FALLBACK_IMAGES.facility}
                       alt={facility.name}
                       className="w-full h-48 object-cover"
-                      loading="lazy"
                     />
                   )}
                   <div className="p-6">

@@ -8,6 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CheckCircle, ArrowLeft, Users, Calendar, Timer } from "lucide-react";
 import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
+import { ImageWithFallback } from "@/components/ui/ImageWithFallback";
 
 // Program data structure
 interface ProgramLevel {
@@ -470,9 +471,10 @@ const ProgramDetails = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {program.instructors.map((instructor, index) => (
                   <Card key={index} className="overflow-hidden">
-                    <img 
-                      src={instructor.image} 
-                      alt={instructor.name} 
+                    <ImageWithFallback
+                      src={instructor.image}
+                      fallbackSrc="/placeholder-image.jpg"
+                      alt={instructor.name}
                       className="w-full h-64 object-cover"
                     />
                     <CardContent className="p-6">
