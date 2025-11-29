@@ -58,7 +58,6 @@ const Home = () => {
       </Helmet>
 
       <HeroSection />
-      <SchedulingWidget />
       <EventsSection />
       <ProgramsSection />
       <CommunitySection />
