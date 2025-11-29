@@ -24,34 +24,29 @@ const HeroSection = () => {
 
   const features = [
     {
-      icon: <Trophy className="w-8 h-8 text-blue-300" />,
-      title: "Experiência",
-      description: "Mais de 10 anos"
+      icon: <Trophy className="w-8 h-8 text-blue-300" />,title: "Experiência",description: "Mais de 10 anos"
     },
     {
-      icon: <Users className="w-8 h-8 text-blue-300" />,
-      title: "Comunidade",
-      description: "500+ atletas"
+      icon: <Users className="w-8 h-8 text-blue-300" />,title: "Comunidade",description: "500+ atletas"
     },
     {
-      icon: <Award className="w-8 h-8 text-blue-300" />,
-      title: "Qualidade",
-      description: "Instrutores certificados"
+      icon: <Award className="w-8 h-8 text-blue-300" />,title: "Qualidade",description: "Instrutores certificados"
     }
   ];
+
+  // CORREÇÃO: garantir que backgroundImage é válido antes de gerar url
+  const backgroundUrl = heroData?.backgroundImage && heroData.backgroundImage.asset
+    ? urlFor(heroData.backgroundImage).width(1920).height(1080).quality(90).url()
+    : undefined;
 
   return (
     <section className="relative h-screen overflow-hidden bg-[#020B2D]">
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
-        {heroData?.backgroundImage && (
+        {backgroundUrl && (
           <img
-            src={urlFor(heroData.backgroundImage)
-              .width(1920)
-              .height(1080)
-              .quality(90)
-              .url()}
-            alt=""
+            src={backgroundUrl}
+            alt={content.title || ""}
             className="object-cover w-full h-full opacity-50 mix-blend-soft-light"
           />
         )}
@@ -69,7 +64,7 @@ const HeroSection = () => {
           className="max-w-4xl mx-auto"
         >
           <h1 className="text-5xl md:text-7xl font-bold text-white mb-4">
-            <span className="text-white">{content.title.split(" ").slice(0, -1).join(" ")} </span>
+            <span className="text-white">{content.title.split(" ").slice(0, -1).join(" ")}{" "}</span>
             <span className="text-[#5B9BD5]">{content.title.split(" ").pop()}</span>
           </h1>
           {content.subtitle && (
