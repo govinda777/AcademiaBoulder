@@ -52,13 +52,12 @@ const Home = () => {
         <meta name="description" content="Academia Boulder é um centro de excelência em escalada boulder com metodologias avançadas para todos os níveis, do iniciante ao atleta profissional." />
         <meta property="og:title" content="Academia Boulder - Centro de Escalada" />
         <meta property="og:description" content="Centro de excelência em escalada boulder com metodologias avançadas para todos os níveis." />
-        <meta property="og:image" content="https://pixabay.com/get/g63703d3004e93b4e703b3bbf1d1f3f01097ace0cafb4010d3ff80cc326efdab10cf036bd0aed67ffd4a8a9336a69c41a8822c2cec4fb12068e28692b34c10cf3_1280.jpg" />
+        <meta property="og:image" content="https://raw.githubusercontent.com/govinda777/AcademiaBoulder/main/attached_assets/escalada-outdoor.jpg" />
         <meta property="og:url" content="https://academiaboulder.com.br" />
         <meta property="og:type" content="website" />
       </Helmet>
 
       <HeroSection />
-      <SchedulingWidget />
       <EventsSection />
       <ProgramsSection />
       <CommunitySection />
