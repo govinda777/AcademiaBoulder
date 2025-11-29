@@ -16,6 +16,7 @@ import { Menu, ChevronDown } from "lucide-react";
 import { useNavigation } from "@/hooks/use-navigation";
 import { useSiteSettings } from "@/hooks/useSanity";
 import { urlFor } from "@/lib/sanity";
+import { ImageWithFallback } from "@/components/ui/ImageWithFallback";
 
 const Header = () => {
   const { currentPath, getPath, navigate } = useNavigation();
@@ -47,8 +48,9 @@ const Header = () => {
           <div className="flex items-center">
             <button onClick={() => navigate("/")} className="flex items-center gap-3">
               {siteSettings?.logo ? (
-                <img 
-                  src={urlFor(siteSettings.logo).url()} 
+                <ImageWithFallback
+                  src={urlFor(siteSettings.logo).url()}
+                  fallbackSrc="/placeholder-image.jpg"
                   alt={siteSettings?.siteName || "Academia Boulder"}
                   className="h-20 w-auto"
                 />

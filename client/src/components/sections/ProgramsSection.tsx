@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { Progress } from "@/components/ui/progress";
 import { usePrograms } from "@/hooks/useSanity";
 import { urlFor } from "@/lib/sanity";
+import { ImageWithFallback } from "@/components/ui/ImageWithFallback";
 
 // Fallback data only as backup
 const fallbackPrograms = [
@@ -71,9 +72,10 @@ const ProgramsSection = () => {
             <motion.div key={program._id || program.id} variants={item} id={program._id || program.id} className="program-card">
               <Card className="h-full overflow-hidden border border-neutral-200">
                 <div className="relative h-48 overflow-hidden">
-                  <img 
-                    src={program.image ? urlFor(program.image).url() : "https://images.unsplash.com/photo-1516592673884-4a382d1124c2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=500"} 
-                    alt={program.title} 
+                  <ImageWithFallback
+                    src={program.image ? urlFor(program.image).url() : "https://images.unsplash.com/photo-1516592673884-4a382d1124c2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=500"}
+                    fallbackSrc="/placeholder-image.jpg"
+                    alt={program.title}
                     className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                   />
                 </div>

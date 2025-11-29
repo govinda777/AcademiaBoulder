@@ -22,6 +22,9 @@ const HeroSection = () => {
 
   const content = heroData || fallbackContent;
 
+  // Default background image (fallback)
+  const defaultBackgroundImage = "https://images.unsplash.com/photo-1522163182402-834f871fd851?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80";
+
   const features = [
     {
       icon: <Trophy className="w-8 h-8 text-blue-300" />,
@@ -40,24 +43,32 @@ const HeroSection = () => {
     }
   ];
 
+  // Get background image URL with error handling
+  const getBackgroundImageUrl = () => {
+    try {
+      if (heroData?.backgroundImage) {
+        return urlFor(heroData.backgroundImage)
+          .width(1920)
+          .height(1080)
+          .quality(90)
+          .url();
+      }
+      return defaultBackgroundImage;
+    } catch (error) {
+      console.error('Error loading background image:', error);
+      return defaultBackgroundImage;
+    }
+  };
+
   return (
     <section className="relative h-screen overflow-hidden bg-[#020B2D]">
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
-        {heroData?.backgroundImage && (
-          <img
-            src={urlFor(heroData.backgroundImage)
-              .width(1920)
-              .height(1080)
-              .quality(90)
-              .url()}
-            alt=""
-            className="object-cover w-full h-full opacity-50 mix-blend-soft-light"
-          />
-        )}
-        {/* Gradient overlays */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#020B2D]/40 via-[#020B2D]/30 to-[#020B2D]/50" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#020B2D]/40 via-transparent to-[#020B2D]/40" />
+        <img
+          src={getBackgroundImageUrl()}
+          alt="Academia Boulder background"
+          className="object-cover w-full h-full"
+        />
       </div>
 
       {/* Hero Content */}
