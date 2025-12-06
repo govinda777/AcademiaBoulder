@@ -4,11 +4,13 @@ export interface SafetyStat {
   description: string;
 }
 
+import { SanityImageSource } from "@sanity/image-url/lib/types/types";
+
 export interface TeamMember {
   name: string;
   role: string;
   bio: string;
-  imageUrl: string;
+  image: SanityImageSource;
 }
 
 export interface Highlight {
@@ -20,17 +22,16 @@ export interface Highlight {
 export interface Facility {
   name: string;
   description: string;
-  imageUrl: string;
+  image: SanityImageSource;
 }
 
 export interface MainSection {
   title: string;
   description: any[]; // Sanity block content
-  philosophy: string;
   mission: string;
   vision: string;
   values: string[];
-  mainImageUrl: string;
+  mainImage: SanityImageSource;
 }
 
 export interface TeamSection {

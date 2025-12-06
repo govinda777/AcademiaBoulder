@@ -100,11 +100,10 @@ export const queries = {
     mainSection {
       title,
       description,
-      philosophy,
       mission,
       vision,
       values[],
-      "mainImageUrl": mainImage.asset->url
+      mainImage
     },
     teamSection {
       title,
@@ -112,7 +111,7 @@ export const queries = {
         name,
         role,
         bio,
-        "imageUrl": image.asset->url
+        image
       }
     },
     safetySection {
@@ -133,7 +132,7 @@ export const queries = {
     facilities[] {
       name,
       description,
-      "imageUrl": image.asset->url
+      image
     }
   }`,
   
