@@ -193,47 +193,6 @@ const AboutSection = () => {
           </motion.div>
         )}
 
-        {/* Seção de Segurança */}
-        {safetySection?.stats && safetySection.stats.length > 0 && (
-          <motion.div 
-            className="bg-neutral-50 rounded-lg p-8 mb-16"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <div className="text-center mb-8">
-              <h3 className="text-2xl font-semibold text-secondary mb-2">
-                {safetySection.title || 'Segurança em Primeiro Lugar'}
-              </h3>
-              {safetySection.description && (
-                <p className="text-neutral-700 max-w-3xl mx-auto">
-                  {safetySection.description}
-                </p>
-              )}
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-              {safetySection.stats.map((stat, index) => (
-                <div 
-                  key={`${stat.label}-${index}`} 
-                  className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 text-center"
-                >
-                  <div className="text-accent text-3xl font-bold mb-2 font-sans">{stat.value}</div>
-                  <div className="text-secondary font-medium text-lg mb-1">{stat.label}</div>
-                  <p className="text-sm text-neutral-600">{stat.description}</p>
-                </div>
-              ))}
-            </div>
-            
-            <div className="text-center">
-              <Button className="bg-secondary hover:bg-secondary/90">
-                {safetySection.buttonText || 'Ver Relatório Completo'}
-              </Button>
-            </div>
-          </motion.div>
-        )}
-
         {/* Seção de Instalações */}
         {facilities && facilities.length > 0 && (
           <motion.div

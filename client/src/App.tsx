@@ -49,7 +49,7 @@ function Router() {
       <Switch>
         <Route path="/" component={Home} />
         <Route path="/programas/:id" component={ProgramDetails} />
-        <Route path="/eventos/:id" component={EventDetails} />
+        {/* <Route path="/eventos/:id" component={EventDetails} /> */}
         <Route component={NotFound} />
       </Switch>
     </WouterRouter>
