@@ -1,1 +1,3 @@
-npm warn Unknown project config "always-auth". This will stop working in the next major version of npm.
+
+> rest-express@1.0.0 dev
+> NODE_ENV=development tsx server/index.ts

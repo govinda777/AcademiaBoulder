@@ -5,6 +5,7 @@ import { useAboutSection } from "@/hooks/useSanity";
 import { SanityBlockContent } from "@/components/ui/SanityBlockContent";
 import { ImageWithFallback } from "@/components/ui/ImageWithFallback";
 import { AboutSectionData } from "@/types/about.types";
+import { urlFor } from "@/lib/sanity";
 
 const FALLBACK_IMAGES = {
   main: "https://images.unsplash.com/photo-1522163182402-834f871fd851?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
@@ -97,10 +98,6 @@ const AboutSection = () => {
           transition={{ duration: 0.8 }}
         >
           <div>
-            <h3 className="text-2xl font-semibold text-secondary mb-4">Nossa Filosofia</h3>
-            <p className="text-neutral-700 mb-4">
-              {mainSection?.philosophy}
-            </p>
             <div className="space-y-4 mb-6">
               <div>
                 <h4 className="font-medium text-secondary mb-2">Missão</h4>
@@ -140,9 +137,9 @@ const AboutSection = () => {
           
           {/* Imagem Principal */}
           <div className="h-full flex items-center">
-            {mainSection?.mainImageUrl && (
+            {mainSection?.mainImage && (
               <ImageWithFallback
-                src={mainSection.mainImageUrl}
+                src={urlFor(mainSection.mainImage).url()}
                 fallbackSrc={FALLBACK_IMAGES.main}
                 alt="Academia Boulder"
                 className="rounded-lg shadow-lg w-full h-auto max-h-[500px] object-cover"
@@ -177,9 +174,9 @@ const AboutSection = () => {
                   variants={item} 
                   className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 text-center"
                 >
-                  {member.imageUrl && (
+                  {member.image && (
                     <ImageWithFallback
-                      src={member.imageUrl}
+                      src={urlFor(member.image).url()}
                       fallbackSrc={FALLBACK_IMAGES.team}
                       alt={member.name}
                       className="w-32 h-32 rounded-full mx-auto mb-4 object-cover border-4 border-primary/10"
@@ -256,9 +253,9 @@ const AboutSection = () => {
                   key={`${facility.name}-${index}`}
                   className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300"
                 >
-                  {facility.imageUrl && (
+                  {facility.image && (
                     <ImageWithFallback
-                      src={facility.imageUrl}
+                      src={urlFor(facility.image).url()}
                       fallbackSrc={FALLBACK_IMAGES.facility}
                       alt={facility.name}
                       className="w-full h-48 object-cover"
