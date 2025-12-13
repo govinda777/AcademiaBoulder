@@ -107,11 +107,6 @@ const Header = () => {
                       </button>
                     )
                   )}
-                  <button onClick={() => navigate("#agendamento")}>
-                    <Button className="w-full mt-4 bg-primary hover:bg-primary/90">
-                      Agendar Aula
-                    </Button>
-                  </button>
                 </nav>
               </SheetContent>
             </Sheet>
@@ -156,14 +151,6 @@ const Header = () => {
             )}
           </div>
 
-          {/* CTA Button */}
-          <div className="hidden md:block">
-            <button onClick={() => navigate("#agendamento")}>
-              <Button className="bg-primary hover:bg-primary/90">
-                Agendar Aula
-              </Button>
-            </button>
-          </div>
         </div>
       </div>
     </header>
