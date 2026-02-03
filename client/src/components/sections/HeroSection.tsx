@@ -61,7 +61,7 @@ const HeroSection = () => {
         <img
           src={getBackgroundImageUrl()}
           alt="Academia Boulder background"
-          className="object-cover w-full h-full"
+          className="w-full h-full"
         />
       </div>
 
