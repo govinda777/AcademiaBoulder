@@ -24,6 +24,8 @@ const contactFormSchema = z.object({
 
 type ContactFormValues = z.infer<typeof contactFormSchema>;
 
+const WHATSAPP_NUMBER = "5515991869689";
+
 const ContactSection = () => {
   const { toast } = useToast();
   
@@ -39,9 +41,15 @@ const ContactSection = () => {
   });
 
   function onSubmit(data: ContactFormValues) {
+    const text = `*Nova mensagem do site*\n\n*Nome:* ${data.name}\n*Email:* ${data.email}\n*Assunto:* ${data.subject}\n*Mensagem:* ${data.message}`;
+    const encodedText = encodeURIComponent(text);
+    const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedText}`;
+
+    window.open(whatsappUrl, '_blank');
+
     toast({
-      title: "Mensagem enviada",
-      description: "Agradecemos seu contato. Responderemos em breve!",
+      title: "Redirecionando para o WhatsApp...",
+      description: "Sua mensagem será enviada através do WhatsApp.",
     });
     form.reset();
   }
@@ -272,7 +280,7 @@ const ContactSection = () => {
                   <Youtube className="h-5 w-5" />
                 </a>
                 <a 
-                  href="#" 
+                  href={`https://wa.me/${WHATSAPP_NUMBER}`}
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="bg-white/10 hover:bg-white/20 w-10 h-10 rounded-full flex items-center justify-center transition duration-300"
