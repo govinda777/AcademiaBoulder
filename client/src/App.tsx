@@ -21,12 +21,24 @@ const useBasePath = (): [string, (to: string) => void] => {
     setBase(basePath);
 
     // Atualiza a localização inicial
-    const path = window.location.pathname.replace(basePath, "") || "/";
+    let path = window.location.pathname;
+    if (basePath !== "/" && path.startsWith(basePath)) {
+        path = path.replace(basePath, "");
+    }
+    if (!path.startsWith("/")) {
+        path = "/" + path;
+    }
     setLocation(path);
 
     // Listener para mudanças na URL
     const handleLocationChange = () => {
-      const newPath = window.location.pathname.replace(basePath, "") || "/";
+      let newPath = window.location.pathname;
+      if (basePath !== "/" && newPath.startsWith(basePath)) {
+        newPath = newPath.replace(basePath, "");
+      }
+      if (!newPath.startsWith("/")) {
+        newPath = "/" + newPath;
+      }
       setLocation(newPath);
     };
 
@@ -35,7 +47,10 @@ const useBasePath = (): [string, (to: string) => void] => {
   }, []);
 
   const navigate = (to: string) => {
-    const newPath = base + (to === "/" ? "" : to);
+    const cleanBase = base.endsWith('/') ? base.slice(0, -1) : base;
+    const cleanTo = to.startsWith('/') ? to : '/' + to;
+    const newPath = cleanBase + (to === "/" ? "" : cleanTo);
+
     window.history.pushState(null, "", newPath);
     setLocation(to);
   };
