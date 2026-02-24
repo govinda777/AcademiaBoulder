@@ -1,9 +1,0 @@
-npm warn Unknown project config "always-auth". This will stop working in the next major version of npm.
-
-> rest-express@1.0.0 dev
-> NODE_ENV=development tsx server/index.ts
-
-5:41:46 PM [express] serving on port 3000
-[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
-5:44:13 PM [vite] (client) hmr update /src/App.tsx?v=snzbfvefuD6HbJN1NQscX, /src/index.css?v=snzbfvefuD6HbJN1NQscX
-5:47:57 PM [vite] (client) hmr update /src/App.tsx?v=snzbfvefuD6HbJN1NQscX, /src/index.css?v=snzbfvefuD6HbJN1NQscX, /src/App.tsx?v=2-kVr65zV7DF09OL5CrVS
