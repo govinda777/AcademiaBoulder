@@ -45,16 +45,49 @@ const Home = () => {
     };
   }, []);
 
+  const pageTitle = "Academia Boulder - Escalada e Cross Training em Sorocaba";
+  const pageDescription = "Academia Boulder, inaugurada em 2018 em Sorocaba (SP), reúne escalada boulder e cross training em um só espaço, com programas estruturados para todos os níveis, do iniciante ao atleta.";
+  const siteUrl = "https://academiaboulder.com";
+  const ogImageUrl = `${siteUrl}/og-image.jpg`;
+
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "SportsActivityLocation",
+    name: "Academia Boulder",
+    url: siteUrl,
+    description: pageDescription,
+    image: ogImageUrl,
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "Av. Getúlio Vargas, 475",
+      addressLocality: "Sorocaba",
+      addressRegion: "SP",
+      addressCountry: "BR",
+    },
+    sameAs: ["https://www.instagram.com/academiaboulder/"],
+  };
+
   return (
     <>
       <Helmet>
-        <title>Academia Boulder - Centro de Escalada</title>
-        <meta name="description" content="Academia Boulder é um centro de excelência em escalada boulder com metodologias avançadas para todos os níveis, do iniciante ao atleta profissional." />
-        <meta property="og:title" content="Academia Boulder - Centro de Escalada" />
-        <meta property="og:description" content="Centro de excelência em escalada boulder com metodologias avançadas para todos os níveis." />
-        <meta property="og:image" content="https://raw.githubusercontent.com/govinda777/AcademiaBoulder/main/attached_assets/escalada-outdoor.jpg" />
-        <meta property="og:url" content="https://academiaboulder.com.br" />
+        <title>{pageTitle}</title>
+        <meta name="description" content={pageDescription} />
+
+        <meta property="og:title" content={pageTitle} />
+        <meta property="og:description" content={pageDescription} />
+        <meta property="og:image" content={ogImageUrl} />
+        <meta property="og:url" content={siteUrl} />
         <meta property="og:type" content="website" />
+
+        <meta name="twitter:title" content={pageTitle} />
+        <meta name="twitter:description" content={pageDescription} />
+        <meta name="twitter:image" content={ogImageUrl} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content={siteUrl} />
+
+        <script type="application/ld+json">
+          {JSON.stringify(structuredData)}
+        </script>
       </Helmet>
 
       <HeroSection />
