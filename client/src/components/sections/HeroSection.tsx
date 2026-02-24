@@ -60,7 +60,7 @@ const HeroSection = () => {
       <div className="absolute inset-0 z-0">
         <img
           src={getBackgroundImageUrl()}
-          alt="Academia Boulder background"
+          alt="Escalador em parede de boulder na Academia Boulder em Sorocaba"
           className="w-full h-full"
         />
       </div>
