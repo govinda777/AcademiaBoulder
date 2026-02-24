@@ -215,37 +215,8 @@ const ContactSection = () => {
                   </div>
                 </div>
                 
-                <div className="flex items-start">
-                  <div className="flex-shrink-0 bg-primary/20 rounded-full p-2 mr-3">
-                    <Phone className="text-primary h-5 w-5" />
-                  </div>
-                  <div>
-                    <h4 className="font-medium">Telefone</h4>
-                    <p className="text-neutral-300">+55 15 99186-9689</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start">
-                  <div className="flex-shrink-0 bg-primary/20 rounded-full p-2 mr-3">
-                    <Mail className="text-primary h-5 w-5" />
-                  </div>
-                  <div>
-                    <h4 className="font-medium">E-mail</h4>
-                    <p className="text-neutral-300">academiaboulder@gmail.com</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start">
-                  <div className="flex-shrink-0 bg-primary/20 rounded-full p-2 mr-3">
-                    <Clock className="text-primary h-5 w-5" />
-                  </div>
-                  <div>
-                    <h4 className="font-medium">Horário de Funcionamento</h4>
-                    <p className="text-neutral-300">Seg-Sex: 06h às 11h</p>
-                    <p className="text-neutral-300">Sáb: 09h às 13h</p>
-                  </div>
-                </div>
               </div>
+
             </div>
             
             {/* Social Media */}
