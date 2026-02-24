@@ -51,9 +51,9 @@ interface ProgramDetails {
 const programsData: ProgramDetails[] = [
   {
     id: "escalada",
-    title: "Escalada Esportiva",
+    title: "Escalada Indoor",
     description: "Desenvolva habilidades técnicas de escalada com nosso currículo estruturado em 5 níveis.",
-    fullDescription: "Nosso programa de Escalada Esportiva é projetado para desenvolver escaladores completos, combinando técnica, força, resistência e mentalidade. Com uma metodologia progressiva, você avançará por níveis claramente definidos, cada um com objetivos específicos e habilidades mensuráveis.",
+    fullDescription: "Nosso programa de Escalada Indoor é projetado para desenvolver escaladores completos, combinando técnica, força, resistência e mentalidade. Com uma metodologia progressiva, você avançará por níveis claramente definidos, cada um com objetivos específicos e habilidades mensuráveis.",
     image: "https://images.unsplash.com/photo-1516592673884-4a382d1124c2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=500",
     progress: 80,
     progressLabel: "Nível 4 de 5",
@@ -174,62 +174,52 @@ const programsData: ProgramDetails[] = [
     }
   },
   {
-    id: "instrutores",
-    title: "Formação de Instrutores",
-    description: "Torne-se um instrutor certificado com nossa formação reconhecida nacionalmente.",
-    fullDescription: "O programa de Formação de Instrutores da Academia Boulder é uma certificação completa para quem deseja atuar profissionalmente no ensino da escalada. Nosso curso abrange metodologias pedagógicas, técnicas avançadas, segurança, primeiros socorros e gestão de aulas, tudo com uma abordagem prática e teórica equilibrada.",
-    image: "https://images.unsplash.com/photo-1521336575822-6da63fb45455?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=500",
+    id: "personal",
+    title: "Personal Training",
+    description: "Treino individualizado focado nos seus objetivos específicos.",
+    fullDescription: "O programa de Personal Training oferece um acompanhamento exclusivo e personalizado, focado inteiramente nas suas metas e necessidades individuais. Seja para melhorar sua performance na escalada, reabilitação, ou condicionamento físico geral, nossos treinadores elaborarão um plano sob medida para você.",
+    image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=500",
     progress: 100,
-    progressLabel: "Certificação",
+    progressLabel: "Exclusivo",
     features: [
-      "Metodologia de ensino",
-      "Segurança e prevenção",
-      "Programa de residência técnica"
+      "Plano personalizado",
+      "Acompanhamento exclusivo",
+      "Horários flexíveis"
     ],
     levels: [
       {
-        level: "Módulo 1 - Fundamentos de Escalada",
-        description: "Revisão e aprofundamento técnico das habilidades fundamentais.",
-        skills: ["Técnica avançada", "Biomecânica", "Análise de movimento", "Auto-resgate básico"]
+        level: "Avaliação Inicial",
+        description: "Análise completa do seu perfil físico e objetivos.",
+        skills: ["Anamnese", "Avaliação postural", "Testes de força", "Definição de metas"]
       },
       {
-        level: "Módulo 2 - Pedagogia da Escalada",
-        description: "Metodologias de ensino adaptadas para diferentes perfis de alunos.",
-        skills: ["Princípios pedagógicos", "Planejamento de aulas", "Progressões didáticas", "Feedback efetivo"]
+        level: "Planejamento",
+        description: "Elaboração do ciclo de treinos.",
+        skills: ["Periodização", "Seleção de exercícios", "Ajuste de volume/intensidade"]
       },
       {
-        level: "Módulo 3 - Segurança e Gestão de Risco",
-        description: "Protocolos de segurança e primeiros socorros específicos para escalada.",
-        skills: ["Primeiros socorros", "Avaliação de risco", "Protocolos de emergência", "Responsabilidade legal"]
-      },
-      {
-        level: "Módulo 4 - Prática Supervisionada",
-        description: "Experiência prática de ensino sob supervisão de instrutores seniores.",
-        skills: ["Aulas assistidas", "Co-instrução", "Avaliação de alunos", "Gestão de grupo"]
-      },
-      {
-        level: "Módulo 5 - Residência Técnica",
-        description: "Período de instrução com acompanhamento e mentorias regulares.",
-        skills: ["Instrução solo", "Mentoria semanal", "Estudos de caso", "Projeto final"]
+        level: "Execução e Acompanhamento",
+        description: "Treinos supervisionados com correções em tempo real.",
+        skills: ["Execução técnica", "Motivação", "Feedback imediato", "Ajustes de carga"]
       }
     ],
     instructors: [
       {
-        name: "Juliana Costa",
-        role: "Coordenadora de Formação",
-        bio: "Especialista em iniciação à escalada e formação de novos instrutores.",
-        image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=300&h=300"
+        name: "Carlos Silva",
+        role: "Personal Trainer",
+        bio: "Especialista em treinamento funcional e musculação voltada para escalada.",
+        image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300"
       }
     ],
     schedule: {
-      days: "Intensivo (3 meses) ou Extensivo (6 meses)",
-      times: "Aulas aos finais de semana ou noturnas",
-      duration: "200 horas totais (teóricas e práticas)"
+      days: "Segunda a Sábado",
+      times: "Horários agendados conforme disponibilidade",
+      duration: "1h por sessão"
     },
     pricing: {
-      monthly: "R$ 1.200,00 (parcela)",
-      quarterly: "R$ 3.400,00 (à vista)",
-      annual: "R$ 5.500,00 (curso completo)"
+      monthly: "R$ 600,00 (1x semana)",
+      quarterly: "R$ 1.100,00 (2x semana)",
+      annual: "Consulte planos especiais"
     }
   }
 ];

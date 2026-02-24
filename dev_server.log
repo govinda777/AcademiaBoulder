@@ -1,0 +1,32 @@
+npm warn Unknown project config "always-auth". This will stop working in the next major version of npm.
+
+> rest-express@1.0.0 dev
+> NODE_ENV=development tsx server/index.ts
+
+5:48:52 PM [express] serving on port 3000
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+5:53:20 PM [vite] (client) hmr update /src/App.tsx?v=VqquXS71u2yPXC9tHZipl, /src/index.css?v=VqquXS71u2yPXC9tHZipl
+✘ [ERROR] Could not resolve "chromium-bidi/lib/cjs/bidiMapper/BidiMapper"
+
+    node_modules/playwright-core/lib/server/bidi/bidiOverCdp.js:34:33:
+      34 │ ...= __toESM(require("chromium-bidi/lib/cjs/bidiMapper/BidiMapper"));
+         ╵                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  You can mark the path "chromium-bidi/lib/cjs/bidiMapper/BidiMapper" as external to exclude it from the bundle, which will remove this error and leave the unresolved path in the bundle. You can also surround this "require" call with a try/catch block to handle this failure at run-time instead of bundle-time.
+
+✘ [ERROR] Could not resolve "chromium-bidi/lib/cjs/cdp/CdpConnection"
+
+    node_modules/playwright-core/lib/server/bidi/bidiOverCdp.js:35:40:
+      35 │ ...ion = __toESM(require("chromium-bidi/lib/cjs/cdp/CdpConnection"));
+         ╵                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  You can mark the path "chromium-bidi/lib/cjs/cdp/CdpConnection" as external to exclude it from the bundle, which will remove this error and leave the unresolved path in the bundle. You can also surround this "require" call with a try/catch block to handle this failure at run-time instead of bundle-time.
+
+5:53:55 PM [vite] (client) error while updating dependencies:
+Error: Build failed with 2 errors:
+node_modules/playwright-core/lib/server/bidi/bidiOverCdp.js:34:33: ERROR: Could not resolve "chromium-bidi/lib/cjs/bidiMapper/BidiMapper"
+node_modules/playwright-core/lib/server/bidi/bidiOverCdp.js:35:40: ERROR: Could not resolve "chromium-bidi/lib/cjs/cdp/CdpConnection"
+    at failureErrorWithLog (/app/node_modules/esbuild/lib/main.js:1465:15)
+    at /app/node_modules/esbuild/lib/main.js:924:25
+    at /app/node_modules/esbuild/lib/main.js:1343:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)

@@ -8,13 +8,13 @@ import { usePrograms } from "@/hooks/useSanity";
 import { urlFor } from "@/lib/sanity";
 import { ImageWithFallback } from "@/components/ui/ImageWithFallback";
 
-// Fallback data only as backup
-const fallbackPrograms = [
+// Hardcoded programs as per requirement
+const hardcodedPrograms = [
   {
     _id: "escalada",
-    title: "Escalada Esportiva",
+    title: "Escalada Indoor",
     shortDescription: "Desenvolva habilidades técnicas de escalada com nosso currículo estruturado em 5 níveis.",
-    image: null,
+    image: "https://images.unsplash.com/photo-1516592673884-4a382d1124c2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=500",
     progress: 80,
     progressLabel: "Nível 4 de 5",
     features: [
@@ -23,6 +23,34 @@ const fallbackPrograms = [
       "Avaliação de progresso mensal"
     ],
     slug: { current: "escalada" }
+  },
+  {
+    _id: "crosstraining",
+    title: "Cross Training",
+    shortDescription: "Programa de condicionamento físico especializado para escaladores com periodização.",
+    image: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=500",
+    progress: 60,
+    progressLabel: "Fase 3 de 5",
+    features: [
+      "Força específica para escalada",
+      "Mobilidade e prevenção de lesões",
+      "Integração com wearables"
+    ],
+    slug: { current: "crosstraining" }
+  },
+  {
+    _id: "personal",
+    title: "Personal Training",
+    shortDescription: "Treino individualizado focado nos seus objetivos específicos.",
+    image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=500",
+    progress: 100,
+    progressLabel: "Exclusivo",
+    features: [
+      "Plano personalizado",
+      "Acompanhamento exclusivo",
+      "Horários flexíveis"
+    ],
+    slug: { current: "personal" }
   }
 ];
 
@@ -42,8 +70,18 @@ const item = {
 };
 
 const ProgramsSection = () => {
-  const { data: programsData, isLoading } = usePrograms();
-  const programs = programsData || fallbackPrograms;
+  // const { data: programsData, isLoading } = usePrograms();
+  const programs = hardcodedPrograms; // programsData || fallbackPrograms;
+
+  const getImageUrl = (image: any) => {
+    if (!image) return "https://images.unsplash.com/photo-1516592673884-4a382d1124c2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=500";
+    if (typeof image === 'string') return image;
+    try {
+      return urlFor(image).url();
+    } catch (e) {
+      return "https://images.unsplash.com/photo-1516592673884-4a382d1124c2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=500";
+    }
+  };
 
   return (
     <section id="programas" className="py-16 bg-white">
@@ -73,7 +111,7 @@ const ProgramsSection = () => {
               <Card className="h-full overflow-hidden border border-neutral-200">
                 <div className="relative h-48 overflow-hidden">
                   <ImageWithFallback
-                    src={program.image ? urlFor(program.image).url() : "https://images.unsplash.com/photo-1516592673884-4a382d1124c2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=500"}
+                    src={getImageUrl(program.image)}
                     fallbackSrc="/placeholder-image.jpg"
                     alt={program.title}
                     className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
