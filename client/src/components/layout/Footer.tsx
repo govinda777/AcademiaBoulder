@@ -147,7 +147,7 @@ const Footer = () => {
               {contactInfo.hours && (
                 <li className="flex items-start">
                   <Clock className="h-5 w-5 mt-1 mr-2 flex-shrink-0" />
-                  <span className="text-neutral-300">{contactInfo.hours}</span>
+                  <span className="text-neutral-300 whitespace-pre-line">{contactInfo.hours}</span>
                 </li>
               )}
             </ul>

@@ -11,6 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Checkbox } from "@/components/ui/checkbox";
 import { MapPin, Phone, Mail, Clock, Facebook, Instagram, Youtube } from "lucide-react";
 import { motion } from "framer-motion";
+import { useSiteSettings } from "@/hooks/useSanity";
 
 const contactFormSchema = z.object({
   name: z.string().min(2, "Nome deve ter pelo menos 2 caracteres"),
@@ -28,6 +29,7 @@ const WHATSAPP_NUMBER = "5515991869689";
 
 const ContactSection = () => {
   const { toast } = useToast();
+  const { data: siteSettings } = useSiteSettings();
   
   const form = useForm<ContactFormValues>({
     resolver: zodResolver(contactFormSchema),
@@ -40,10 +42,19 @@ const ContactSection = () => {
     },
   });
 
+  const getWhatsappNumber = () => {
+    let phone = siteSettings?.contactInfo?.phone || WHATSAPP_NUMBER;
+    phone = phone.replace(/\D/g, "");
+    if (phone.length >= 10 && phone.length <= 11) {
+      phone = "55" + phone;
+    }
+    return phone;
+  };
+
   function onSubmit(data: ContactFormValues) {
     const text = `*Nova mensagem do site*\n\n*Nome:* ${data.name}\n*Email:* ${data.email}\n*Assunto:* ${data.subject}\n*Mensagem:* ${data.message}`;
     const encodedText = encodeURIComponent(text);
-    const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedText}`;
+    const whatsappUrl = `https://wa.me/${getWhatsappNumber()}?text=${encodedText}`;
 
     window.open(whatsappUrl, '_blank');
 
@@ -211,7 +222,7 @@ const ContactSection = () => {
                   </div>
                   <div>
                     <h4 className="font-medium">Endereço</h4>
-                    <p className="text-neutral-300">Avenida Getúlio Vargas, 475 - Jardim São Paulo, Sorocaba - SP</p>
+                    <p className="text-neutral-300">{siteSettings?.contactInfo?.address || "Avenida Getúlio Vargas, 475 - Jardim São Paulo, Sorocaba - SP"}</p>
                   </div>
                 </div>
                 
@@ -221,7 +232,7 @@ const ContactSection = () => {
                   </div>
                   <div>
                     <h4 className="font-medium">Telefone</h4>
-                    <p className="text-neutral-300">+55 15 99186-9689</p>
+                    <p className="text-neutral-300">{siteSettings?.contactInfo?.phone || "+55 15 99186-9689"}</p>
                   </div>
                 </div>
                 
@@ -231,7 +242,7 @@ const ContactSection = () => {
                   </div>
                   <div>
                     <h4 className="font-medium">E-mail</h4>
-                    <p className="text-neutral-300">academiaboulder@gmail.com</p>
+                    <p className="text-neutral-300">{siteSettings?.contactInfo?.email || "academiaboulder@gmail.com"}</p>
                   </div>
                 </div>
                 
@@ -241,8 +252,14 @@ const ContactSection = () => {
                   </div>
                   <div>
                     <h4 className="font-medium">Horário de Funcionamento</h4>
-                    <p className="text-neutral-300">Seg-Sex: 06h às 11h</p>
-                    <p className="text-neutral-300">Sáb: 09h às 13h</p>
+                    {siteSettings?.contactInfo?.hours ? (
+                      <p className="text-neutral-300 whitespace-pre-line">{siteSettings.contactInfo.hours}</p>
+                    ) : (
+                      <>
+                        <p className="text-neutral-300">Seg-Sex: 06h às 11h</p>
+                        <p className="text-neutral-300">Sáb: 09h às 13h</p>
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
@@ -280,7 +297,7 @@ const ContactSection = () => {
                   <Youtube className="h-5 w-5" />
                 </a>
                 <a 
-                  href={`https://wa.me/${WHATSAPP_NUMBER}`}
+                  href={`https://wa.me/${getWhatsappNumber()}`}
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="bg-white/10 hover:bg-white/20 w-10 h-10 rounded-full flex items-center justify-center transition duration-300"

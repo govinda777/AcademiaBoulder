@@ -67,3 +67,10 @@ afterEach(() => {
 afterAll(() => {
   vi.useRealTimers();
 });
+
+// Mock ResizeObserver
+global.ResizeObserver = class ResizeObserver {
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+};
