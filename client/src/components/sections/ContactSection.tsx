@@ -200,25 +200,7 @@ const ContactSection = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-          >
-            <div className="mb-8">
-              <h3 className="text-xl font-semibold mb-4">Informações de Contato</h3>
-              
-              <div className="space-y-4">
-                <div className="flex items-start">
-                  <div className="flex-shrink-0 bg-primary/20 rounded-full p-2 mr-3">
-                    <MapPin className="text-primary h-5 w-5" />
-                  </div>
-                  <div>
-                    <h4 className="font-medium">Endereço</h4>
-                    <p className="text-neutral-300">Avenida Getúlio Vargas, 475 - Jardim São Paulo, Sorocaba - SP</p>
-                  </div>
-                </div>
-                
-              </div>
-
-            </div>
-            
+          >            
             {/* Social Media */}
             <div className="mb-8">
               <h3 className="text-xl font-semibold mb-4">Redes Sociais</h3>
