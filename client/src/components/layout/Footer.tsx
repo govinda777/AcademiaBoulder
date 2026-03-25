@@ -96,7 +96,7 @@ const Footer = () => {
             <ul className="space-y-2">
               <li>
                 <Link href="#escalada" className="text-neutral-300 hover:text-white transition duration-300">
-                  Escalada Esportiva
+                  Escalada Indoor
                 </Link>
               </li>
               <li>
@@ -105,18 +105,8 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link href="#instrutores" className="text-neutral-300 hover:text-white transition duration-300">
-                  Formação de Instrutores
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="text-neutral-300 hover:text-white transition duration-300">
-                  Aulas para Crianças
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="text-neutral-300 hover:text-white transition duration-300">
-                  Treinamento Personalizado
+                <Link href="#personal" className="text-neutral-300 hover:text-white transition duration-300">
+                  Personal Training
                 </Link>
               </li>
             </ul>

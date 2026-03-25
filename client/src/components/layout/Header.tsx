@@ -30,9 +30,9 @@ const Header = () => {
       path: "#programas",
       dropdown: true,
       items: [
-        { name: "Escalada Esportiva", path: "#escalada" },
+        { name: "Escalada Indoor", path: "#escalada" },
         { name: "Cross Training", path: "#crosstraining" },
-        { name: "Formação de Instrutores", path: "#instrutores" }
+        { name: "Personal Training", path: "#personal" }
       ]
     },
     { name: "Agenda", path: "#agenda" },
