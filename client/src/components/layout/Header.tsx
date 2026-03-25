@@ -35,8 +35,6 @@ const Header = () => {
         { name: "Personal Training", path: "#personal" },
       ]
     },
-    { name: "Agenda", path: "#agenda" },
-    { name: "Comunidade", path: "#comunidade" },
     { name: "Sobre", path: "#sobre" },
     { name: "Contato", path: "#contato" },
   ];
