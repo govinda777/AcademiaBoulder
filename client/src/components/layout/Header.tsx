@@ -32,6 +32,7 @@ const Header = () => {
       items: [
         { name: "Escalada Esportiva", path: "#escalada" },
         { name: "Cross Training", path: "#crosstraining" },
+        { name: "Personal Training", path: "#personal" },
       ]
     },
     { name: "Agenda", path: "#agenda" },
