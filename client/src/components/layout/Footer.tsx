@@ -58,60 +58,6 @@ const Footer = () => {
             </div>
           </div>
           
-          {/* Quick Links */}
-          <div>
-            <h3 className="text-xl font-semibold mb-4">Links Rápidos</h3>
-            <ul className="space-y-2">
-              <li>
-                <Link href="#programas" className="text-neutral-300 hover:text-white transition duration-300">
-                  Programas
-                </Link>
-              </li>
-              <li>
-                <Link href="#agenda" className="text-neutral-300 hover:text-white transition duration-300">
-                  Agenda
-                </Link>
-              </li>
-              <li>
-                <Link href="#comunidade" className="text-neutral-300 hover:text-white transition duration-300">
-                  Comunidade
-                </Link>
-              </li>
-              <li>
-                <Link href="#sobre" className="text-neutral-300 hover:text-white transition duration-300">
-                  Sobre Nós
-                </Link>
-              </li>
-              <li>
-                <Link href="#contato" className="text-neutral-300 hover:text-white transition duration-300">
-                  Contato
-                </Link>
-              </li>
-            </ul>
-          </div>
-          
-          {/* Programs */}
-          <div>
-            <h3 className="text-xl font-semibold mb-4">Programas</h3>
-            <ul className="space-y-2">
-              <li>
-                <Link href="#escalada" className="text-neutral-300 hover:text-white transition duration-300">
-                  Escalada Indoor
-                </Link>
-              </li>
-              <li>
-                <Link href="#crosstraining" className="text-neutral-300 hover:text-white transition duration-300">
-                  Cross Training
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="text-neutral-300 hover:text-white transition duration-300">
-                  Personal Trainer
-                </Link>
-              </li>
-            </ul>
-          </div>
-          
           {/* Contact Info */}
           <div>
             <h3 className="text-xl font-semibold mb-4">Contato</h3>

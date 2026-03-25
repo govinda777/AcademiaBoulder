@@ -32,7 +32,6 @@ const Header = () => {
       items: [
         { name: "Escalada Esportiva", path: "#escalada" },
         { name: "Cross Training", path: "#crosstraining" },
-        { name: "Formação de Instrutores", path: "#instrutores" }
       ]
     },
     { name: "Agenda", path: "#agenda" },
