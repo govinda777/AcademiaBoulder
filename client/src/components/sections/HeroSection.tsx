@@ -25,18 +25,6 @@ const HeroSection = () => {
   // Default background image (fallback)
   const defaultBackgroundImage = "https://images.unsplash.com/photo-1522163182402-834f871fd851?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80";
 
-  const features = [
-    {
-      icon: <Trophy className="w-8 h-8 text-blue-300" />,title: "Experiência",description: "Mais de 10 anos"
-    },
-    {
-      icon: <Users className="w-8 h-8 text-blue-300" />,title: "Comunidade",description: "500+ atletas"
-    },
-    {
-      icon: <Award className="w-8 h-8 text-blue-300" />,title: "Qualidade",description: "Instrutores certificados"
-    }
-  ];
-
   // Get background image URL with error handling
   const getBackgroundImageUrl = () => {
     try {
@@ -101,25 +89,6 @@ const HeroSection = () => {
               </Button>
             ))}
           </div>
-        </motion.div>
-
-        {/* Feature Cards */}
-        <motion.div 
-          className="flex flex-wrap justify-center gap-8 mt-16"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5, duration: 0.8 }}
-        >
-          {features.map((feature, index) => (
-            <div
-              key={index}
-              className="flex flex-col items-center p-6 rounded-xl bg-[#020B2D]/80 backdrop-blur-sm border border-white/10 w-[280px]"
-            >
-              {feature.icon}
-              <h3 className="text-xl font-semibold text-white mt-3">{feature.title}</h3>
-              <p className="text-white/80 text-sm">{feature.description}</p>
-            </div>
-          ))}
         </motion.div>
       </div>
 
