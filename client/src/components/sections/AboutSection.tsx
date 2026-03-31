@@ -71,20 +71,20 @@ const AboutSection = () => {
 
   const { mainSection, teamSection, safetySection, highlights, facilities } = aboutData as AboutSectionData;
   return (
-    <section id="sobre" className="py-16 bg-white">
+    <section id="sobre" className="py-24 bg-white">
       <div className="container mx-auto px-4">
         {/* Seção Principal */}
         <motion.div 
-          className="text-center mb-12"
+          className="text-center mb-16"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-3xl font-bold text-secondary mb-4 font-sans">
+          <h2 className="text-4xl font-black text-foreground mb-4 uppercase tracking-tighter">
             {mainSection?.title || 'Sobre Nós'}
           </h2>
-          <div className="text-neutral-700 max-w-2xl mx-auto">
+          <div className="subtitle text-lg max-w-2xl mx-auto">
             <SanityBlockContent blocks={mainSection?.description} />
           </div>
         </motion.div>
@@ -99,19 +99,22 @@ const AboutSection = () => {
         >
           <div>
             <div className="space-y-4 mb-6">
-              <div>
-                <h4 className="font-medium text-secondary mb-2">Missão</h4>
-                <p className="text-neutral-700">{mainSection?.mission}</p>
+              <div className="bg-muted p-8 rounded-xl border-l-4 border-primary">
+                <h4 className="font-black text-foreground mb-2 uppercase tracking-widest text-xs">Missão</h4>
+                <p className="text-secondary leading-relaxed font-medium">{mainSection?.mission}</p>
               </div>
-              <div>
-                <h4 className="font-medium text-secondary mb-2">Visão</h4>
-                <p className="text-neutral-700">{mainSection?.vision}</p>
+              <div className="bg-muted p-8 rounded-xl border-l-4 border-primary">
+                <h4 className="font-black text-foreground mb-2 uppercase tracking-widest text-xs">Visão</h4>
+                <p className="text-secondary leading-relaxed font-medium">{mainSection?.vision}</p>
               </div>
-              <div>
-                <h4 className="font-medium text-secondary mb-2">Valores</h4>
-                <ul className="list-disc pl-5 space-y-1 text-neutral-700">
+              <div className="bg-muted p-8 rounded-xl border-l-4 border-primary">
+                <h4 className="font-black text-foreground mb-2 uppercase tracking-widest text-xs">Valores</h4>
+                <ul className="grid grid-cols-2 gap-2 text-secondary font-bold text-sm uppercase">
                   {mainSection?.values?.map((value, index) => (
-                    <li key={index}>{value}</li>
+                    <li key={index} className="flex items-center">
+                      <span className="w-2 h-2 bg-primary rounded-full mr-2" />
+                      {value}
+                    </li>
                   ))}
                 </ul>
               </div>
