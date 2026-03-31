@@ -3,54 +3,70 @@
 @tailwind utilities;
 
 :root {
-  /* Modernized Academia Boulder Color Scheme */
-  --background: 210 10% 98%; /* Light gray background */
-  --foreground: 222 47% 11%;
-  --muted: 210 10% 90%;
-  --muted-foreground: 215.4 16.3% 46.9%;
+  /* Academia Boulder Color Scheme - Light Mode */
+  --background: 0 0% 100%;  /* Branco para light mode */
+  --foreground: 0 0% 7.1%;  /* Preto/cinza escuro para texto */
+  --muted: 0 0% 96.1%;
+  --muted-foreground: 0 0% 45.1%;
   --popover: 0 0% 100%;
-  --popover-foreground: 222.2 47.4% 11.2%;
+  --popover-foreground: 0 0% 7.1%;
   --card: 0 0% 100%;
-  --card-foreground: 222.2 47.4% 11.2%;
-  --border: 214.3 31.8% 91.4%;
-  --input: 214.3 31.8% 91.4%;
-
-  /* Royal Blue Primary */
-  --primary: 217 91% 35%; /* #0a4da2 - Royal Blue */
-  --primary-foreground: 210 40% 98%;
-
-  /* Concrete Gray Secondary */
-  --secondary: 210 5% 45%; /* #6c757d - Concrete Gray */
-  --secondary-foreground: 210 40% 98%;
-
-  /* Vibrant Orange CTA */
-  --accent: 25 100% 50%; /* #ff8c00 - Vibrant Orange */
-  --accent-foreground: 0 0% 100%;
-
+  --card-foreground: 0 0% 7.1%;
+  --border: 0 0% 20%;  /* #333333 - bordas e divisores */
+  --input: 0 0% 89.8%;
+  --primary: 207 77% 54%;  /* #1E88E5 - Azul Principal */
+  --primary-foreground: 0 0% 100%;  /* Branco */
+  --secondary: 0 0% 20%;  /* #333333 - Cinza para elementos secundários */
+  --secondary-foreground: 0 0% 100%;
+  --accent: 51 100% 50%;  /* #FFD700 - Amarelo/Dourado */
+  --accent-foreground: 0 0% 7.1%;
   --destructive: 0 84.2% 60.2%;
-  --destructive-foreground: 210 40% 98%;
-  --ring: 217 91% 35%;
+  --destructive-foreground: 0 0% 98%;
+  --ring: 207 77% 54%;  /* Azul principal para focus */
   --radius: 0.5rem;
+  
+  /* Cores customizadas da Academia Boulder */
+  --boulder-blue: 207 77% 54%;  /* #1E88E5 */
+  --boulder-dark: 0 0% 7.1%;   /* #121212 */
+  --boulder-white: 0 0% 100%;   /* #FFFFFF */
+  --boulder-gold: 51 100% 50%;  /* #FFD700 */
+  --boulder-gray: 0 0% 20%;     /* #333333 */
+  --boulder-gradient-start: 288 65% 41%;  /* #8E24AA - Roxo */
+  --boulder-gradient-end: 340 82% 52%;    /* #E91E63 - Rosa */
 }
 
 .dark {
-  --background: 222 15% 10%; /* Dark Concrete/Industrial Gray */
-  --foreground: 210 40% 98%;
-  --muted: 217 19% 27%;
-  --muted-foreground: 215 20.2% 65.1%;
-  --popover: 222 15% 10%;
-  --popover-foreground: 210 40% 98%;
-  --card: 222 15% 12%;
-  --card-foreground: 210 40% 98%;
-  --border: 217 19% 27%;
-  --input: 217 19% 27%;
-  --primary: 217 91% 45%; /* Slightly brighter Royal Blue for dark mode */
-  --primary-foreground: 210 40% 98%;
-  --secondary: 210 5% 35%;
-  --secondary-foreground: 210 40% 98%;
-  --accent: 25 100% 50%;
-  --accent-foreground: 0 0% 100%;
-  --ring: 217 91% 45%;
+  /* Academia Boulder Color Scheme - Dark Mode (Principal) */
+  --background: 0 0% 7.1%;  /* #121212 - Preto/cinza escuro principal */
+  --foreground: 0 0% 100%;  /* #FFFFFF - Branco para textos */
+  --muted: 0 0% 15%;
+  --muted-foreground: 0 0% 64.9%;
+  --popover: 0 0% 7.1%;
+  --popover-foreground: 0 0% 100%;
+  --card: 0 0% 10%;  /* Ligeiramente mais claro que o fundo */
+  --card-foreground: 0 0% 100%;
+  --border: 0 0% 20%;  /* #333333 - bordas e divisores */
+  --input: 0 0% 15%;
+  --primary: 207 77% 54%;  /* #1E88E5 - Azul Principal */
+  --primary-foreground: 0 0% 100%;  /* Branco */
+  --secondary: 0 0% 20%;  /* #333333 - Cinza para elementos secundários */
+  --secondary-foreground: 0 0% 100%;
+  --accent: 51 100% 50%;  /* #FFD700 - Amarelo/Dourado */
+  --accent-foreground: 0 0% 7.1%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 98%;
+  --ring: 207 77% 54%;  /* Azul principal para focus */
+  --radius: 0.5rem;
+  
+  /* Sidebar específico para dark mode */
+  --sidebar-background: 0 0% 7.1%;
+  --sidebar-foreground: 0 0% 100%;
+  --sidebar-primary: 207 77% 54%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 51 100% 50%;
+  --sidebar-accent-foreground: 0 0% 7.1%;
+  --sidebar-border: 0 0% 20%;
+  --sidebar-ring: 207 77% 54%;
 }
 
 @layer base {
@@ -60,107 +76,106 @@
 
   html {
     scroll-behavior: smooth;
-    font-family: 'Inter', sans-serif;
   }
 
   body {
     @apply bg-background text-foreground;
   }
-
-  h1, h2, h3, h4, h5, h6 {
-    font-family: 'Montserrat', sans-serif;
-    @apply font-extrabold tracking-tight;
-  }
-
-  h1 { @apply text-4xl md:text-6xl lg:text-7xl; font-weight: 900; }
-  h2 { @apply text-3xl md:text-4xl; font-weight: 800; }
-  
-  .subtitle {
-    font-family: 'Inter', sans-serif;
-    font-weight: 500;
-    letter-spacing: 0.05em;
-    @apply text-muted-foreground;
-  }
 }
 
 @layer components {
-  /* Modern Button CTA */
-  .btn-primary {
-    @apply inline-flex items-center justify-center rounded-md text-sm font-bold transition-all duration-300 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50;
-    background-color: hsl(var(--accent));
-    color: hsl(var(--accent-foreground));
-    padding: 1rem 2rem;
-    border-radius: 6px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  /* Academia Boulder gradient backgrounds */
+  .boulder-gradient {
+    background: linear-gradient(135deg, hsl(var(--boulder-gradient-start)), hsl(var(--boulder-gradient-end)));
+  }
+  
+  .boulder-gradient-text {
+    background: linear-gradient(135deg, hsl(var(--boulder-gradient-start)), hsl(var(--boulder-gradient-end)));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
-  .btn-primary:hover {
-    background-color: hsl(var(--accent) / 0.9);
-    transform: translateY(-2px);
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+  /* High contrast buttons for accessibility */
+  .btn-boulder-primary {
+    @apply bg-boulder-blue text-boulder-white hover:bg-boulder-blue/90 transition-colors;
+  }
+  
+  .btn-boulder-accent {
+    @apply bg-boulder-gold text-boulder-dark hover:bg-boulder-gold/90 transition-colors;
+  }
+  
+  /* Card styles with Boulder theme */
+  .card-boulder {
+    @apply bg-card border-boulder-gray shadow-lg;
+  }
+  
+  /* Navigation styles */
+  .nav-boulder {
+    @apply bg-boulder-dark border-b border-boulder-gray;
+  }
+  
+  /* Existing components */
+  .hero-video-overlay {
+    @apply absolute inset-0 z-10 bg-gradient-to-b from-black/40 to-black/60;
   }
 
-  /* Sticky Header with Backdrop Blur */
-  .header-modern {
-    @apply sticky top-0 z-50 w-full transition-all duration-300;
-    background-color: rgba(10, 11, 15, 0.7);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  }
-
-  /* Hero Section Styles */
-  .hero-overlay {
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.3) 50%, rgba(0, 0, 0, 0.8) 100%);
-    @apply absolute inset-0 z-10;
-  }
-
-  .text-highlight {
-    position: relative;
-    display: inline-block;
-    color: hsl(var(--primary));
-  }
-
-  .text-highlight::after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 30%;
-    bottom: 5%;
-    left: 0;
-    background-color: hsl(var(--primary) / 0.2);
-    z-index: -1;
-    transform: skewX(-15deg);
-  }
-
-  /* Mobile Menu Hamburger Area */
-  .mobile-menu-trigger {
-    min-width: 44px;
-    min-height: 44px;
-    @apply flex items-center justify-center;
-  }
-
-  /* Hero Title Mobile */
-  @media (max-width: 767px) {
-    .hero-title {
-      font-size: 3rem;
-      line-height: 1.1;
-      text-align: center;
-    }
-  }
-
-  /* Navigation Links */
   .nav-link {
-    @apply relative text-foreground/80 hover:text-primary font-semibold transition duration-300 px-2 py-1;
-    font-family: 'Inter', sans-serif;
+    @apply relative text-secondary hover:text-primary font-medium transition duration-300;
   }
 
   .nav-link::after {
     content: '';
-    @apply absolute w-0 h-0.5 -bottom-0.5 left-2 bg-primary transition-all duration-300;
+    @apply absolute w-0 h-0.5 -bottom-1 left-0 bg-primary transition-all duration-300;
   }
 
   .nav-link:hover::after {
-    @apply w-[calc(100%-1rem)];
+    @apply w-full;
+  }
+
+  .event-countdown {
+    @apply bg-secondary/90 px-3 py-2 rounded-md text-white text-sm mb-4 inline-block;
+  }
+
+  .program-card {
+    @apply transition-all duration-300;
+  }
+
+  .program-card:hover {
+    @apply -translate-y-1 shadow-md;
+  }
+
+  .instagram-feed {
+    @apply grid gap-2;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+
+  .calendar-day.active {
+    @apply bg-primary text-white;
+  }
+
+  .tour-hotspot {
+    @apply animate-pulse;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(224, 90, 43, 0.7);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 10px rgba(224, 90, 43, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(224, 90, 43, 0);
+  }
+}
+
+@media (min-width: 768px) {
+  .instagram-feed {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   }
 }

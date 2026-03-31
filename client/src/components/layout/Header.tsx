@@ -40,7 +40,7 @@ const Header = () => {
   ];
 
   return (
-    <header className="header-modern">
+    <header className="sticky top-0 z-50 w-full bg-white shadow-md">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center py-4">
           <div className="flex items-center">
@@ -54,8 +54,8 @@ const Header = () => {
                 />
               ) : null}
               <span className="text-2xl font-bold font-sans">
-                <span className="text-white">{siteSettings?.siteName?.split(' ')[0] || "Academia"}</span>
-                <span className="text-primary">{' '}{siteSettings?.siteName?.split(' ')[1] || "Boulder"}</span>
+                <span className="text-primary">{siteSettings?.siteName?.split(' ')[0] || "Academia"}</span>
+                <span className="text-secondary">{' '}{siteSettings?.siteName?.split(' ')[1] || "Boulder"}</span>
               </span>
             </button>
           </div>
@@ -64,7 +64,7 @@ const Header = () => {
           <div className="md:hidden">
             <Sheet>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="mobile-menu-trigger text-white hover:bg-white/10">
+                <Button variant="ghost" size="icon">
                   <Menu className="h-6 w-6" />
                   <span className="sr-only">Toggle Menu</span>
                 </Button>
@@ -116,17 +116,17 @@ const Header = () => {
               item.dropdown ? (
                 <DropdownMenu key={item.name}>
                   <DropdownMenuTrigger asChild>
-                    <button className="nav-link flex items-center text-white">
+                    <button className="nav-link flex items-center">
                       {item.name}
                       <ChevronDown className="h-4 w-4 ml-1" />
                     </button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent align="center" className="w-48 bg-background/95 backdrop-blur-md border-border">
+                  <DropdownMenuContent align="center" className="w-48">
                     {item.items.map((subItem) => (
                       <DropdownMenuItem key={subItem.name} asChild>
                         <button 
                           onClick={() => navigate(subItem.path)}
-                          className="block px-4 py-2 text-sm text-foreground/80 hover:bg-primary/10 hover:text-primary w-full text-left"
+                          className="block px-4 py-2 text-sm text-secondary hover:bg-neutral-100 hover:text-primary w-full text-left"
                         >
                           {subItem.name}
                         </button>
@@ -140,7 +140,7 @@ const Header = () => {
                   onClick={() => navigate(item.path)}
                   className={cn(
                     "nav-link",
-                    currentPath === item.path ? "text-primary" : "text-white"
+                    currentPath === item.path && "text-primary"
                   )}
                 >
                   {item.name}

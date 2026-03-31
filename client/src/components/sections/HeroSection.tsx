@@ -49,9 +49,8 @@ const HeroSection = () => {
         <img
           src={getBackgroundImageUrl()}
           alt="Escalador em parede de boulder na Academia Boulder em Sorocaba"
-          className="w-full h-full object-cover"
+          className="w-full h-full"
         />
-        <div className="hero-overlay" />
       </div>
 
       {/* Hero Content */}
@@ -62,24 +61,26 @@ const HeroSection = () => {
           transition={{ duration: 0.8 }}
           className="max-w-4xl mx-auto"
         >
-          <h1 className="hero-title text-white mb-6">
+          <h1 className="text-5xl md:text-7xl font-bold text-white mb-4">
             <span className="text-white">{content.title.split(" ").slice(0, -1).join(" ")}{" "}</span>
-            <span className="text-highlight">{content.title.split(" ").pop()}</span>
+            <span className="text-[#5B9BD5]">{content.title.split(" ").pop()}</span>
           </h1>
           {content.subtitle && (
-            <p className="subtitle text-xl md:text-2xl text-white/90 mb-12 uppercase tracking-widest">
+            <p className="text-xl md:text-2xl text-white/90 mb-12">
               {content.subtitle}
             </p>
           )}
-          <div className="flex flex-col sm:flex-row gap-6 justify-center">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
             {content.ctaButtons?.map((button: any, index: number) => (
               <Button
                 key={index}
                 asChild
+                size="lg"
                 className={cn(
+                  "text-lg px-8 py-6 rounded-full font-medium",
                   button.variant === 'primary' 
-                    ? "btn-primary text-lg"
-                    : "bg-transparent hover:bg-white/10 text-white border-2 border-white/50 text-lg px-8 py-6 rounded-md font-bold transition-all duration-300"
+                    ? "bg-[#2B7FE0] hover:bg-[#2B7FE0]/90 text-white"
+                    : "bg-transparent hover:bg-white/5 text-white border border-white/30"
                 )}
               >
                 <Link href={button.link}>
