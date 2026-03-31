@@ -84,18 +84,18 @@ const ProgramsSection = () => {
   };
 
   return (
-    <section id="programas" className="py-16 bg-white">
+    <section id="programas" className="py-24 bg-[#f8f9fa]">
       <div className="container mx-auto px-4">
         <motion.div 
-          className="text-center mb-12"
+          className="text-center mb-16"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-3xl font-bold text-secondary mb-4 font-sans">Nossos Programas</h2>
-          <p className="text-neutral-700 max-w-2xl mx-auto">
-            Conheça nossas metodologias exclusivas para todos os níveis, do iniciante ao atleta profissional.
+          <h2 className="text-4xl font-black text-foreground mb-4 uppercase tracking-tighter">Nossos Programas</h2>
+          <p className="subtitle text-lg max-w-2xl mx-auto">
+            Metodologias exclusivas para todos os níveis, do iniciante ao atleta profissional.
           </p>
         </motion.div>
 
@@ -108,47 +108,46 @@ const ProgramsSection = () => {
         >
           {programs.map((program: any) => (
             <motion.div key={program._id || program.id} variants={item} id={program._id || program.id} className="program-card">
-              <Card className="h-full overflow-hidden border border-neutral-200">
-                <div className="relative h-48 overflow-hidden">
+              <Card className="h-full overflow-hidden border-none shadow-xl bg-white rounded-xl">
+                <div className="relative h-56 overflow-hidden">
                   <ImageWithFallback
                     src={getImageUrl(program.image)}
                     fallbackSrc="/placeholder-image.jpg"
                     alt={program.title}
-                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                    className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                  <h3 className="absolute bottom-4 left-6 font-black text-2xl text-white uppercase italic tracking-tighter">{program.title}</h3>
                 </div>
-                <CardHeader className="pt-6">
-                  <h3 className="font-semibold text-xl mb-4 text-secondary">{program.title}</h3>
-                </CardHeader>
-                <CardContent className="pb-0">
-                  <div className="mb-4">
-                    <p className="text-neutral-700 mb-2">
+                <CardContent className="pt-8">
+                  <div className="mb-6">
+                    <p className="text-secondary leading-relaxed font-medium">
                       {program.shortDescription || program.description}
                     </p>
                     
                     {(program.progress || program.progressLabel) && (
-                      <div className="flex items-center mt-3">
-                        <div className="w-full mr-2">
-                          <Progress value={program.progress || 0} className="h-2" />
+                      <div className="flex items-center mt-6">
+                        <div className="w-full mr-4">
+                          <Progress value={program.progress || 0} className="h-2 bg-muted" />
                         </div>
-                        <span className="text-sm text-neutral-600 whitespace-nowrap">{program.progressLabel}</span>
+                        <span className="text-xs font-bold text-primary uppercase tracking-widest whitespace-nowrap">{program.progressLabel}</span>
                       </div>
                     )}
                   </div>
                   
                   {program.features && program.features.length > 0 && (
-                    <div className="space-y-2 mb-6">
+                    <div className="space-y-3 mb-8">
                       {program.features.map((feature: string, index: number) => (
                         <div key={index} className="flex items-start">
-                          <CheckCircle className="h-5 w-5 text-accent mr-2 mt-0.5 flex-shrink-0" />
-                          <p className="text-neutral-700 text-sm">{feature}</p>
+                          <CheckCircle className="h-5 w-5 text-primary mr-3 mt-0.5 flex-shrink-0" />
+                          <p className="text-secondary text-sm font-medium">{feature}</p>
                         </div>
                       ))}
                     </div>
                   )}
                 </CardContent>
-                <CardFooter className="pt-2 pb-6">
-                  <Button asChild className="bg-secondary hover:bg-secondary/90">
+                <CardFooter className="pb-8 px-6">
+                  <Button asChild className="btn-primary w-full py-6">
                     <Link href={`/programas/${program.slug?.current || program.id}`}>
                       Detalhes do Programa
                     </Link>
