@@ -1,14 +1,15 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "wouter";
 import { ChevronDown, Trophy, Users, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useHeroSection } from "@/hooks/useSanity";
 import { urlFor } from "@/lib/sanity";
 import { cn } from "@/lib/utils";
 
 const HeroSection = () => {
   const { data: heroData, isLoading } = useHeroSection();
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   // Fallback content while loading or if no CMS data
   const fallbackContent = {
@@ -22,9 +23,6 @@ const HeroSection = () => {
 
   const content = heroData || fallbackContent;
 
-  // Default background image (fallback)
-  const defaultBackgroundImage = "https://images.unsplash.com/photo-1522163182402-834f871fd851?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80";
-
   // Get background image URL with error handling
   const getBackgroundImageUrl = () => {
     try {
@@ -35,22 +33,62 @@ const HeroSection = () => {
           .quality(90)
           .url();
       }
-      return defaultBackgroundImage;
+      return null;
     } catch (error) {
       console.error('Error loading background image:', error);
-      return defaultBackgroundImage;
+      return null;
     }
   };
 
+  const bgUrl = getBackgroundImageUrl();
+
+  // Preload image
+  useEffect(() => {
+    if (bgUrl) {
+      const link = document.createElement('link');
+      link.rel = 'preload';
+      link.as = 'image';
+      link.href = bgUrl;
+      link.imageSrcset = ""; // Avoid issues if not defined
+      document.head.appendChild(link);
+      return () => {
+        document.head.removeChild(link);
+      };
+    }
+  }, [bgUrl]);
+
   return (
     <section className="relative h-screen overflow-hidden bg-[#020B2D]">
+      {/* Skeleton / Loading State */}
+      <AnimatePresence>
+        {(!imageLoaded || isLoading) && (
+          <motion.div
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+            className="absolute inset-0 z-30 bg-[#020B2D] flex items-center justify-center"
+          >
+            <div className="w-full h-full animate-pulse bg-gradient-to-br from-[#020B2D] via-[#0A1A4D] to-[#020B2D]" />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Background Image with Overlay */}
-      <div className="absolute inset-0 z-0">
-        <img
-          src={getBackgroundImageUrl()}
-          alt="Escalador em parede de boulder na Academia Boulder em Sorocaba"
-          className="w-full h-full"
-        />
+      <div className={cn(
+        "absolute inset-0 z-0 transition-opacity duration-1000",
+        imageLoaded ? "opacity-100" : "opacity-0"
+      )}>
+        {bgUrl && (
+          <img
+            src={bgUrl}
+            alt="Escalador em parede de boulder na Academia Boulder em Sorocaba"
+            className="w-full h-full object-cover"
+            onLoad={() => setImageLoaded(true)}
+            fetchpriority="high"
+          />
+        )}
+        {/* Dark linear-gradient overlay for contrast */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/60 z-10" />
       </div>
 
       {/* Hero Content */}

@@ -30,8 +30,6 @@ interface ProgramDetails {
   description: string;
   fullDescription: string;
   image: string;
-  progress: number;
-  progressLabel: string;
   features: string[];
   levels: ProgramLevel[];
   instructors: Instructor[];
@@ -55,8 +53,6 @@ const programsData: ProgramDetails[] = [
     description: "Desenvolva habilidades técnicas de escalada com nosso currículo estruturado em 5 níveis.",
     fullDescription: "Nosso programa de Escalada Indoor é projetado para desenvolver escaladores completos, combinando técnica, força, resistência e mentalidade. Com uma metodologia progressiva, você avançará por níveis claramente definidos, cada um com objetivos específicos e habilidades mensuráveis.",
     image: "https://images.unsplash.com/photo-1516592673884-4a382d1124c2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=500",
-    progress: 80,
-    progressLabel: "Nível 4 de 5",
     features: [
       "Técnicas fundamentais de movimento",
       "Estratégias de solução de problemas",
@@ -120,8 +116,6 @@ const programsData: ProgramDetails[] = [
     description: "Programa de condicionamento físico especializado para escaladores com periodização.",
     fullDescription: "O Cross Training para escaladores é um programa de condicionamento físico especializado que foca no desenvolvimento de força, resistência, mobilidade e prevenção de lesões específicas para as demandas da escalada. Utilizamos uma abordagem periodizada para maximizar seus ganhos e evitar platôs.",
     image: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=500",
-    progress: 60,
-    progressLabel: "Fase 3 de 5",
     features: [
       "Força específica para escalada",
       "Mobilidade e prevenção de lesões",
@@ -179,8 +173,6 @@ const programsData: ProgramDetails[] = [
     description: "Treino individualizado focado nos seus objetivos específicos.",
     fullDescription: "O programa de Personal Training oferece um acompanhamento exclusivo e personalizado, focado inteiramente nas suas metas e necessidades individuais. Seja para melhorar sua performance na escalada, reabilitação, ou condicionamento físico geral, nossos treinadores elaborarão um plano sob medida para você.",
     image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=500",
-    progress: 100,
-    progressLabel: "Exclusivo",
     features: [
       "Plano personalizado",
       "Acompanhamento exclusivo",
@@ -368,15 +360,6 @@ const ProgramDetails = () => {
                 >
                   <Card className="bg-neutral-50">
                     <CardContent className="p-6">
-                      <h3 className="text-xl font-semibold text-secondary mb-4">Seu Progresso</h3>
-                      
-                      <div className="mb-4">
-                        <div className="flex items-center mb-2">
-                          <Progress value={program.progress} className="h-2 flex-grow mr-2" />
-                          <span className="text-sm text-neutral-600">{program.progressLabel}</span>
-                        </div>
-                      </div>
-                      
                       <div className="space-y-4 mb-6">
                         <div className="flex items-center">
                           <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center mr-3">
