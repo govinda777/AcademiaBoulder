@@ -70,8 +70,8 @@ const item = {
 };
 
 const ProgramsSection = () => {
-  // const { data: programsData, isLoading } = usePrograms();
-  const programs = hardcodedPrograms; // programsData || fallbackPrograms;
+  const { data: programsData, isLoading } = usePrograms();
+  const programs = programsData || hardcodedPrograms;
 
   const getImageUrl = (image: any) => {
     if (!image) return "https://images.unsplash.com/photo-1516592673884-4a382d1124c2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=500";
@@ -125,15 +125,6 @@ const ProgramsSection = () => {
                     <p className="text-neutral-700 mb-2">
                       {program.shortDescription || program.description}
                     </p>
-                    
-                    {(program.progress || program.progressLabel) && (
-                      <div className="flex items-center mt-3">
-                        <div className="w-full mr-2">
-                          <Progress value={program.progress || 0} className="h-2" />
-                        </div>
-                        <span className="text-sm text-neutral-600 whitespace-nowrap">{program.progressLabel}</span>
-                      </div>
-                    )}
                   </div>
                   
                   {program.features && program.features.length > 0 && (

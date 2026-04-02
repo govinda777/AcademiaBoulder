@@ -162,7 +162,7 @@ const AboutSection = () => {
             </h3>
             
             <motion.div 
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+              className="flex flex-wrap justify-center gap-6"
               variants={container}
               initial="hidden"
               whileInView="show"
@@ -172,7 +172,7 @@ const AboutSection = () => {
                 <motion.div 
                   key={`${member.name}-${index}`} 
                   variants={item} 
-                  className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 text-center"
+                  className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 text-center w-full sm:w-[calc(50%-12px)] lg:w-[calc(25%-18px)] min-w-[250px] max-w-[320px]"
                 >
                   {member.image && (
                     <ImageWithFallback

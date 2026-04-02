@@ -18,6 +18,28 @@ describe('HeroSection', () => {
 
     render(<HeroSection />);
 
+    // Initially, the image might not be in the DOM if it's waiting for the URL
+    // In our new implementation, bgUrl will be null initially if heroData is null
+    // and we removed the default background image.
+    // So we mock the data to have a background image.
+    (useHeroSection as any).mockReturnValue({
+      data: {
+        title: "Test Title",
+        backgroundImage: {
+          _type: 'image',
+          asset: {
+            _ref: 'image-G387_SlS6_BGS-2000x3000-jpg',
+            _type: 'reference'
+          }
+        }
+      },
+      isLoading: false,
+    });
+
+    render(<HeroSection />);
+
+    // The image will be hidden (opacity-0) until onLoad fires.
+    // In a test environment, we might need to wait or check for existence.
     const image = screen.getByAltText('Escalador em parede de boulder na Academia Boulder em Sorocaba');
     expect(image).toBeInTheDocument();
   });
