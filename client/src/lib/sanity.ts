@@ -66,6 +66,37 @@ export const queries = {
       image
     }
   }`,
+
+  program: `*[_type == "program" && slug.current == $slug][0]{
+    _id,
+    title,
+    slug,
+    description,
+    shortDescription,
+    image,
+    features[],
+    levels[]{
+      level,
+      description,
+      skills[]
+    },
+    schedule{
+      days,
+      times,
+      duration
+    },
+    pricing{
+      monthly,
+      quarterly,
+      annual
+    },
+    instructors[]->{
+      name,
+      role,
+      bio,
+      image
+    }
+  }`,
   
   events: `*[_type == "event"] | order(date asc){
     _id,
