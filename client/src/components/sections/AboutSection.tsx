@@ -82,10 +82,10 @@ const AboutSection = () => {
   const { mainSection, teamSection, highlights, facilities } = aboutData as AboutSectionData;
 
   return (
-    <section id="sobre" className="py-24 bg-white relative overflow-hidden">
+    <section id="sobre" className="py-24 bg-neutral-50 relative overflow-hidden">
       {/* Decorative background elements */}
-      <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl pointer-events-none"></div>
-      <div className="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/4 w-96 h-96 bg-accent/5 rounded-full blur-3xl pointer-events-none"></div>
+      <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div className="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/4 w-96 h-96 bg-accent/10 rounded-full blur-3xl pointer-events-none"></div>
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Header */}
@@ -113,7 +113,7 @@ const AboutSection = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <Card className="h-full border-none shadow-xl shadow-neutral-100/50 bg-gradient-to-br from-white to-neutral-50 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300">
+            <Card className="h-full border border-neutral-200/60 shadow-2xl shadow-neutral-200/50 bg-white hover:shadow-primary/10 transition-all duration-300">
               <CardContent className="p-8">
                 <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-6">
                   <Target className="text-primary h-8 w-8" />
@@ -130,7 +130,7 @@ const AboutSection = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-            <Card className="h-full border-none shadow-xl shadow-neutral-100/50 bg-gradient-to-br from-white to-neutral-50 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300">
+            <Card className="h-full border border-neutral-200/60 shadow-2xl shadow-neutral-200/50 bg-white hover:shadow-primary/10 transition-all duration-300">
               <CardContent className="p-8">
                 <div className="w-14 h-14 bg-accent/10 rounded-2xl flex items-center justify-center mb-6">
                   <Eye className="text-accent h-8 w-8" />
@@ -147,7 +147,7 @@ const AboutSection = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <Card className="h-full border-none shadow-xl shadow-neutral-100/50 bg-gradient-to-br from-white to-neutral-50 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300">
+            <Card className="h-full border border-neutral-200/60 shadow-2xl shadow-neutral-200/50 bg-white hover:shadow-primary/10 transition-all duration-300">
               <CardContent className="p-8">
                 <div className="w-14 h-14 bg-red-50 rounded-2xl flex items-center justify-center mb-6">
                   <Heart className="text-red-500 h-8 w-8" />
