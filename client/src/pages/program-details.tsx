@@ -12,9 +12,10 @@ import { ImageWithFallback } from "@/components/ui/ImageWithFallback";
 import { SanityBlockContent } from "@/components/ui/SanityBlockContent";
 
 const ProgramDetails = () => {
-  const { id: slug } = useParams();
+  const { id: rawSlug } = useParams();
+  const slug = rawSlug ? decodeURIComponent(rawSlug) : "";
   const [activeTab, setActiveTab] = useState("sobre");
-  const { data: program, isLoading, error } = useProgram(slug || "");
+  const { data: program, isLoading, error } = useProgram(slug);
 
   // Scroll to top when component mounts
   useEffect(() => {
