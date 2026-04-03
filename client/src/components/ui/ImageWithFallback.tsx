@@ -29,6 +29,10 @@ export const ImageWithFallback = ({
     }
   };
 
+  if (!imgSrc) {
+    return null;
+  }
+
   return (
     <img
       src={imgSrc}
