@@ -69,7 +69,7 @@ const ProgramsSection = () => {
           viewport={{ once: true }}
         >
           {programs.map((program: any) => (
-            <motion.div key={program._id} variants={item} id={program._id} className="program-card">
+            <motion.div key={program._id} variants={item} id={program.slug?.current || program._id} className="program-card">
               <Card className="h-full overflow-hidden border border-neutral-200 flex flex-col">
                 {program.image && (
                   <div className="relative h-48 overflow-hidden">
