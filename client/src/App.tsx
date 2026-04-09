@@ -58,32 +58,25 @@ const useBasePath = (): [string, (to: string) => void] => {
   return [location, navigate];
 };
 
-function Router() {
-  return (
-    <WouterRouter hook={useBasePath}>
-      <Switch>
-        <Route path="/" component={Home} />
-        <Route path="/programas/:id" component={ProgramDetails} />
-        {/* <Route path="/eventos/:id" component={EventDetails} /> */}
-        <Route component={NotFound} />
-      </Switch>
-    </WouterRouter>
-  );
-}
-
 function App() {
   return (
-    <TooltipProvider>
-      <Toaster />
-      <div className="flex flex-col min-h-screen overflow-x-hidden">
-        <Header />
-        <main className="flex-grow">
-          <Router />
-        </main>
-        <Footer />
-        <BackToTop />
-      </div>
-    </TooltipProvider>
+    <WouterRouter hook={useBasePath}>
+      <TooltipProvider>
+        <Toaster />
+        <div className="flex flex-col min-h-screen overflow-x-hidden">
+          <Header />
+          <main className="flex-grow">
+            <Switch>
+              <Route path="/" component={Home} />
+              <Route path="/programas/:id" component={ProgramDetails} />
+              <Route component={NotFound} />
+            </Switch>
+          </main>
+          <Footer />
+          <BackToTop />
+        </div>
+      </TooltipProvider>
+    </WouterRouter>
   );
 }
 

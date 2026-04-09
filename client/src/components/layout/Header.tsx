@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Menu, ChevronDown } from "lucide-react";
 import { useNavigation } from "@/hooks/use-navigation";
-import { useSiteSettings } from "@/hooks/useSanity";
+import { useSiteSettings, usePrograms } from "@/hooks/useSanity";
 import { urlFor } from "@/lib/sanity";
 import { ImageWithFallback } from "@/components/ui/ImageWithFallback";
 
@@ -22,6 +22,7 @@ const Header = () => {
   const { currentPath, getPath, navigate } = useNavigation();
   const [programsOpen, setProgramsOpen] = useState(false);
   const { data: siteSettings } = useSiteSettings();
+  const { data: programs } = usePrograms();
 
   const navigationItems = [
     { name: "Home", path: "/" },
@@ -29,11 +30,10 @@ const Header = () => {
       name: "Programas", 
       path: "#programas",
       dropdown: true,
-      items: [
-        { name: "Escalada Esportiva", path: "#escalada" },
-        { name: "Cross Training", path: "#crosstraining" },
-        { name: "Personal Training", path: "#personal" },
-      ]
+      items: programs?.map(p => ({
+        name: p.title,
+        path: `/programas/${p.slug?.current}`
+      })) || []
     },
     { name: "Sobre", path: "#sobre" },
     { name: "Contato", path: "#contato" },

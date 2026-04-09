@@ -6,30 +6,29 @@ export const useNavigation = () => {
   const basePath = import.meta.env.BASE_URL;
 
   const getPath = useCallback((path: string) => {
-    // Se for um link de âncora, retorna como está
-    if (path.startsWith('#')) {
-      return path;
-    }
-    
-    // Remove o base path da localização atual para comparação
-    const currentPath = location.replace(basePath, '');
-    
-    // Adiciona o base path para navegação
-    const fullPath = path === '/' ? basePath : `${basePath}${path}`.replace('//', '/');
-    
-    return fullPath;
-  }, [location, basePath]);
+    // Retornamos o caminho como está, pois o hook customizado do router em App.tsx
+    // já lida com o prefixo do base path.
+    return path;
+  }, []);
 
   const navigate = useCallback((to: string) => {
+    // Se for um link de âncora
     if (to.startsWith('#')) {
-      window.location.hash = to;
+      // Se já estivermos na home, apenas atualiza o hash
+      if (location === '/' || location === '') {
+        window.location.hash = to;
+      } else {
+        // Se estivermos em outra página, navega para a home com o hash
+        setLocation('/' + to);
+      }
       return;
     }
-    setLocation(getPath(to));
-  }, [getPath, setLocation]);
+
+    setLocation(to);
+  }, [location, setLocation]);
 
   return {
-    currentPath: location.replace(basePath, ''),
+    currentPath: location,
     getPath,
     navigate
   };
