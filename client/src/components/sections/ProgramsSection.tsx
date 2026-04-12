@@ -3,27 +3,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { CheckCircle } from "lucide-react";
 import { motion } from "framer-motion";
-import { Progress } from "@/components/ui/progress";
 import { usePrograms } from "@/hooks/useSanity";
 import { urlFor } from "@/lib/sanity";
-
-// Fallback data only as backup
-const fallbackPrograms = [
-  {
-    _id: "escalada",
-    title: "Escalada Esportiva",
-    shortDescription: "Desenvolva habilidades técnicas de escalada com nosso currículo estruturado em 5 níveis.",
-    image: null,
-    progress: 80,
-    progressLabel: "Nível 4 de 5",
-    features: [
-      "Técnicas fundamentais de movimento",
-      "Estratégias de solução de problemas",
-      "Avaliação de progresso mensal"
-    ],
-    slug: { current: "escalada" }
-  }
-];
+import { ImageWithFallback } from "@/components/ui/ImageWithFallback";
 
 const container = {
   hidden: { opacity: 0 },
@@ -41,8 +23,27 @@ const item = {
 };
 
 const ProgramsSection = () => {
-  const { data: programsData, isLoading } = usePrograms();
-  const programs = programsData || fallbackPrograms;
+  const { data: programs, isLoading } = usePrograms();
+
+  if (isLoading) {
+    return (
+      <section id="programas" className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <div className="h-10 w-64 bg-neutral-200 animate-pulse mx-auto mb-4 rounded"></div>
+            <div className="h-4 w-96 bg-neutral-200 animate-pulse mx-auto rounded"></div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="h-96 bg-neutral-100 animate-pulse rounded-xl"></div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (!programs || programs.length === 0) return null;
 
   return (
     <section id="programas" className="py-16 bg-white">
@@ -68,32 +69,26 @@ const ProgramsSection = () => {
           viewport={{ once: true }}
         >
           {programs.map((program: any) => (
-            <motion.div key={program._id || program.id} variants={item} id={program._id || program.id} className="program-card">
-              <Card className="h-full overflow-hidden border border-neutral-200">
-                <div className="relative h-48 overflow-hidden">
-                  <img 
-                    src={program.image ? urlFor(program.image).url() : "https://images.unsplash.com/photo-1516592673884-4a382d1124c2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=500"} 
-                    alt={program.title} 
-                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                  />
-                </div>
+            <motion.div key={program._id} variants={item} id={program.slug?.current || program._id} className="program-card">
+              <Card className="h-full overflow-hidden border border-neutral-200 flex flex-col">
+                {program.image && (
+                  <div className="relative h-48 overflow-hidden">
+                    <ImageWithFallback
+                      src={urlFor(program.image).url()}
+                      fallbackSrc="" // No fallback as per requirement
+                      alt={program.title}
+                      className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                    />
+                  </div>
+                )}
                 <CardHeader className="pt-6">
-                  <h3 className="font-semibold text-xl mb-4 text-secondary">{program.title}</h3>
+                  <h3 className="font-semibold text-xl mb-2 text-secondary">{program.title}</h3>
                 </CardHeader>
-                <CardContent className="pb-0">
+                <CardContent className="pb-0 flex-grow">
                   <div className="mb-4">
                     <p className="text-neutral-700 mb-2">
-                      {program.shortDescription || program.description}
+                      {program.shortDescription}
                     </p>
-                    
-                    {(program.progress || program.progressLabel) && (
-                      <div className="flex items-center mt-3">
-                        <div className="w-full mr-2">
-                          <Progress value={program.progress || 0} className="h-2" />
-                        </div>
-                        <span className="text-sm text-neutral-600 whitespace-nowrap">{program.progressLabel}</span>
-                      </div>
-                    )}
                   </div>
                   
                   {program.features && program.features.length > 0 && (
@@ -108,8 +103,8 @@ const ProgramsSection = () => {
                   )}
                 </CardContent>
                 <CardFooter className="pt-2 pb-6">
-                  <Button asChild className="bg-secondary hover:bg-secondary/90">
-                    <Link href={`/programas/${program.slug?.current || program.id}`}>
+                  <Button asChild className="bg-secondary hover:bg-secondary/90 w-full">
+                    <Link href={`/programas/${program.slug?.current}`}>
                       Detalhes do Programa
                     </Link>
                   </Button>

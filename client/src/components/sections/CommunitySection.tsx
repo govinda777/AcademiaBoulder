@@ -6,6 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Gift, Users, Medal, ArrowRight, User, Clock } from "lucide-react";
 import { motion } from "framer-motion";
 import SocialFeed from "@/components/ui/social-feed";
+import { ImageWithFallback } from "@/components/ui/ImageWithFallback";
 
 const forumTopics = [
   {
@@ -201,9 +202,10 @@ const CommunitySection = () => {
                       {topic.preview}
                     </p>
                     <div className="flex items-center text-sm text-neutral-500">
-                      <img 
-                        src={topic.avatar} 
-                        alt={`Avatar de ${topic.author}`} 
+                      <ImageWithFallback
+                        src={topic.avatar}
+                        fallbackSrc="/placeholder-image.jpg"
+                        alt={`Avatar de ${topic.author}`}
                         className="w-6 h-6 rounded-full mr-2"
                       />
                       <span>{topic.author}</span>

@@ -2,9 +2,9 @@ import { createClient } from '@sanity/client'
 import imageUrlBuilder from '@sanity/image-url'
 
 export const client = createClient({
-  projectId: import.meta.env.VITE_SANITY_PROJECT_ID || 'your-project-id',
+  projectId: import.meta.env.VITE_SANITY_PROJECT_ID || '4y88u6cf',
   dataset: import.meta.env.VITE_SANITY_DATASET || 'production',
-  useCdn: true,
+  useCdn: false,
   apiVersion: '2023-05-03',
   token: import.meta.env.VITE_SANITY_TOKEN,
 })
@@ -37,6 +37,37 @@ export const queries = {
   }`,
   
   programs: `*[_type == "program"] | order(order asc){
+    _id,
+    title,
+    slug,
+    description,
+    shortDescription,
+    image,
+    features[],
+    levels[]{
+      level,
+      description,
+      skills[]
+    },
+    schedule{
+      days,
+      times,
+      duration
+    },
+    pricing{
+      monthly,
+      quarterly,
+      annual
+    },
+    instructors[]->{
+      name,
+      role,
+      bio,
+      image
+    }
+  }`,
+
+  program: `*[_type == "program" && slug.current == $slug][0]{
     _id,
     title,
     slug,
@@ -103,7 +134,7 @@ export const queries = {
       mission,
       vision,
       values[],
-      "mainImageUrl": mainImage.asset->url
+      mainImage
     },
     teamSection {
       title,
@@ -111,7 +142,7 @@ export const queries = {
         name,
         role,
         bio,
-        "imageUrl": image.asset->url
+        image
       }
     },
     safetySection {
@@ -132,7 +163,7 @@ export const queries = {
     facilities[] {
       name,
       description,
-      "imageUrl": image.asset->url
+      image
     }
   }`,
   

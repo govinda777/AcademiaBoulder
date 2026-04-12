@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { ImageWithFallback } from "@/components/ui/ImageWithFallback";
 
 interface SocialFeedProps {
   images: string[];
@@ -19,9 +20,10 @@ const SocialFeed = ({ images }: SocialFeedProps) => {
               className="cursor-pointer overflow-hidden rounded"
               onClick={() => setSelectedImage(image)}
             >
-              <img 
-                src={image} 
-                alt={`Instagram post ${index + 1}`} 
+              <ImageWithFallback
+                src={image}
+                fallbackSrc="/placeholder-image.jpg"
+                alt={`Instagram post ${index + 1}`}
                 className="w-full h-full object-cover rounded transition-transform duration-500 hover:scale-105"
                 loading="lazy"
               />
@@ -29,9 +31,10 @@ const SocialFeed = ({ images }: SocialFeedProps) => {
           </DialogTrigger>
           <DialogContent className="max-w-3xl p-0 overflow-hidden">
             <div className="relative w-full h-full aspect-square md:aspect-auto md:h-[80vh]">
-              <img 
-                src={image} 
-                alt={`Instagram post ${index + 1}`} 
+              <ImageWithFallback
+                src={image}
+                fallbackSrc="/placeholder-image.jpg"
+                alt={`Instagram post ${index + 1}`}
                 className="w-full h-full object-contain"
               />
             </div>

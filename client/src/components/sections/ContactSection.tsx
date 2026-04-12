@@ -24,6 +24,8 @@ const contactFormSchema = z.object({
 
 type ContactFormValues = z.infer<typeof contactFormSchema>;
 
+const WHATSAPP_NUMBER = "5515991869689";
+
 const ContactSection = () => {
   const { toast } = useToast();
   
@@ -39,9 +41,15 @@ const ContactSection = () => {
   });
 
   function onSubmit(data: ContactFormValues) {
+    const text = `*Nova mensagem do site*\n\n*Nome:* ${data.name}\n*Email:* ${data.email}\n*Assunto:* ${data.subject}\n*Mensagem:* ${data.message}`;
+    const encodedText = encodeURIComponent(text);
+    const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedText}`;
+
+    window.open(whatsappUrl, '_blank');
+
     toast({
-      title: "Mensagem enviada",
-      description: "Agradecemos seu contato. Responderemos em breve!",
+      title: "Redirecionando para o WhatsApp...",
+      description: "Sua mensagem será enviada através do WhatsApp.",
     });
     form.reset();
   }
@@ -192,54 +200,7 @@ const ContactSection = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-          >
-            <div className="mb-8">
-              <h3 className="text-xl font-semibold mb-4">Informações de Contato</h3>
-              
-              <div className="space-y-4">
-                <div className="flex items-start">
-                  <div className="flex-shrink-0 bg-primary/20 rounded-full p-2 mr-3">
-                    <MapPin className="text-primary h-5 w-5" />
-                  </div>
-                  <div>
-                    <h4 className="font-medium">Endereço</h4>
-                    <p className="text-neutral-300">Av. Exemplo, 1234 - Centro, São Paulo - SP</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start">
-                  <div className="flex-shrink-0 bg-primary/20 rounded-full p-2 mr-3">
-                    <Phone className="text-primary h-5 w-5" />
-                  </div>
-                  <div>
-                    <h4 className="font-medium">Telefone</h4>
-                    <p className="text-neutral-300">(11) 5555-1234</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start">
-                  <div className="flex-shrink-0 bg-primary/20 rounded-full p-2 mr-3">
-                    <Mail className="text-primary h-5 w-5" />
-                  </div>
-                  <div>
-                    <h4 className="font-medium">E-mail</h4>
-                    <p className="text-neutral-300">contato@academiaboulder.com.br</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start">
-                  <div className="flex-shrink-0 bg-primary/20 rounded-full p-2 mr-3">
-                    <Clock className="text-primary h-5 w-5" />
-                  </div>
-                  <div>
-                    <h4 className="font-medium">Horário de Funcionamento</h4>
-                    <p className="text-neutral-300">Seg-Sex: 07h às 22h</p>
-                    <p className="text-neutral-300">Sáb-Dom: 08h às 20h</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
+          >            
             {/* Social Media */}
             <div className="mb-8">
               <h3 className="text-xl font-semibold mb-4">Redes Sociais</h3>
@@ -272,7 +233,7 @@ const ContactSection = () => {
                   <Youtube className="h-5 w-5" />
                 </a>
                 <a 
-                  href="#" 
+                  href={`https://wa.me/${WHATSAPP_NUMBER}`}
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="bg-white/10 hover:bg-white/20 w-10 h-10 rounded-full flex items-center justify-center transition duration-300"
@@ -287,16 +248,8 @@ const ContactSection = () => {
             
             {/* Map */}
             <div className="rounded-lg overflow-hidden h-64 bg-white/10">
-              <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3657.1976082759226!2d-46.65390492467796!3d-23.56507126162643!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce59c8da0aa315%3A0xd59f9431f2c9776a!2sAv.%20Paulista%20-%20Bela%20Vista%2C%20S%C3%A3o%20Paulo%20-%20SP!5e0!3m2!1spt-BR!2sbr!4v1682964119683!5m2!1spt-BR!2sbr" 
-                width="100%" 
-                height="100%" 
-                style={{ border: 0 }} 
-                allowFullScreen 
-                loading="lazy" 
-                referrerPolicy="no-referrer-when-downgrade"
-                title="Localização da Academia Boulder"
-              ></iframe>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3658.2684509596247!2d-47.49819742522334!3d-23.52284517882626!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94c58b1bab524bcd%3A0x2537fb85c4b1116d!2sAv.%20Get%C3%BAlio%20Vargas%2C%20475%20-%20Jardim%20Sao%20Paulo%2C%20Sorocaba%20-%20SP%2C%2018051-480!5e0!3m2!1spt-BR!2sbr!4v1764295502390!5m2!1spt-BR!2sbr" width="600" height="450" style={{ border: 0 }} loading="lazy">
+            </iframe>
             </div>
           </motion.div>
         </div>

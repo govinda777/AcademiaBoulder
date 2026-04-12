@@ -1,12 +1,14 @@
 import { PortableText as SanityPortableText } from '@portabletext/react'
 import { urlFor } from '@/lib/sanity'
+import { ImageWithFallback } from '@/components/ui/ImageWithFallback'
 
 const components = {
   types: {
     image: ({ value }: any) => (
-      <img 
-        src={urlFor(value).url()} 
-        alt={value.alt || ''} 
+      <ImageWithFallback
+        src={urlFor(value).url()}
+        fallbackSrc="/placeholder-image.jpg"
+        alt={value.alt || ''}
         className="rounded-lg shadow-lg max-w-full h-auto my-4"
       />
     ),

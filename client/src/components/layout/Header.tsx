@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Link, useLocation } from "wouter";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -14,10 +13,16 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Menu, ChevronDown } from "lucide-react";
+import { useNavigation } from "@/hooks/use-navigation";
+import { useSiteSettings, usePrograms } from "@/hooks/useSanity";
+import { urlFor } from "@/lib/sanity";
+import { ImageWithFallback } from "@/components/ui/ImageWithFallback";
 
 const Header = () => {
-  const [location] = useLocation();
+  const { currentPath, getPath, navigate } = useNavigation();
   const [programsOpen, setProgramsOpen] = useState(false);
+  const { data: siteSettings } = useSiteSettings();
+  const { data: programs } = usePrograms();
 
   const navigationItems = [
     { name: "Home", path: "/" },
@@ -25,14 +30,11 @@ const Header = () => {
       name: "Programas", 
       path: "#programas",
       dropdown: true,
-      items: [
-        { name: "Escalada Esportiva", path: "#escalada" },
-        { name: "Cross Training", path: "#crosstraining" },
-        { name: "Formação de Instrutores", path: "#instrutores" }
-      ]
+      items: programs?.map(p => ({
+        name: p.title,
+        path: `/programas/${p.slug?.current}`
+      })) || []
     },
-    { name: "Agenda", path: "#agenda" },
-    { name: "Comunidade", path: "#comunidade" },
     { name: "Sobre", path: "#sobre" },
     { name: "Contato", path: "#contato" },
   ];
@@ -42,12 +44,20 @@ const Header = () => {
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center py-4">
           <div className="flex items-center">
-            <Link href="/" className="flex items-center">
+            <button onClick={() => navigate("/")} className="flex items-center gap-3">
+              {siteSettings?.logo ? (
+                <ImageWithFallback
+                  src={urlFor(siteSettings.logo).url()}
+                  fallbackSrc="/placeholder-image.jpg"
+                  alt={siteSettings?.siteName || "Academia Boulder"}
+                  className="h-20 w-auto"
+                />
+              ) : null}
               <span className="text-2xl font-bold font-sans">
-                <span className="text-primary">Academia</span>
-                <span className="text-secondary">Boulder</span>
+                <span className="text-primary">{siteSettings?.siteName?.split(' ')[0] || "Academia"}</span>
+                <span className="text-secondary">{' '}{siteSettings?.siteName?.split(' ')[1] || "Boulder"}</span>
               </span>
-            </Link>
+            </button>
           </div>
 
           {/* Mobile Menu */}
@@ -74,32 +84,27 @@ const Header = () => {
                         {programsOpen && (
                           <div className="pl-4 py-2 flex flex-col gap-2">
                             {item.items.map((subItem) => (
-                              <Link 
+                              <button 
                                 key={subItem.name}
-                                href={subItem.path}
-                                className="py-2 text-secondary hover:text-primary"
+                                onClick={() => navigate(subItem.path)}
+                                className="py-2 text-secondary hover:text-primary text-left"
                               >
                                 {subItem.name}
-                              </Link>
+                              </button>
                             ))}
                           </div>
                         )}
                       </div>
                     ) : (
-                      <Link 
+                      <button 
                         key={item.name}
-                        href={item.path}
-                        className="py-2 text-secondary hover:text-primary font-medium"
+                        onClick={() => navigate(item.path)}
+                        className="py-2 text-secondary hover:text-primary font-medium text-left"
                       >
                         {item.name}
-                      </Link>
+                      </button>
                     )
                   )}
-                  <Link href="#agendamento">
-                    <Button className="w-full mt-4 bg-primary hover:bg-primary/90">
-                      Agendar Aula
-                    </Button>
-                  </Link>
                 </nav>
               </SheetContent>
             </Sheet>
@@ -119,39 +124,31 @@ const Header = () => {
                   <DropdownMenuContent align="center" className="w-48">
                     {item.items.map((subItem) => (
                       <DropdownMenuItem key={subItem.name} asChild>
-                        <Link 
-                          href={subItem.path}
-                          className="block px-4 py-2 text-sm text-secondary hover:bg-neutral-100 hover:text-primary w-full"
+                        <button 
+                          onClick={() => navigate(subItem.path)}
+                          className="block px-4 py-2 text-sm text-secondary hover:bg-neutral-100 hover:text-primary w-full text-left"
                         >
                           {subItem.name}
-                        </Link>
+                        </button>
                       </DropdownMenuItem>
                     ))}
                   </DropdownMenuContent>
                 </DropdownMenu>
               ) : (
-                <Link 
+                <button 
                   key={item.name}
-                  href={item.path}
+                  onClick={() => navigate(item.path)}
                   className={cn(
                     "nav-link",
-                    location === item.path && "text-primary"
+                    currentPath === item.path && "text-primary"
                   )}
                 >
                   {item.name}
-                </Link>
+                </button>
               )
             )}
           </div>
 
-          {/* CTA Button */}
-          <div className="hidden md:block">
-            <Link href="#agendamento">
-              <Button className="bg-primary hover:bg-primary/90">
-                Agendar Aula
-              </Button>
-            </Link>
-          </div>
         </div>
       </div>
     </header>

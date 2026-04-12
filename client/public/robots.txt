@@ -1,0 +1,27 @@
+# Academia Boulder - robots.txt
+# Configuração para search engines
+
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /dashboard
+Disallow: *.json
+Disallow: /api
+Disallow: /private
+
+# Sitemaps
+Sitemap: https://academiaboulder.com/sitemap.xml
+Sitemap: https://academiaboulder.com/sitemap-programs.xml
+Sitemap: https://academiaboulder.com/sitemap-events.xml
+
+# Crawl delay
+Crawl-delay: 1
+
+# Rules for specific crawlers
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1

@@ -25,6 +25,15 @@ export function usePrograms() {
   })
 }
 
+export function useProgram(slug: string) {
+  return useQuery({
+    queryKey: ['sanity', 'program', slug],
+    queryFn: () => client.fetch(queries.program, { slug }),
+    staleTime: 1000 * 60 * 5,
+    enabled: !!slug,
+  })
+}
+
 export function useEvents() {
   return useQuery({
     queryKey: ['sanity', 'events'],

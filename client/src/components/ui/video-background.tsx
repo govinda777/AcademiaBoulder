@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { ImageWithFallback } from "@/components/ui/ImageWithFallback";
 
 interface VideoBackgroundProps {
   videoUrl: string;
@@ -45,8 +46,9 @@ const VideoBackground = ({ videoUrl, fallbackImg }: VideoBackgroundProps) => {
       )}
       
       {isError && (
-        <img
+        <ImageWithFallback
           src={fallbackImg}
+          fallbackSrc="/placeholder-image.jpg"
           alt="Background"
           className="absolute h-full w-full object-cover"
         />

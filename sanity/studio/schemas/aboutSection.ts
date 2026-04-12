@@ -2,7 +2,6 @@ export default {
   name: 'aboutSection',
   title: 'Seção Sobre',
   type: 'document',
-  __experimental_actions: ['update', 'publish'],
   fields: [
     // Seção Principal
     {
@@ -21,6 +20,13 @@ export default {
           title: 'Descrição',
           type: 'array',
           of: [{ type: 'block' }],
+          validation: (Rule: any) => Rule.required()
+        },
+        {
+          name: 'philosophy',
+          title: 'Nossa Filosofia',
+          type: 'text',
+          description: 'Texto que descreve a filosofia da Academia Boulder',
           validation: (Rule: any) => Rule.required()
         },
         {
@@ -99,8 +105,7 @@ export default {
                 }
               ]
             }
-          ],
-          validation: (Rule: any) => Rule.required().min(1)
+          ]
         }
       ]
     },

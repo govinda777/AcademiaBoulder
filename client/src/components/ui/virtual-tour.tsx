@@ -179,12 +179,12 @@ const VirtualTour = ({ activeArea }: VirtualTourProps) => {
           style={{
             backgroundImage: `url(${area.image})`,
             backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            scale: zoom,
-            x: position.x,
-            y: position.y,
-            transition: dragging ? 'none' : 'all 0.1s ease-out'
+            backgroundPosition: 'center'
           }}
+          scale={zoom}
+          x={position.x}
+          y={position.y}
+          transition={dragging ? { duration: 0 } : { duration: 0.1, ease: 'easeOut' }}
         >
           {/* Hotspots */}
           {area.hotspots.map((hotspot) => (
