@@ -12,20 +12,8 @@ export const useNavigation = () => {
   }, []);
 
   const navigate = useCallback((to: string) => {
-    // Se for um link de âncora
-    if (to.startsWith('#')) {
-      // Se já estivermos na home, apenas atualiza o hash
-      if (location === '/' || location === '') {
-        window.location.hash = to;
-      } else {
-        // Se estivermos em outra página, navega para a home com o hash
-        setLocation('/' + to);
-      }
-      return;
-    }
-
     setLocation(to);
-  }, [location, setLocation]);
+  }, [setLocation]);
 
   return {
     currentPath: location,

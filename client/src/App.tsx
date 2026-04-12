@@ -12,34 +12,27 @@ import { useState, useEffect } from "react";
 
 // Hook personalizado para lidar com o base path
 const useBasePath = (): [string, (to: string) => void] => {
-  const [base, setBase] = useState("");
-  const [location, setLocation] = useState("");
+  const getInitialPath = () => {
+    const basePath = import.meta.env.VITE_BASE_PATH || import.meta.env.BASE_URL || "/";
+    let path = window.location.pathname;
+
+    if (basePath !== "/" && path.startsWith(basePath)) {
+      path = path.replace(basePath, "");
+    }
+
+    if (!path.startsWith("/")) {
+      path = "/" + path;
+    }
+
+    return path;
+  };
+
+  const [base] = useState(() => import.meta.env.VITE_BASE_PATH || import.meta.env.BASE_URL || "/");
+  const [location, setLocation] = useState(getInitialPath);
 
   useEffect(() => {
-    // Obtém o base path do Vite em produção
-    const basePath = import.meta.env.VITE_BASE_PATH || import.meta.env.BASE_URL;
-    setBase(basePath);
-
-    // Atualiza a localização inicial
-    let path = window.location.pathname;
-    if (basePath !== "/" && path.startsWith(basePath)) {
-        path = path.replace(basePath, "");
-    }
-    if (!path.startsWith("/")) {
-        path = "/" + path;
-    }
-    setLocation(path);
-
-    // Listener para mudanças na URL
     const handleLocationChange = () => {
-      let newPath = window.location.pathname;
-      if (basePath !== "/" && newPath.startsWith(basePath)) {
-        newPath = newPath.replace(basePath, "");
-      }
-      if (!newPath.startsWith("/")) {
-        newPath = "/" + newPath;
-      }
-      setLocation(newPath);
+      setLocation(getInitialPath());
     };
 
     window.addEventListener("popstate", handleLocationChange);
@@ -47,12 +40,30 @@ const useBasePath = (): [string, (to: string) => void] => {
   }, []);
 
   const navigate = (to: string) => {
-    const cleanBase = base.endsWith('/') ? base.slice(0, -1) : base;
-    const cleanTo = to.startsWith('/') ? to : '/' + to;
-    const newPath = cleanBase + (to === "/" ? "" : cleanTo);
+    // Se for apenas uma âncora e não estivermos na home, vai para a home com a âncora
+    if (to.startsWith('#') && location !== '/') {
+      to = '/' + to;
+    }
 
-    window.history.pushState(null, "", newPath);
-    setLocation(to);
+    const [pathWithoutHash, hash] = to.split('#');
+
+    const cleanBase = base.endsWith('/') ? base.slice(0, -1) : base;
+
+    // Se pathWithoutHash for vazio, mantém o location atual
+    const targetPath = pathWithoutHash === "" ? location : (pathWithoutHash.startsWith('/') ? pathWithoutHash : '/' + pathWithoutHash);
+
+    const fullUrl = cleanBase + (targetPath === "/" ? "" : targetPath) + (hash ? '#' + hash : '');
+
+    window.history.pushState(null, "", fullUrl);
+    setLocation(targetPath);
+
+    // Sempre dispara hashchange se houver hash, para garantir o scroll
+    if (hash) {
+      // Pequeno delay para garantir que a navegação de página (se houver) já ocorreu
+      setTimeout(() => {
+        window.dispatchEvent(new HashChangeEvent("hashchange"));
+      }, 100);
+    }
   };
 
   return [location, navigate];

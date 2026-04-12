@@ -32,7 +32,7 @@ const Header = () => {
       dropdown: true,
       items: programs?.map(p => ({
         name: p.title,
-        path: `/programas/${p.slug?.current}`
+        path: `#${p.slug?.current}`
       })) || []
     },
     { name: "Sobre", path: "#sobre" },
@@ -116,7 +116,10 @@ const Header = () => {
               item.dropdown ? (
                 <DropdownMenu key={item.name}>
                   <DropdownMenuTrigger asChild>
-                    <button className="nav-link flex items-center">
+                    <button
+                      onClick={() => navigate(item.path)}
+                      className="nav-link flex items-center"
+                    >
                       {item.name}
                       <ChevronDown className="h-4 w-4 ml-1" />
                     </button>
