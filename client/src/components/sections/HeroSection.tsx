@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 
 const HeroSection = () => {
   const { data: heroData, isLoading } = useHeroSection();
-  const [imageLoaded, setImageLoaded] = useState(false);
+  const [mediaLoaded, setMediaLoaded] = useState(false);
 
   // Fallback content while loading or if no CMS data
   const fallbackContent = {
@@ -22,12 +22,13 @@ const HeroSection = () => {
   };
 
   const content = heroData || fallbackContent;
+  const videoUrl = content.backgroundVideo?.asset?.url;
 
   // Get background image URL with error handling
   const getBackgroundImageUrl = () => {
     try {
-      if (heroData?.backgroundImage) {
-        return urlFor(heroData.backgroundImage)
+      if (content.backgroundImage) {
+        return urlFor(content.backgroundImage)
           .width(1920)
           .height(1080)
           .quality(90)
@@ -42,9 +43,9 @@ const HeroSection = () => {
 
   const bgUrl = getBackgroundImageUrl();
 
-  // Preload image
+  // Preload image if no video
   useEffect(() => {
-    if (bgUrl) {
+    if (bgUrl && !videoUrl) {
       const link = document.createElement('link');
       link.rel = 'preload';
       link.as = 'image';
@@ -55,13 +56,13 @@ const HeroSection = () => {
         document.head.removeChild(link);
       };
     }
-  }, [bgUrl]);
+  }, [bgUrl, videoUrl]);
 
   return (
     <section className="relative h-screen overflow-hidden bg-[#020B2D]">
       {/* Skeleton / Loading State */}
       <AnimatePresence>
-        {(!imageLoaded || isLoading) && (
+        {(!mediaLoaded || isLoading) && (
           <motion.div
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -73,22 +74,32 @@ const HeroSection = () => {
         )}
       </AnimatePresence>
 
-      {/* Background Image with Overlay */}
+      {/* Background Media with Overlay */}
       <div className={cn(
         "absolute inset-0 z-0 transition-opacity duration-1000",
-        imageLoaded ? "opacity-100" : "opacity-0"
+        mediaLoaded ? "opacity-100" : "opacity-0"
       )}>
-        {bgUrl && (
+        {videoUrl ? (
+          <video
+            src={videoUrl}
+            autoPlay
+            muted
+            loop
+            playsInline
+            onCanPlayThrough={() => setMediaLoaded(true)}
+            className="w-full h-full object-cover"
+          />
+        ) : bgUrl ? (
           <img
             src={bgUrl}
             alt="Escalador em parede de boulder na Academia Boulder em Sorocaba"
             className="w-full h-full object-cover"
-            onLoad={() => setImageLoaded(true)}
+            onLoad={() => setMediaLoaded(true)}
             fetchpriority="high"
           />
-        )}
+        ) : null}
         {/* Dark linear-gradient overlay for contrast */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/60 z-10" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/70 z-10" />
       </div>
 
       {/* Hero Content */}

@@ -29,6 +29,11 @@ export const queries = {
     title,
     subtitle,
     backgroundImage,
+    backgroundVideo {
+      asset-> {
+        url
+      }
+    },
     ctaButtons[]{
       text,
       link,

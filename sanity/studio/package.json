@@ -15,10 +15,10 @@
     "sanity"
   ],
   "dependencies": {
-    "@sanity/vision": "^3.97.1",
+    "@sanity/vision": "^4.22.0",
     "react": "^19.1",
     "react-dom": "^19.1",
-    "sanity": "^3.97.1",
+    "sanity": "^4.22.0",
     "styled-components": "^6.1.18"
   },
   "devDependencies": {
@@ -33,5 +33,9 @@
     "printWidth": 100,
     "bracketSpacing": false,
     "singleQuote": true
+  },
+  "overrides": {
+    "glob": "^13.0.0",
+    "whatwg-encoding": "^3.1.1"
   }
 }

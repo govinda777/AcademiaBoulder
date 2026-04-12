@@ -19,12 +19,27 @@ export default {
       name: 'backgroundImage',
       title: 'Imagem de Fundo',
       type: 'image',
-      description: 'Imagem de fundo para a seção hero. Recomendado: 1920x1080px ou maior.',
+      description: 'Imagem de fundo para a seção hero (se não houver vídeo). Recomendado: 1920x1080px.',
       options: {
         hotspot: true,
         metadata: ['lqip'],
       },
-      validation: (Rule: any) => Rule.required().error('A imagem de fundo é obrigatória')
+      validation: (Rule: any) => Rule.custom((value: any, context: any) => {
+        const { document } = context;
+        if (!value && !document.backgroundVideo) {
+          return 'A imagem de fundo é obrigatória se não houver um vídeo.';
+        }
+        return true;
+      })
+    },
+    {
+      name: 'backgroundVideo',
+      title: 'Vídeo de Fundo',
+      type: 'file',
+      description: 'Vídeo de fundo para a seção hero. Se fornecido, substituirá a imagem.',
+      options: {
+        accept: 'video/*'
+      }
     },
     {
       name: 'ctaButtons',
