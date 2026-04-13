@@ -98,8 +98,8 @@ const HeroSection = () => {
             fetchpriority="high"
           />
         ) : null}
-        {/* Dark linear-gradient overlay for contrast */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/70 z-10" />
+        {/* Subtle overlay to unify the background without over-darkening */}
+        <div className="absolute inset-0 bg-black/30 z-10" />
       </div>
 
       {/* Hero Content */}
@@ -108,35 +108,35 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="max-w-4xl mx-auto"
+          className="max-w-6xl mx-auto"
         >
-          <h1 className="text-5xl md:text-7xl font-bold text-white mb-4">
-            <span className="text-white">{content.title.split(" ").slice(0, -1).join(" ")}{" "}</span>
-            <span className="text-[#5B9BD5]">{content.title.split(" ").pop()}</span>
-          </h1>
-          {content.subtitle && (
-            <p className="text-xl md:text-2xl text-white/90 mb-12">
-              {content.subtitle}
-            </p>
-          )}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            {content.ctaButtons?.map((button: any, index: number) => (
-              <Button
-                key={index}
-                asChild
-                size="lg"
-                className={cn(
-                  "text-lg px-8 py-6 rounded-full font-medium",
-                  button.variant === 'primary' 
-                    ? "bg-[#2B7FE0] hover:bg-[#2B7FE0]/90 text-white"
-                    : "bg-transparent hover:bg-white/5 text-white border border-white/30"
-                )}
-              >
-                <Link href={button.link}>
-                  {button.text}
-                </Link>
-              </Button>
-            ))}
+          <div className="backdrop-blur-xl bg-black/45 p-8 md:p-16 rounded-[2rem] border border-white/10 shadow-2xl shadow-black/60">
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-black text-white mb-8 font-montserrat tracking-tight leading-[1.1] uppercase drop-shadow-md">
+              {content.title.includes(' - ') ? (
+                <div className="flex flex-wrap justify-center items-center gap-x-4 gap-y-2 md:gap-x-8 md:gap-y-4">
+                  {content.title.split(' - ').map((part: string, idx: number, arr: string[]) => (
+                    <div key={idx} className="flex items-center">
+                      <span className={idx === arr.length - 1 ? "text-[#5B9BD5]" : "text-white"}>
+                        {part}
+                      </span>
+                      {idx < arr.length - 1 && (
+                        <span className="hidden md:inline ml-4 md:ml-8 text-[#5B9BD5]/40 font-extralight select-none">|</span>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <>
+                  <span className="text-white">{content.title.split(" ").slice(0, -1).join(" ")}{" "}</span>
+                  <span className="text-[#5B9BD5]">{content.title.split(" ").pop()}</span>
+                </>
+              )}
+            </h1>
+            {content.subtitle && (
+              <p className="text-lg md:text-2xl text-white/90 font-sans font-medium max-w-2xl mx-auto">
+                {content.subtitle}
+              </p>
+            )}
           </div>
         </motion.div>
       </div>
