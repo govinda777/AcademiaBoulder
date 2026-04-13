@@ -25,7 +25,7 @@ export function SEOHead({
 }: SEOHeadProps) {
   const baseUrl = 'https://academiaboulder.com';
   const fullUrl = url ? `${baseUrl}${url.startsWith('/') ? url : `/${url}`}` : baseUrl;
-  const ogImage = image || `${baseUrl}/og-image.jpg`;
+  const ogImage = image || `https://cdn.sanity.io/images/4y88u6cf/production/5c7f0dbc7d1665d689cdc64ff2eb8074a119aa86-2211x1884.png?w=1200&h=630&fit=fill&bg=000&auto=format`;
   const siteTitle = 'Academia Boulder';
   const displayTitle = `${title} | ${siteTitle}`;
 
