@@ -1,10 +1,8 @@
 import { useEffect } from "react";
-import { Helmet } from "react-helmet";
+import { SEOHead } from "@/components/seo/SEOHead";
+import { StructuredData, createLocalBusinessSchema } from "@/components/seo/StructuredData";
 import HeroSection from "@/components/sections/HeroSection";
-import SchedulingWidget from "@/components/sections/SchedulingWidget";
-import EventsSection from "@/components/sections/EventsSection";
 import ProgramsSection from "@/components/sections/ProgramsSection";
-import CommunitySection from "@/components/sections/CommunitySection";
 import AboutSection from "@/components/sections/AboutSection";
 import ContactSection from "@/components/sections/ContactSection";
 import FAQSection from "@/components/sections/FAQSection";
@@ -45,50 +43,20 @@ const Home = () => {
     };
   }, []);
 
-  const pageTitle = "Academia Boulder - Escalada e Cross Training em Sorocaba";
-  const pageDescription = "Academia Boulder, inaugurada em 2018 em Sorocaba (SP), reúne escalada boulder e cross training em um só espaço, com programas estruturados para todos os níveis, do iniciante ao atleta.";
-  const siteUrl = "https://academiaboulder.com";
-  const ogImageUrl = `${siteUrl}/og-image.jpg`;
-
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "SportsActivityLocation",
-    name: "Academia Boulder",
-    url: siteUrl,
-    description: pageDescription,
-    image: ogImageUrl,
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: "Av. Getúlio Vargas, 475",
-      addressLocality: "Sorocaba",
-      addressRegion: "SP",
-      addressCountry: "BR",
-    },
-    sameAs: ["https://www.instagram.com/academiaboulder/"],
-  };
+  const pageTitle = "Escalada e Cross Training em Sorocaba";
+  const pageDescription = "Academia Boulder reúne escalada boulder e cross training em Sorocaba. Treinamento para todos os níveis, do iniciante ao atleta.";
 
   return (
     <>
-      <Helmet>
-        <title>{pageTitle}</title>
-        <meta name="description" content={pageDescription} />
-
-        <meta property="og:title" content={pageTitle} />
-        <meta property="og:description" content={pageDescription} />
-        <meta property="og:image" content={ogImageUrl} />
-        <meta property="og:url" content={siteUrl} />
-        <meta property="og:type" content="website" />
-
-        <meta name="twitter:title" content={pageTitle} />
-        <meta name="twitter:description" content={pageDescription} />
-        <meta name="twitter:image" content={ogImageUrl} />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:url" content={siteUrl} />
-
-        <script type="application/ld+json">
-          {JSON.stringify(structuredData)}
-        </script>
-      </Helmet>
+      <SEOHead 
+        title={pageTitle}
+        description={pageDescription}
+        keywords="escalada, boulder, cross training, sorocaba, academia, treinamento físico"
+      />
+      <StructuredData 
+        type="localBusiness"
+        data={createLocalBusinessSchema()}
+      />
 
       <HeroSection />
       <ProgramsSection />

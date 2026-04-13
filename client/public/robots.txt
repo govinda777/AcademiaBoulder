@@ -11,8 +11,6 @@ Disallow: /private
 
 # Sitemaps
 Sitemap: https://academiaboulder.com/sitemap.xml
-Sitemap: https://academiaboulder.com/sitemap-programs.xml
-Sitemap: https://academiaboulder.com/sitemap-events.xml
 
 # Crawl delay
 Crawl-delay: 1
