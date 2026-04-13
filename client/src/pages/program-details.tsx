@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "wouter";
-import { Helmet } from "react-helmet";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -10,6 +9,8 @@ import { useProgram } from "@/hooks/useSanity";
 import { urlFor } from "@/lib/sanity";
 import { ImageWithFallback } from "@/components/ui/ImageWithFallback";
 import { SanityBlockContent } from "@/components/ui/SanityBlockContent";
+import { SEOHead } from "@/components/seo/SEOHead";
+import { StructuredData, createCourseSchema } from "@/components/seo/StructuredData";
 
 const ProgramDetails = () => {
   const { id: rawSlug } = useParams();
@@ -48,13 +49,22 @@ const ProgramDetails = () => {
 
   return (
     <>
-      <Helmet>
-        <title>{program.title} - Academia Boulder</title>
-        <meta name="description" content={program.shortDescription} />
-        <meta property="og:title" content={`${program.title} - Academia Boulder`} />
-        <meta property="og:description" content={program.shortDescription} />
-        {imageUrl && <meta property="og:image" content={imageUrl} />}
-      </Helmet>
+      <SEOHead 
+        title={program.title}
+        description={program.shortDescription}
+        image={imageUrl || undefined}
+        url={`/programas/${slug}`}
+        type="article"
+      />
+      <StructuredData 
+        type="course"
+        data={createCourseSchema(
+          program.title,
+          program.shortDescription,
+          imageUrl || "",
+          program.levels?.[0]?.level || "Iniciante"
+        )}
+      />
 
       {/* Hero Section */}
       <div 

@@ -100,7 +100,8 @@ graph TD
 ## 🚀 Scripts Disponíveis
 
 - `npm run dev`: Inicia o servidor de desenvolvimento
-- `npm run build`: Gera a build de produção
+- `npm run build`: Gera a build de produção (inclui geração de sitemap)
+- `npm run sitemap`: Gera manualmente o sitemap.xml baseado no Sanity
 - `npm run start`: Inicia o servidor em produção
 - `npm run check`: Verifica erros de TypeScript
 - `npm run db:push`: Sincroniza o banco de dados
@@ -137,6 +138,10 @@ O projeto utiliza Tailwind CSS para estilização. As configurações estão em 
 ## 📄 Licença
 
 Este projeto está sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.
+
+## 🔍 SEO e Monitoramento
+
+Para detalhes sobre a implementação de SEO técnico, sitemaps e monitoramento, veja a [Documentação de SEO](docs/SEO.md).
 
 ## 🙏 Agradecimentos
 
