@@ -23,12 +23,12 @@ export default function ContactSection(){
   const safeMapUrl = address ? `https://maps.google.com/maps?q=${encodeURIComponent(address)}&t=&z=16&ie=UTF8&iwloc=&output=embed` : "";
 
   return (
-    <section id="contato" data-theme="dark" className="relative h-screen overflow-hidden grain flex flex-col"
+    <section id="contato" data-theme="dark" className="relative min-h-screen bg-[var(--ink)] overflow-x-hidden grain flex flex-col py-20 md:py-0 md:h-screen"
              style={{background:'linear-gradient(180deg, #051C36 0%, #0F1116 100%)', color:'var(--paper)'}}>
       <div className="absolute -top-32 -left-20 w-[480px] h-[480px] rounded-full pointer-events-none"
            style={{background:'radial-gradient(closest-side, rgba(255,215,0,0.12), rgba(0,0,0,0) 70%)'}}/>
 
-      <div className="relative px-8 max-w-[1780px] mx-auto w-full flex flex-col h-full pt-[clamp(70px,9vh,100px)] pb-6">
+      <div className="relative px-8 max-w-[1780px] mx-auto w-full flex flex-col h-auto md:h-full pt-[clamp(70px,9vh,100px)] pb-6">
         {/* Header */}
         <div className="flex flex-col gap-1 mb-6 md:mb-10 shrink-0">
           <div className="flex items-center gap-4">

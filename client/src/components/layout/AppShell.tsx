@@ -68,9 +68,9 @@ function RadialMenu(){
   },[]);
 
   return (
-    <div className="fixed top-6 right-6 z-[60]">
+    <div className="fixed top-4 right-4 md:top-6 md:right-6 z-[60]">
       <button data-cursor="grip" onClick={()=>setOpen(o=>!o)}
-        className="relative w-[80px] h-[80px] grid place-items-center"
+        className="relative w-[60px] h-[60px] md:w-[80px] md:h-[80px] grid place-items-center"
         aria-label={open?'Fechar menu':'Abrir menu'}>
         <svg viewBox="0 0 100 100" className="absolute inset-0 w-full h-full transition-transform duration-500"
              style={{transform: open?'rotate(135deg) scale(1.05)':'rotate(0deg)'}}>
@@ -86,7 +86,7 @@ function RadialMenu(){
           <path d="M50 6 C70 6, 92 22, 92 46 C94 68, 76 92, 52 92 C28 96, 6 78, 6 54 C4 30, 30 6, 50 6Z"
                 fill="none" stroke="rgba(0,0,0,0.18)" strokeWidth="1"/>
         </svg>
-        <span className="relative font-display font-extrabold text-[var(--ink)] text-[20px] leading-none select-none"
+        <span className="relative font-display font-extrabold text-[var(--ink)] text-[16px] md:text-[20px] leading-none select-none"
               style={{transform: open?'rotate(45deg)':'none', transition:'transform .4s'}}>
           {open ? '×' : '≡'}
         </span>
@@ -139,12 +139,12 @@ function TopStrip(){
       <div className="flex items-center justify-between px-6 py-4">
         <a href="#inicio" data-cursor="link" className="flex items-center gap-4">
           {siteSettings?.logo ? (
-            <div className="bg-white/90 p-1.5 rounded-xl">
+            <div className="bg-white/90 p-1 rounded-lg md:p-1.5 md:rounded-xl">
               <ImageWithFallback
                 src={urlFor(siteSettings.logo).url()}
                 fallbackSrc="/placeholder-image.jpg"
                 alt={siteSettings?.siteName || "Academia Boulder"}
-                className="h-10 w-auto object-contain"
+                className="h-8 md:h-10 w-auto object-contain"
               />
             </div>
           ) : (
@@ -154,8 +154,8 @@ function TopStrip(){
             </svg>
           )}
           <div className="leading-none text-[var(--paper)]">
-            <div className="font-display font-extrabold text-[20px] tracking-tight">{siteSettings?.siteName?.split(' ')[0]?.toUpperCase() || "ACADEMIA"}</div>
-            <div className="font-mono text-[11px] tracking-[0.35em] opacity-90 -mt-0.5">{siteSettings?.siteName?.split(' ')[1]?.toUpperCase().split('').join(' · ') || "B · O · U · L · D · E · R"}</div>
+            <div className="font-display font-extrabold text-[14px] md:text-[20px] tracking-tight">{siteSettings?.siteName?.split(' ')[0]?.toUpperCase() || "ACADEMIA"}</div>
+            <div className="font-mono text-[8px] md:text-[11px] tracking-[0.25em] md:tracking-[0.35em] opacity-90 -mt-0.5">{siteSettings?.siteName?.split(' ')[1]?.toUpperCase().split('').join(' · ') || "B · O · U · L · D · E · R"}</div>
           </div>
         </a>
       </div>

@@ -70,13 +70,13 @@ export default function HeroSection(){
 
       {/* Floating grips */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden>
-        <div className="absolute pointer-events-auto drift" style={{...tFg, top:'15vh', left:'55vw', width:'110px', height:'110px'}} data-cursor="grip">
+        <div className="hidden md:block absolute pointer-events-auto drift" style={{...tFg, top:'15vh', left:'55vw', width:'110px', height:'110px'}} data-cursor="grip">
           <GripBlobH fill="url(#g-grip)" label="V8"/>
         </div>
-        <div className="absolute pointer-events-auto" style={{...tFg, top:'25vh', right:'15vw', width:'70px', height:'70px', animation:'drift-y 9s ease-in-out infinite -3s'}} data-cursor="grip">
+        <div className="hidden md:block absolute pointer-events-auto" style={{...tFg, top:'25vh', right:'15vw', width:'70px', height:'70px', animation:'drift-y 9s ease-in-out infinite -3s'}} data-cursor="grip">
           <GripBlobH fill="#FFD700" label="V3"/>
         </div>
-        <div className="absolute pointer-events-auto" style={{...tFg, bottom:'15vh', right:'25vw', width:'100px', height:'100px'}} data-cursor="grip">
+        <div className="hidden md:block absolute pointer-events-auto" style={{...tFg, bottom:'15vh', right:'25vw', width:'100px', height:'100px'}} data-cursor="grip">
           <GripBlobH fill="#FAFAF7" label="V0"/>
         </div>
       </div>

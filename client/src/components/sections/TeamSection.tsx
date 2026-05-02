@@ -101,7 +101,7 @@ export default function TeamSection(){
   if (isLoading) return null;
 
   return (
-    <section id="equipe" className="relative h-screen bg-[var(--paper)] overflow-hidden flex flex-col justify-center">
+    <section id="equipe" className="relative min-h-screen bg-[var(--paper)] overflow-x-hidden flex flex-col justify-center py-20 md:py-0 md:h-screen">
       <div className="px-8 max-w-[1500px] mx-auto w-full flex flex-col h-full pt-[clamp(70px,9vh,110px)] pb-10 md:pb-16">
         
         <div className="flex flex-col gap-2 mb-8 md:mb-10 shrink-0">
