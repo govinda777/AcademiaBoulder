@@ -5,9 +5,7 @@ import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
 import ProgramDetails from "@/pages/program-details";
 import EventDetails from "@/pages/event-details";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
-import BackToTop from "@/components/ui/back-to-top";
+import AppShell from "@/components/layout/AppShell";
 import { useState, useEffect } from "react";
 
 // Hook personalizado para lidar com o base path
@@ -75,7 +73,7 @@ function App() {
       <TooltipProvider>
         <Toaster />
         <div className="flex flex-col min-h-screen overflow-x-hidden">
-          <Header />
+          <AppShell />
           <main className="flex-grow">
             <Switch>
               <Route path="/" component={Home} />
@@ -83,8 +81,6 @@ function App() {
               <Route component={NotFound} />
             </Switch>
           </main>
-          <Footer />
-          <BackToTop />
         </div>
       </TooltipProvider>
     </WouterRouter>

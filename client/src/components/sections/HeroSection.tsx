@@ -1,162 +1,125 @@
-import { useEffect, useRef, useState } from "react";
-import { Link } from "wouter";
-import { ChevronDown, Trophy, Users, Award } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useState } from "react";
 import { useHeroSection } from "@/hooks/useSanity";
-import { urlFor } from "@/lib/sanity";
-import { cn } from "@/lib/utils";
 
-const HeroSection = () => {
-  const { data: heroData, isLoading } = useHeroSection();
-  const [mediaLoaded, setMediaLoaded] = useState(false);
+function useParallaxH(){
+  const [p, setP] = useState({mx:0,my:0,sy:0});
+  useEffect(()=>{
+    const onMove = (e: MouseEvent)=>{ const w=innerWidth,h=innerHeight; setP(s=>({...s,mx:e.clientX/w-.5,my:e.clientY/h-.5})); };
+    const onScroll = ()=> setP(s=>({...s, sy: window.scrollY}));
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('scroll', onScroll, {passive:true});
+    return ()=>{ window.removeEventListener('mousemove', onMove); window.removeEventListener('scroll', onScroll); };
+  },[]);
+  return p;
+}
 
-  // Fallback content while loading or if no CMS data
-  const fallbackContent = {
-    title: "Descubra Seus Limites.",
-    subtitle: "Escalada esportiva e cross training em Sorocaba",
-    ctaButtons: [
-      { text: "Comece Agora", link: "#agendamento", variant: "primary" },
-      { text: "Saiba Mais", link: "#sobre", variant: "secondary" }
-    ]
-  };
+function GripBlobH({className='', fill='url(#g-grip)', d, label, labelColor='#0F1116'}: {className?: string, fill?: string, d?: string, label?: string, labelColor?: string}){
+  const path = d || "M100 8 C148 6, 196 36, 188 92 C180 148, 132 192, 78 188 C28 184, 4 138, 12 92 C20 44, 56 10, 100 8 Z";
+  return (
+    <div className={`relative ${className}`}>
+      <svg viewBox="0 0 200 200" className="w-full h-full">
+        <path d={path} fill={fill} filter="url(#liquid-soft)"/>
+        <path d={path} fill="none" stroke="rgba(0,0,0,0.18)" strokeWidth="1.5"/>
+      </svg>
+      {label && <span className="absolute inset-0 grid place-items-center font-display font-extrabold leading-none select-none"
+                     style={{color:labelColor, fontSize:'min(38%,52px)'}}>{label}</span>}
+    </div>
+  );
+}
 
-  const content = heroData || fallbackContent;
-  const videoUrl = content.backgroundVideo?.asset?.url;
 
-  // Get background image URL with error handling
-  const getBackgroundImageUrl = () => {
-    try {
-      if (content.backgroundImage) {
-        return urlFor(content.backgroundImage)
-          .width(1920)
-          .height(1080)
-          .quality(90)
-          .url();
-      }
-      return null;
-    } catch (error) {
-      console.error('Error loading background image:', error);
-      return null;
-    }
-  };
 
-  const bgUrl = getBackgroundImageUrl();
+export default function HeroSection(){
+  const p = useParallaxH();
+  const { data: heroData } = useHeroSection();
+  const tBg = { transform:`translate3d(${p.mx*-10}px, 0, 0) scale(1.1)` };
+  const tFg = { transform:`translate3d(${p.mx*-60}px, ${p.my*32}px, 0)` };
+  const tType = { transform:`translate3d(${p.mx*-8}px, ${p.my*-6}px, 0)` };
 
-  // Preload image if no video
-  useEffect(() => {
-    if (bgUrl && !videoUrl) {
-      const link = document.createElement('link');
-      link.rel = 'preload';
-      link.as = 'image';
-      link.href = bgUrl;
-      link.imageSrcset = ""; // Avoid issues if not defined
-      document.head.appendChild(link);
-      return () => {
-        document.head.removeChild(link);
-      };
-    }
-  }, [bgUrl, videoUrl]);
+  const videoUrl = heroData?.backgroundVideo?.asset?.url || "https://cdn.pixabay.com/video/2020/03/26/34063-401476457_large.mp4";
 
   return (
-    <section className="relative h-screen overflow-hidden bg-[#020B2D]">
-      {/* Skeleton / Loading State */}
-      <AnimatePresence>
-        {(!mediaLoaded || isLoading) && (
-          <motion.div
-            initial={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
-            className="absolute inset-0 z-30 bg-[#020B2D] flex items-center justify-center"
-          >
-            <div className="w-full h-full animate-pulse bg-gradient-to-br from-[#020B2D] via-[#0A1A4D] to-[#020B2D]" />
-          </motion.div>
-        )}
-      </AnimatePresence>
+    <section id="inicio" data-theme="dark" className="relative h-screen overflow-hidden grain"
+             style={{background:'#000', color:'var(--paper)'}}>
 
-      {/* Background Media with Overlay */}
-      <div className={cn(
-        "absolute inset-0 z-0 transition-opacity duration-1000",
-        mediaLoaded ? "opacity-100" : "opacity-0"
-      )}>
-        {videoUrl ? (
-          <video
-            src={videoUrl}
-            autoPlay
-            muted
-            loop
-            playsInline
-            onCanPlayThrough={() => setMediaLoaded(true)}
-            className="w-full h-full object-cover"
-          />
-        ) : bgUrl ? (
-          <img
-            src={bgUrl}
-            alt="Escalador em parede de boulder na Academia Boulder em Sorocaba"
-            className="w-full h-full object-cover"
-            onLoad={() => setMediaLoaded(true)}
-            fetchpriority="high"
-          />
-        ) : null}
-        {/* Dark linear-gradient overlay for contrast */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/70 z-10" />
+      {/* VIDEO BG (placeholder — abstract animated SVG sim of climbing footage) */}
+      <div className="absolute inset-0 pointer-events-none" style={tBg} aria-hidden>
+        <video
+          key={videoUrl}
+          autoPlay loop muted playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+          poster=""
+          style={{filter:'contrast(1.05) brightness(0.55) saturate(1.05)'}}>
+          <source src={videoUrl} type="video/mp4" />
+        </video>
+        {/* Fallback / overlay gradient mood */}
+        <div className="absolute inset-0"
+             style={{background:'linear-gradient(180deg, rgba(5,28,54,0.65) 0%, rgba(5,28,54,0.4) 40%, rgba(15,17,22,0.8) 100%)'}}/>
+        {/* Animated abstract overlay */}
+        <svg viewBox="0 0 1600 900" className="absolute inset-0 w-full h-full opacity-30 mix-blend-overlay" preserveAspectRatio="xMidYMid slice">
+          <path d="M0 760 C300 700, 700 720, 1000 660 C1300 600, 1600 540, 1600 540 L1600 900 L0 900 Z" fill="rgba(255,215,0,0.15)"/>
+          <path d="M0 600 C300 540, 700 580, 1000 500 C1300 420, 1600 380, 1600 380" fill="none" stroke="rgba(30,136,229,0.35)" strokeWidth="1"/>
+        </svg>
       </div>
 
-      {/* Hero Content */}
-      <div className="relative z-20 h-full flex flex-col justify-center items-center text-center px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="max-w-4xl mx-auto"
-        >
-          <h1 className="text-5xl md:text-7xl font-bold text-white mb-4">
-            <span className="text-white">{content.title.split(" ").slice(0, -1).join(" ")}{" "}</span>
-            <span className="text-[#5B9BD5]">{content.title.split(" ").pop()}</span>
-          </h1>
-          {content.subtitle && (
-            <p className="text-xl md:text-2xl text-white/90 mb-12">
-              {content.subtitle}
-            </p>
-          )}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            {content.ctaButtons?.map((button: any, index: number) => (
-              <Button
-                key={index}
-                asChild
-                size="lg"
-                className={cn(
-                  "text-lg px-8 py-6 rounded-full font-medium",
-                  button.variant === 'primary' 
-                    ? "bg-[#2B7FE0] hover:bg-[#2B7FE0]/90 text-white"
-                    : "bg-transparent hover:bg-white/5 text-white border border-white/30"
-                )}
-              >
-                <Link href={button.link}>
-                  {button.text}
-                </Link>
-              </Button>
-            ))}
+      {/* Spotlight glow */}
+      <div className="absolute inset-0 pointer-events-none" aria-hidden>
+        <div className="absolute -top-[20vh] left-[15vw] w-[80vw] h-[80vw] rounded-full"
+             style={{background:'radial-gradient(closest-side, rgba(255,215,0,0.18), rgba(0,0,0,0) 65%)'}}/>
+      </div>
+
+      {/* Floating grips */}
+      <div className="absolute inset-0 pointer-events-none" aria-hidden>
+        <div className="absolute pointer-events-auto drift" style={{...tFg, top:'15vh', left:'55vw', width:'110px', height:'110px'}} data-cursor="grip">
+          <GripBlobH fill="url(#g-grip)" label="V8"/>
+        </div>
+        <div className="absolute pointer-events-auto" style={{...tFg, top:'25vh', right:'15vw', width:'70px', height:'70px', animation:'drift-y 9s ease-in-out infinite -3s'}} data-cursor="grip">
+          <GripBlobH fill="#FFD700" label="V3"/>
+        </div>
+        <div className="absolute pointer-events-auto" style={{...tFg, bottom:'15vh', right:'25vw', width:'100px', height:'100px'}} data-cursor="grip">
+          <GripBlobH fill="#FAFAF7" label="V0"/>
+        </div>
+      </div>
+
+      {/* Type */}
+      <div className="relative z-10 h-full flex flex-col items-center justify-center" style={tType}>
+        <div className="grid grid-cols-12 gap-0 px-8 max-w-[1700px] w-full">
+          <div className="col-span-1 hidden md:block">
+            <div className="font-mono text-[10px] tracking-[0.3em] opacity-70 [writing-mode:vertical-rl] rotate-180">CAP · 00 / Home</div>
           </div>
-        </motion.div>
-      </div>
+          <div className="col-span-12 md:col-span-11 relative">
+            <h1 className="relative font-display font-extrabold leading-[0.92] tracking-[-0.04em]">
+              <span className="block text-[clamp(40px,6vw,100px)]">DESCUBRA</span>
+              <span className="block text-[clamp(40px,6vw,100px)] pl-[6%] md:pl-[10%]">
+                SEUS <span className="font-serif-it italic text-[var(--gold)]" style={{fontFamily:'Fraunces',fontStyle:'italic',fontWeight:300}}>limites.</span>
+              </span>
+              <span className="block text-[clamp(40px,6vw,100px)] stroke-text-light">CADA AGARRA.</span>
+            </h1>
 
-      {/* Scroll Indicator */}
-      <motion.div 
-        className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-20"
-        animate={{ y: [0, 10, 0] }}
-        transition={{ 
-          repeat: Infinity, 
-          duration: 1.5,
-          ease: "easeInOut" 
-        }}
-      >
-        <Link href="#sobre" className="text-white/40 hover:text-white/60 transition-colors">
-          <ChevronDown className="h-8 w-8" />
-        </Link>
-      </motion.div>
+            <div className="grid grid-cols-12 mt-8 md:mt-10 gap-8">
+              <div className="col-span-12 md:col-span-6 md:col-start-2">
+                <p className="font-mono text-[11px] tracking-[0.18em] uppercase opacity-80 mb-4">ESCALADA · CROSS · TRAINING</p>
+                <p className="text-[16px] md:text-[18px] leading-[1.6] max-w-[44ch]" style={{textWrap:'pretty'}}>
+                  Em <span className="text-[var(--gold)]">Sorocaba</span> desde 2008, somos um centro de boulder e cross training que trata cada via como um <span className="font-serif-it italic" style={{fontFamily:'Fraunces',fontStyle:'italic',fontWeight:300}}>problema</span> a ser lido com o corpo.
+                </p>
+              </div>
+              <div className="col-span-12 md:col-span-4 md:col-start-9 flex md:justify-end items-end gap-3 flex-wrap">
+                <a data-cursor="link" href="#programas"
+                   className="group relative inline-flex items-center gap-4 pl-5 pr-3 py-2.5 bg-[var(--gold)] text-[var(--ink)] rounded-full hover:scale-[1.02] transition-transform">
+                  <span className="font-display font-extrabold text-[18px] tracking-tight">COMECE AGORA</span>
+                  <span className="relative w-8 h-8 grid place-items-center rounded-full bg-[var(--ink)] text-[var(--gold)]">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                  </span>
+                </a>
+                <a data-cursor="link" href="#sobre"
+                   className="inline-flex items-center gap-3 pl-5 pr-5 py-2.5 border border-white/40 hover:border-[var(--gold)] rounded-full text-[var(--paper)]">
+                  <span className="font-display font-extrabold text-[16px] tracking-tight">SAIBA MAIS</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
   );
-};
-
-export default HeroSection;
+}

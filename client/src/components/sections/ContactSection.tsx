@@ -1,261 +1,161 @@
 import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { useToast } from "@/hooks/use-toast";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Checkbox } from "@/components/ui/checkbox";
-import { MapPin, Phone, Mail, Clock, Facebook, Instagram, Youtube } from "lucide-react";
-import { motion } from "framer-motion";
+import { useSiteSettings, useContactSection } from "@/hooks/useSanity";
 
-const contactFormSchema = z.object({
-  name: z.string().min(2, "Nome deve ter pelo menos 2 caracteres"),
-  email: z.string().email("Email inválido"),
-  subject: z.string().min(1, "Selecione um assunto"),
-  message: z.string().min(10, "Mensagem deve ter pelo menos 10 caracteres"),
-  agreeToPrivacy: z.boolean().refine(val => val === true, {
-    message: "Você deve concordar com a Política de Privacidade",
-  }),
-});
-
-type ContactFormValues = z.infer<typeof contactFormSchema>;
-
-const WHATSAPP_NUMBER = "5515991869689";
-
-const ContactSection = () => {
-  const { toast } = useToast();
+export default function ContactSection(){
+  const { data: siteSettings } = useSiteSettings();
+  const { data: contactData } = useContactSection();
   
-  const form = useForm<ContactFormValues>({
-    resolver: zodResolver(contactFormSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      subject: "",
-      message: "",
-      agreeToPrivacy: false,
-    },
-  });
+  const [form, setForm] = useState({ name: '', email: '', interest: 'Escalada', message: '' });
+  const [copied, setCopied] = useState(false);
 
-  function onSubmit(data: ContactFormValues) {
-    const text = `*Nova mensagem do site*\n\n*Nome:* ${data.name}\n*Email:* ${data.email}\n*Assunto:* ${data.subject}\n*Mensagem:* ${data.message}`;
-    const encodedText = encodeURIComponent(text);
-    const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedText}`;
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const phone = contactData?.contactInfo?.phone?.replace(/\D/g, '');
+    if (!phone) return;
+    const text = `*Nova Mensagem - Academia Boulder*\n\n*Nome:* ${form.name}\n*Email:* ${form.email}\n*Interesse:* ${form.interest}\n*Mensagem:* ${form.message}`;
+    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text)}`, '_blank');
+  };
 
-    window.open(whatsappUrl, '_blank');
-
-    toast({
-      title: "Redirecionando para o WhatsApp...",
-      description: "Sua mensagem será enviada através do WhatsApp.",
-    });
-    form.reset();
-  }
+  const address = contactData?.contactInfo?.address || "";
+  const instagram = siteSettings?.socialMedia?.instagram || "#";
+  const whatsappNumber = contactData?.contactInfo?.phone?.replace(/\D/g, '') || "";
+  const whatsappLink = whatsappNumber ? `https://wa.me/${whatsappNumber}` : "#";
+  const safeMapUrl = address ? `https://maps.google.com/maps?q=${encodeURIComponent(address)}&t=&z=16&ie=UTF8&iwloc=&output=embed` : "";
 
   return (
-    <section id="contato" className="py-16 bg-neutral-900 text-white">
-      <div className="container mx-auto px-4">
-        <motion.div 
-          className="text-center mb-12"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          <h2 className="text-3xl font-bold mb-4 font-sans">Entre em Contato</h2>
-          <p className="text-neutral-300 max-w-2xl mx-auto">
-            Tire suas dúvidas, solicite informações ou venha nos visitar.
-          </p>
-        </motion.div>
+    <section id="contato" data-theme="dark" className="relative h-screen overflow-hidden grain flex flex-col"
+             style={{background:'linear-gradient(180deg, #051C36 0%, #0F1116 100%)', color:'var(--paper)'}}>
+      <div className="absolute -top-32 -left-20 w-[480px] h-[480px] rounded-full pointer-events-none"
+           style={{background:'radial-gradient(closest-side, rgba(255,215,0,0.12), rgba(0,0,0,0) 70%)'}}/>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          {/* Contact Form */}
-          <motion.div 
-            className="bg-white/5 backdrop-blur-sm rounded-lg p-6"
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <h3 className="text-xl font-semibold mb-6">Envie uma Mensagem</h3>
-            
-            <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <FormField
-                    control={form.control}
-                    name="name"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Nome</FormLabel>
-                        <FormControl>
-                          <Input 
-                            {...field} 
-                            className="bg-white/10 border border-white/20 text-white"
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  
-                  <FormField
-                    control={form.control}
-                    name="email"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>E-mail</FormLabel>
-                        <FormControl>
-                          <Input 
-                            {...field} 
-                            type="email" 
-                            className="bg-white/10 border border-white/20 text-white"
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+      <div className="relative px-8 max-w-[1780px] mx-auto w-full flex flex-col h-full pt-[clamp(70px,9vh,100px)] pb-6">
+        {/* Header */}
+        <div className="flex flex-col gap-1 mb-6 md:mb-10 shrink-0">
+          <div className="flex items-center gap-4">
+            <span className="font-mono text-[11px] tracking-[0.4em] text-[var(--gold)] uppercase opacity-50">Cap / 05</span>
+            <div className="w-8 h-px bg-white/20" />
+            <span className="font-mono text-[11px] tracking-[0.3em] font-bold uppercase">Entre em Contato</span>
+          </div>
+        </div>
+
+        {/* 3-Column Layout */}
+        <div className="grid grid-cols-12 gap-8 md:gap-12 flex-1 min-h-0 items-start">
+          {/* Column 1: Title + Social */}
+          <div className="col-span-12 md:col-span-4 flex flex-col h-full justify-between pb-8">
+            <div>
+              <h2 className="font-display font-extrabold leading-[1.03] tracking-[-0.04em] text-[clamp(28px,4.5vw,52px)] mb-12">
+                <span className="block uppercase">SUA <span className="font-serif-it italic text-[var(--gold)]" style={{fontFamily:'Fraunces',fontStyle:'italic',fontWeight:300}}>primeira</span></span>
+                <span className="block uppercase stroke-text-light">SUBIDA COMEÇA</span>
+                <span className="block uppercase">COM UM <span className="text-[var(--gold)]">OI.</span></span>
+              </h2>
+
+              <div className="space-y-8">
+                <div>
+                  <div className="font-mono text-[10px] tracking-[0.3em] opacity-40 mb-4 uppercase text-[var(--gold)] font-bold">01 · Social</div>
+                  <div className="flex flex-col gap-3">
+                    <a href={instagram} target="_blank" rel="noopener noreferrer" data-cursor="link" className="flex items-center justify-between group hover:text-[var(--gold)] transition-colors border-b border-white/5 pb-2">
+                      <span className="font-display font-extrabold text-[20px] tracking-tight uppercase">INSTAGRAM</span>
+                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" className="text-white/20 group-hover:text-[var(--gold)] transition-colors">
+                        <path d="M5 19L19 5M19 5H7M19 5V17" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </a>
+                    <a href={whatsappLink} target="_blank" rel="noopener noreferrer" data-cursor="link" className="flex items-center justify-between group hover:text-[var(--gold)] transition-colors border-b border-white/5 pb-2">
+                      <span className="font-display font-extrabold text-[20px] tracking-tight uppercase">WHATSAPP</span>
+                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" className="text-white/20 group-hover:text-[var(--gold)] transition-colors">
+                        <path d="M5 19L19 5M19 5H7M19 5V17" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </a>
+                  </div>
                 </div>
-                
-                <FormField
-                  control={form.control}
-                  name="subject"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Assunto</FormLabel>
-                      <Select onValueChange={field.onChange} defaultValue={field.value}>
-                        <FormControl>
-                          <SelectTrigger className="bg-white/10 border border-white/20 text-white">
-                            <SelectValue placeholder="Selecione um assunto" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          <SelectItem value="aulas">Informações sobre Aulas</SelectItem>
-                          <SelectItem value="eventos">Eventos e Competições</SelectItem>
-                          <SelectItem value="parcerias">Parcerias</SelectItem>
-                          <SelectItem value="outros">Outros</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                
-                <FormField
-                  control={form.control}
-                  name="message"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Mensagem</FormLabel>
-                      <FormControl>
-                        <Textarea 
-                          {...field} 
-                          rows={4} 
-                          className="bg-white/10 border border-white/20 text-white resize-none"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                
-                <FormField
-                  control={form.control}
-                  name="agreeToPrivacy"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                      <FormControl>
-                        <Checkbox
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                          className="data-[state=checked]:bg-primary"
-                        />
-                      </FormControl>
-                      <div className="space-y-1 leading-none">
-                        <FormLabel>
-                          Concordo com a <a href="#" className="text-primary hover:underline">Política de Privacidade</a>
-                        </FormLabel>
-                        <FormMessage />
-                      </div>
-                    </FormItem>
-                  )}
-                />
-                
-                <Button 
-                  type="submit" 
-                  className="w-full bg-primary hover:bg-primary/90"
-                >
-                  Enviar Mensagem
-                </Button>
-              </form>
-            </Form>
-          </motion.div>
-          
-          {/* Contact Info */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >            
-            {/* Social Media */}
-            <div className="mb-8">
-              <h3 className="text-xl font-semibold mb-4">Redes Sociais</h3>
-              <div className="flex space-x-4">
-                <a 
-                  href="https://web.facebook.com/academiaboulder" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="bg-white/10 hover:bg-white/20 w-10 h-10 rounded-full flex items-center justify-center transition duration-300"
-                  aria-label="Facebook"
-                >
-                  <Facebook className="h-5 w-5" />
-                </a>
-                <a 
-                  href="https://www.instagram.com/academiaboulder" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="bg-white/10 hover:bg-white/20 w-10 h-10 rounded-full flex items-center justify-center transition duration-300"
-                  aria-label="Instagram"
-                >
-                  <Instagram className="h-5 w-5" />
-                </a>
-                <a 
-                  href="#" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="bg-white/10 hover:bg-white/20 w-10 h-10 rounded-full flex items-center justify-center transition duration-300"
-                  aria-label="YouTube"
-                >
-                  <Youtube className="h-5 w-5" />
-                </a>
-                <a 
-                  href={`https://wa.me/${WHATSAPP_NUMBER}`}
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="bg-white/10 hover:bg-white/20 w-10 h-10 rounded-full flex items-center justify-center transition duration-300"
-                  aria-label="WhatsApp"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-phone">
-                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-                  </svg>
-                </a>
               </div>
             </div>
-            
-            {/* Map */}
-            <div className="rounded-lg overflow-hidden h-64 bg-white/10">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3658.2684509596247!2d-47.49819742522334!3d-23.52284517882626!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94c58b1bab524bcd%3A0x2537fb85c4b1116d!2sAv.%20Get%C3%BAlio%20Vargas%2C%20475%20-%20Jardim%20Sao%20Paulo%2C%20Sorocaba%20-%20SP%2C%2018051-480!5e0!3m2!1spt-BR!2sbr!4v1764295502390!5m2!1spt-BR!2sbr" width="600" height="450" style={{ border: 0 }} loading="lazy">
-            </iframe>
+
+            <div className="pt-4 border-t border-white/5">
+              <span className="font-mono text-[9px] tracking-[0.3em] opacity-30 uppercase font-bold">
+                © {new Date().getFullYear()} Academia Boulder
+              </span>
             </div>
-          </motion.div>
+          </div>
+
+          {/* Column 2: Form */}
+          <div className="col-span-12 md:col-span-4 flex flex-col pt-2 border-x border-white/5 px-0 md:px-12 h-full">
+            <div className="font-mono text-[10px] tracking-[0.3em] opacity-40 mb-6 uppercase text-[var(--gold)] font-bold">02 · Envie uma mensagem</div>
+            <form className="space-y-5" onSubmit={handleSubmit}>
+              <div className="group">
+                <label className="font-mono text-[9px] tracking-[0.3em] opacity-50 block mb-1.5 uppercase">NOME</label>
+                <input type="text" value={form.name} onChange={e=>setForm({...form, name:e.target.value})} placeholder="Seu nome" data-cursor="link" required
+                  className="w-full bg-transparent border-b border-white/20 focus:border-[var(--gold)] outline-none py-2 text-[17px] transition-all placeholder:text-white/10"/>
+              </div>
+              <div className="group">
+                <label className="font-mono text-[9px] tracking-[0.3em] opacity-50 block mb-1.5 uppercase">EMAIL</label>
+                <input type="email" value={form.email} onChange={e=>setForm({...form, email:e.target.value})} placeholder="voce@dominio.com" data-cursor="link" required
+                  className="w-full bg-transparent border-b border-white/20 focus:border-[var(--gold)] outline-none py-2 text-[17px] transition-all placeholder:text-white/10"/>
+              </div>
+              <div className="group">
+                <label className="font-mono text-[9px] tracking-[0.3em] opacity-50 block mb-1.5 uppercase">INTERESSE</label>
+                <select value={form.interest} onChange={e=>setForm({...form, interest:e.target.value})} data-cursor="link"
+                  className="w-full bg-transparent border-b border-white/20 focus:border-[var(--gold)] outline-none py-2 text-[17px] transition-all">
+                  {['Aula Aberta (Grátis)','Cross Training','Escalada','Outro'].map((o,j)=><option key={j} value={o} className="bg-[var(--azul-ink)]">{o}</option>)}
+                </select>
+              </div>
+              <div className="group">
+                <label className="font-mono text-[9px] tracking-[0.3em] opacity-50 block mb-1.5 uppercase">MENSAGEM</label>
+                <textarea rows={3} value={form.message} onChange={e=>setForm({...form, message:e.target.value})} placeholder="O que você busca?" data-cursor="link" required
+                  className="w-full bg-transparent border-b border-white/20 focus:border-[var(--gold)] outline-none py-2 text-[17px] resize-none transition-all placeholder:text-white/10"/>
+              </div>
+              <button data-cursor="link" type="submit"
+                      className="mt-6 w-full flex items-center justify-between pl-6 pr-2 py-2.5 bg-[var(--gold)] text-[var(--ink)] rounded-full hover:scale-[1.02] transition-all active:scale-95 shadow-[0_15px_30px_rgba(255,215,0,0.1)]">
+                <span className="font-display font-extrabold text-[17px] tracking-tight">ENVIAR AGORA</span>
+                <span className="w-9 h-9 rounded-full bg-[var(--ink)] text-[var(--gold)] grid place-items-center">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                </span>
+              </button>
+            </form>
+          </div>
+
+          {/* Column 3: Address + Map */}
+          <div className="col-span-12 md:col-span-4 flex flex-col h-full pt-2">
+            <div className="font-mono text-[10px] tracking-[0.3em] opacity-40 mb-6 uppercase text-[var(--gold)] font-bold">03 · Unidade</div>
+            <div className="mb-6">
+              <div 
+                data-cursor="link"
+                onClick={() => {
+                  navigator.clipboard.writeText(address);
+                  setCopied(true);
+                  setTimeout(() => setCopied(false), 2000);
+                }}
+                className="group cursor-pointer relative"
+              >
+                <p className="text-[17px] leading-snug opacity-80 font-medium whitespace-pre-line mb-1 group-hover:text-[var(--gold)] transition-colors">
+                  {address}
+                </p>
+                <div className="flex items-center gap-2">
+                  <span className="font-mono text-[9px] tracking-[0.1em] uppercase opacity-40 group-hover:opacity-100 transition-opacity">
+                    {copied ? '✓ Copiado!' : 'Clique para copiar'}
+                  </span>
+                </div>
+              </div>
+              <a data-cursor="link" href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`} target="_blank" rel="noopener noreferrer" 
+                 className="mt-4 inline-flex items-center gap-2 text-[var(--gold)] hover:text-white transition-all">
+                <span className="font-mono text-[10px] tracking-[0.1em] uppercase">VER NO GOOGLE MAPS</span>
+                <span className="block w-6 h-px bg-current"/>
+              </a>
+            </div>
+
+            <div className="relative flex-1 w-full bg-white/5 rounded-2xl overflow-hidden border border-white/10 grayscale opacity-40 hover:opacity-100 transition-all duration-700 min-h-[180px]">
+              <iframe
+                title="Google Maps"
+                src={safeMapUrl}
+                width="100%"
+                height="100%"
+                style={{ border: 0, filter: 'invert(90%) hue-rotate(180deg) brightness(1.1) saturate(0.8)' }}
+                allowFullScreen={false}
+                loading="lazy"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </section>
   );
-};
-
-export default ContactSection;
+}
