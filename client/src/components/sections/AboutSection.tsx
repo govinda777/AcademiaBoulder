@@ -203,23 +203,6 @@ const AboutSection = () => {
                 Nossa infraestrutura foi pensada para oferecer o melhor em escalada e treinamento funcional, com segurança e orientação profissional.
               </p>
             </div>
-
-            {/* Destaques List */}
-            {highlights && highlights.length > 0 && (
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                {highlights.map((highlight, index) => (
-                  <div key={index} className="flex gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-neutral-50 flex items-center justify-center flex-shrink-0 shadow-sm border border-neutral-100">
-                      {renderIcon(highlight.icon)}
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-secondary text-base">{highlight.title}</h4>
-                      <p className="text-sm text-neutral-500 leading-snug">{highlight.description}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
           </motion.div>
         </div>
 
