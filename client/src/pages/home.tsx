@@ -4,20 +4,20 @@ import { StructuredData, createLocalBusinessSchema } from "@/components/seo/Stru
 import HeroSection from "@/components/sections/HeroSection";
 import ProgramsSection from "@/components/sections/ProgramsSection";
 import AboutSection from "@/components/sections/AboutSection";
-import ContactSection from "@/components/sections/ContactSection";
+import TeamSection from "@/components/sections/TeamSection";
+import FacilitiesSection from "@/components/sections/FacilitiesSection";
 import FAQSection from "@/components/sections/FAQSection";
+import ContactSection from "@/components/sections/ContactSection";
 
 const Home = () => {
-  // Smooth scroll to sections when navigating via hash links
   useEffect(() => {
     const handleHashChange = () => {
       const { hash } = window.location;
       if (hash) {
         const element = document.getElementById(hash.substring(1));
         if (element) {
-          // Add a slight delay to ensure any layout shifts have completed
           setTimeout(() => {
-            const headerOffset = 80;
+            const headerOffset = 0; // Header is fixed but sections handle their own paddings in this design
             const elementPosition = element.getBoundingClientRect().top;
             const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 
@@ -30,14 +30,11 @@ const Home = () => {
       }
     };
 
-    // Handle hash on initial load
     if (window.location.hash) {
       handleHashChange();
     }
 
-    // Add event listener for hash changes
     window.addEventListener("hashchange", handleHashChange);
-
     return () => {
       window.removeEventListener("hashchange", handleHashChange);
     };
@@ -61,8 +58,10 @@ const Home = () => {
       <HeroSection />
       <ProgramsSection />
       <AboutSection />
-      <ContactSection />
+      <TeamSection />
+      <FacilitiesSection />
       <FAQSection />
+      <ContactSection />
     </>
   );
 };
