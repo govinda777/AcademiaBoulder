@@ -120,7 +120,7 @@ function ProgramCard({ p, index, onSelect }: { p: any, index: number, onSelect: 
       onClick={onSelect}
       data-cursor="view"
       data-theme={isLight ? 'light' : 'dark'}
-      className="relative overflow-hidden grain h-full group flex flex-col cursor-pointer"
+      className="relative overflow-hidden grain min-h-[220px] md:min-h-[380px] md:h-full group flex flex-col cursor-pointer"
       style={{
         background: style.bg, color: style.text,
         transform: `rotate(${rotation}deg) scale(${hover?1.02:1})`,
@@ -141,15 +141,15 @@ function ProgramCard({ p, index, onSelect }: { p: any, index: number, onSelect: 
         </div>
       )}
 
-      <div className="relative p-8 md:p-10 flex flex-col h-full z-10">
-        <div className="font-mono text-[9px] tracking-[0.4em] opacity-40 mb-6 uppercase">
+      <div className="relative p-6 md:p-10 flex flex-col h-full z-10">
+        <div className="font-mono text-[9px] tracking-[0.2em] md:tracking-[0.4em] opacity-50 mb-3 md:mb-6 uppercase">
           0{index+1} / {p.shortDescription || 'ACADEMIA BOULDER'}
         </div>
-        <h3 className="font-display font-extrabold leading-[0.85] tracking-[-0.05em] text-[clamp(28px,3.5vw,56px)] uppercase break-words">
+        <h3 className="font-display font-extrabold leading-[0.85] tracking-[-0.05em] text-[32px] md:text-[clamp(32px,3.5vw,56px)] uppercase break-words">
           {p.title}
         </h3>
         
-        <div className="mt-auto pt-8 flex items-center justify-between border-t border-current/10">
+        <div className="mt-auto pt-6 md:pt-8 flex items-center justify-between border-t border-current/10">
           <div className="flex flex-col">
             <span className="font-mono text-[11px] tracking-[0.4em] uppercase font-bold">Ver +</span>
           </div>
@@ -173,8 +173,8 @@ export default function ProgramsSection(){
   const validPrograms = programs?.filter((p: any) => p.title) || [];
 
   return (
-    <section id="programas" className="relative h-screen bg-[var(--paper)] overflow-hidden flex flex-col justify-center">
-      <div className="px-8 max-w-[1780px] mx-auto w-full flex flex-col h-full pt-[clamp(70px,9vh,110px)] pb-10 md:pb-16">
+    <section id="programas" className="relative min-h-screen bg-[var(--paper)] overflow-y-auto md:overflow-hidden flex flex-col justify-center py-20 md:py-0 md:h-screen">
+      <div className="px-8 max-w-[1780px] mx-auto w-full flex flex-col h-auto md:h-full pt-[clamp(60px,7vh,90px)] pb-12 md:pb-24">
         
         <div className="flex flex-col gap-2 mb-8 md:mb-10 shrink-0">
           <div className="flex items-center gap-4">
@@ -198,9 +198,9 @@ export default function ProgramsSection(){
           </div>
         </div>
 
-        <div className="flex-1 grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-8 min-h-0">
+         <div className="flex-1 grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-8 min-h-0 md:max-h-[500px]">
           {validPrograms.slice(0, 4).map((p: any, i: number) => (
-            <div key={p._id} className="h-full">
+            <div key={p._id} className="h-auto md:h-full">
               <ProgramCard p={p} index={i} onSelect={() => setSelectedProgram(p)} />
             </div>
           ))}
