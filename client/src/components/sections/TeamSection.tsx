@@ -148,7 +148,7 @@ export default function TeamSection(){
           </div>
           <div className="col-span-12 md:col-span-4 self-center">
             <p className="text-[12px] md:text-[14px] leading-[1.6] opacity-65 max-w-[36ch]">
-              {section?.description || "Profissionais que ainda treinam — porque o trabalho começa subindo. Mais de quatro décadas somadas de parede e técnica."}
+              {section?.description}
             </p>
           </div>
         </div>
