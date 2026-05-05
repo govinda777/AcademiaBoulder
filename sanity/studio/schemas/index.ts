@@ -5,6 +5,7 @@ import instructor from './instructor'
 import aboutSection from './aboutSection'
 import faqSection from './faqSection'
 import contactSection from './contactSection'
+import programSection from './programSection'
 
 export const schemaTypes = [
   siteSettings,
@@ -13,5 +14,6 @@ export const schemaTypes = [
   instructor,
   aboutSection,
   faqSection,
-  contactSection
+  contactSection,
+  programSection
 ]

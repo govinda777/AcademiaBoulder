@@ -32,7 +32,9 @@ function ImageLightbox({ src, onClose }: { src: string; onClose: () => void }) {
 export default function FacilitiesSection(){
   const { data: aboutData, isLoading } = useAboutSection();
   const [lightbox, setLightbox] = useState<string | null>(null);
-  const facilities = aboutData?.facilities || [];
+  
+  const section = aboutData?.facilitiesSection;
+  const facilities = (section?.items && section.items.length > 0) ? section.items : (aboutData?.facilities || []);
 
   if (isLoading) return null;
 
@@ -44,20 +46,48 @@ export default function FacilitiesSection(){
           <div className="flex items-center gap-4">
             <span className="font-mono text-[11px] tracking-[0.4em] opacity-30 uppercase">Cap / 04</span>
             <div className="w-8 h-px bg-[var(--ink)]/20" />
-            <span className="font-mono text-[12px] tracking-[0.3em] font-bold uppercase">Nossas Instalações</span>
+            <span className="font-mono text-[11px] tracking-[0.3em] opacity-70 uppercase">
+              {section?.label || "Nossas Instalações"}
+            </span>
           </div>
         </div>
 
         <div className="grid grid-cols-12 gap-8 items-end mb-12 md:mb-20 shrink-0">
           <div className="col-span-12 md:col-span-8">
-            <h2 className="font-display font-extrabold leading-[1.0] tracking-[-0.04em] text-[clamp(28px,4.5vw,52px)]">
-              <span className="block uppercase">UM GINÁSIO <span className="font-serif-it italic text-[var(--azul)]" style={{fontFamily:'Fraunces',fontStyle:'italic',fontWeight:300}}>desenhado</span></span>
-              <span className="block uppercase">COMO UMA <span className="text-[var(--azul)]">ROTA.</span></span>
+            <h2 className="font-display font-extrabold leading-[1.0] tracking-[-0.04em] text-[clamp(40px,6vw,80px)]">
+              {section?.title ? (
+                <>
+                  {(() => {
+                    const parts = section.title.split(' ').filter(Boolean);
+                    // Logic to split "UM GINÁSIO DESENHADO COMO UMA ROTA."
+                    return (
+                      <>
+                        <span className="block uppercase">
+                          {parts.slice(0, 2).join(' ')}{" "}
+                          {parts[2] && (
+                            <span className="font-serif-it italic text-[var(--azul)]" style={{fontFamily:'Fraunces',fontStyle:'italic',fontWeight:300, textTransform:'none'}}>
+                              {parts[2].toLowerCase()}
+                            </span>
+                          )}
+                        </span>
+                        <span className="block uppercase">
+                          {parts.slice(3).join(' ')}
+                        </span>
+                      </>
+                    );
+                  })()}
+                </>
+              ) : (
+                <>
+                  <span className="block uppercase">UM GINÁSIO <span className="font-serif-it italic text-[var(--azul)]" style={{fontFamily:'Fraunces',fontStyle:'italic',fontWeight:300}}>desenhado</span></span>
+                  <span className="block uppercase">COMO UMA <span className="text-[var(--azul)]">ROTA.</span></span>
+                </>
+              )}
             </h2>
           </div>
           <div className="col-span-12 md:col-span-4 self-center">
             <p className="text-[14px] md:text-[16px] leading-[1.6] opacity-65 max-w-[36ch]">
-              Dois ambientes complementares, um só projeto pedagógico. Escalada e cross training se conversam a cada ciclo de treino.
+              {section?.description || "Dois ambientes complementares, um só projeto pedagógico. Escalada e cross training se conversam a cada ciclo de treino."}
             </p>
           </div>
         </div>
@@ -98,7 +128,9 @@ export default function FacilitiesSection(){
                 <div className="absolute top-10 left-10 font-mono text-[11px] tracking-[0.4em] text-white/40 uppercase">Setor · 0{i+1}</div>
 
                 <div className="absolute bottom-12 left-12 right-12">
-                  <div className="font-mono text-[11px] tracking-[0.3em] uppercase text-[var(--gold)] mb-4 font-bold">Capacidade Máxima</div>
+                  <div className="font-mono text-[11px] tracking-[0.3em] uppercase text-[var(--gold)] mb-4 font-bold">
+                    {section?.capacityLabel || "Capacidade Máxima"}
+                  </div>
                   <div className="font-display font-extrabold text-white text-[clamp(40px,5.5vw,82px)] leading-[0.85] tracking-tighter mb-6">
                     {f.name.split(' · ').map((w: string, j: number) => (
                       <span key={j} className="block uppercase">{w}</span>

@@ -68,8 +68,8 @@ export function SEOHead({
       <link rel="canonical" href={canonical || fullUrl} />
 
       {/* Favicon */}
-      <link rel="icon" type="image/png" href="/generated-icon.png" />
-      <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+      <link rel="icon" type="image/png" href="/logo.png" />
+      <link rel="apple-touch-icon" href="/logo.png" />
 
       {/* WhatsApp / Search Engine Image */}
       <meta itemProp="image" content={ogImage} />

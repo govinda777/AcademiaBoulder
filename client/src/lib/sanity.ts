@@ -26,8 +26,8 @@ export const queries = {
   }`,
   
   heroSection: `*[_type == "heroSection"][0]{
+    label,
     title,
-    subtitle,
     backgroundImage,
     backgroundVideo {
       asset-> {
@@ -103,46 +103,25 @@ export const queries = {
     }
   }`,
   
-  events: `*[_type == "event"] | order(date asc){
-    _id,
-    title,
-    slug,
-    description,
-    fullDescription,
-    date,
-    image,
-    location,
-    capacity,
-    price,
-    categories[]{
-      name,
-      requirements,
-      prizes
-    },
-    schedule[]{
-      time,
-      activity
-    },
-    speakers[]->{
-      name,
-      role,
-      bio,
-      image
-    },
-    requirements[]
-  }`,
-  
   about: `*[_type == "aboutSection"][0]{
     mainSection {
+      label,
       title,
       description,
       mission,
       vision,
       values[],
+      missionLabel,
+      visionLabel,
+      valuesLabel,
       mainImage
     },
     teamSection {
+      label,
       title,
+      description,
+      modalExpertiseLabel,
+      modalCloseLabel,
       members[] {
         name,
         role,
@@ -150,20 +129,16 @@ export const queries = {
         image
       }
     },
-    safetySection {
+    facilitiesSection {
+      label,
       title,
       description,
-      stats[] {
-        value,
-        label,
-        description
-      },
-      buttonText
-    },
-    highlights[] {
-      title,
-      description,
-      icon
+      capacityLabel,
+      items[] {
+        name,
+        description,
+        image
+      }
     },
     facilities[] {
       name,
@@ -172,24 +147,18 @@ export const queries = {
     }
   }`,
   
-  community: `*[_type == "communitySection"][0]{
+  programSection: `*[_type == "programSection"][0]{
+    label,
     title,
-    description,
-    instagramFeed[]{
-      image,
-      caption,
-      link
-    },
-    testimonials[]{
-      name,
-      text,
-      image,
-      rating
-    }
+    subtitle,
+    description
   }`,
   
   faq: `*[_type == "faqSection"][0]{
+    label,
     title,
+    subtitle,
+    footer,
     faqs[]{
       question,
       answer
@@ -206,19 +175,5 @@ export const queries = {
       hours
     },
     mapEmbed
-  }`,
-  
-  scheduling: `*[_type == "schedulingSection"][0]{
-    title,
-    description,
-    buttonText,
-    modalTitle,
-    modalDescription,
-    calendarUrl,
-    availableSlots[]{
-      day,
-      timeSlots
-    },
-    notes
   }`
-}
+}

@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from "react";
-import { usePrograms } from "@/hooks/useSanity";
+import { usePrograms, useProgramSection } from "@/hooks/useSanity";
 import { urlFor } from "@/lib/sanity";
 import { ImageWithFallback } from "@/components/ui/ImageWithFallback";
 import { PortableText } from "@portabletext/react";
@@ -165,42 +165,54 @@ function ProgramCard({ p, index, onSelect }: { p: any, index: number, onSelect: 
 }
 
 export default function ProgramsSection(){
-  const { data: programs, isLoading } = usePrograms();
+  const { data: programs, isLoading: pLoading } = usePrograms();
+  const { data: sectionData, isLoading: sLoading } = useProgramSection();
   const [selectedProgram, setSelectedProgram] = useState<any>(null);
 
-  if (isLoading) return null;
+  if (pLoading || sLoading) return null;
 
   const validPrograms = programs?.filter((p: any) => p.title) || [];
 
   return (
-    <section id="programas" className="relative min-h-screen bg-[var(--paper)] overflow-y-auto md:overflow-hidden flex flex-col justify-center py-20 md:py-0 md:h-screen">
-      <div className="px-8 max-w-[1780px] mx-auto w-full flex flex-col h-auto md:h-full pt-[clamp(60px,7vh,90px)] pb-12 md:pb-24">
+    <section id="programas" className="relative min-h-screen bg-[var(--paper)] overflow-y-auto md:overflow-hidden flex flex-col justify-center py-12 md:py-0 md:h-screen">
+      <div className="px-8 max-w-[1780px] mx-auto w-full flex flex-col h-auto md:h-full pt-[clamp(40px,6vh,80px)] pb-8 md:pb-16">
         
-        <div className="flex flex-col gap-2 mb-8 md:mb-10 shrink-0">
+        <div className="flex flex-col gap-2 mb-4 md:mb-6 shrink-0">
           <div className="flex items-center gap-4">
             <span className="font-mono text-[11px] tracking-[0.4em] opacity-30 uppercase">Cap / 01</span>
             <div className="w-8 h-px bg-[var(--ink)]/20" />
-            <span className="font-mono text-[12px] tracking-[0.3em] font-bold uppercase">Nossos Programas</span>
+            <span className="font-mono text-[11px] tracking-[0.3em] opacity-70 uppercase">
+              {sectionData?.label || "Nossos Programas"}
+            </span>
           </div>
         </div>
 
-        <div className="grid grid-cols-12 gap-8 items-end mb-10 md:mb-14 shrink-0">
+        <div className="grid grid-cols-12 gap-8 items-end mb-6 md:mb-10 shrink-0">
           <div className="col-span-12 md:col-span-8">
-            <h2 className="font-display font-extrabold leading-[1.0] tracking-[-0.04em] text-[clamp(28px,4.5vw,52px)]">
-              <span className="block">QUATRO CAMINHOS,</span>
-              <span className="block">UMA <span className="font-serif-it italic text-[var(--azul)]" style={{fontFamily:'Fraunces',fontStyle:'italic',fontWeight:300}}>parede.</span></span>
+            <h2 className="font-display font-extrabold leading-[1.0] tracking-[-0.04em] text-[clamp(32px,5vw,72px)]">
+              {sectionData?.title ? (
+                <>
+                  <span className="block uppercase">{sectionData.title}</span>
+                  <span className="block"><span className="font-serif-it italic text-[var(--azul)]" style={{fontFamily:'Fraunces',fontStyle:'italic',fontWeight:300, textTransform: 'none'}}>{sectionData.subtitle}</span></span>
+                </>
+              ) : (
+                <>
+                  <span className="block uppercase">QUATRO CAMINHOS,</span>
+                  <span className="block"><span className="font-serif-it italic text-[var(--azul)]" style={{fontFamily:'Fraunces',fontStyle:'italic',fontWeight:300, textTransform: 'none'}}>UMA parede.</span></span>
+                </>
+              )}
             </h2>
           </div>
           <div className="col-span-12 md:col-span-4 self-center">
-            <p className="text-[14px] md:text-[16px] leading-[1.6] opacity-60 max-w-[36ch]">
-              Programas pensados para encontrar você onde você está — do primeiro contato com a parede ao próximo grade.
+            <p className="text-[13px] md:text-[15px] leading-[1.6] opacity-60 max-w-[36ch]">
+              {sectionData?.description || "Programas pensados para encontrar você onde você está — do primeiro contato com a parede ao próximo grade."}
             </p>
           </div>
         </div>
 
-         <div className="flex-1 grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-8 min-h-0 md:max-h-[500px]">
+         <div className="flex-1 grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-6 min-h-0">
           {validPrograms.slice(0, 4).map((p: any, i: number) => (
-            <div key={p._id} className="h-auto md:h-full">
+            <div key={p._id} className="h-auto md:h-full min-h-0">
               <ProgramCard p={p} index={i} onSelect={() => setSelectedProgram(p)} />
             </div>
           ))}

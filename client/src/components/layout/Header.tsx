@@ -45,14 +45,12 @@ const Header = () => {
         <div className="flex justify-between items-center py-4">
           <div className="flex items-center">
             <button onClick={() => navigate("/")} className="flex items-center gap-3">
-              {siteSettings?.logo ? (
-                <ImageWithFallback
-                  src={urlFor(siteSettings.logo).url()}
-                  fallbackSrc="/placeholder-image.jpg"
-                  alt={siteSettings?.siteName || "Academia Boulder"}
-                  className="h-20 w-auto"
-                />
-              ) : null}
+              <ImageWithFallback
+                src="/logo.png"
+                fallbackSrc="/placeholder-image.jpg"
+                alt={siteSettings?.siteName || "Academia Boulder"}
+                className="h-20 w-auto"
+              />
               <span className="text-2xl font-bold font-sans">
                 <span className="text-primary">{siteSettings?.siteName?.split(' ')[0] || "Academia"}</span>
                 <span className="text-secondary">{' '}{siteSettings?.siteName?.split(' ')[1] || "Boulder"}</span>
