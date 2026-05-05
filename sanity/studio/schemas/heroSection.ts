@@ -5,15 +5,17 @@ export default {
   __experimental_actions: ['update', 'publish'],
   fields: [
     {
+      name: 'label',
+      title: 'Rótulo Superior (Tagline)',
+      type: 'string',
+      initialValue: 'ESCALADA · CROSS · TRAINING'
+    },
+    {
       name: 'title',
       title: 'Título Principal',
       type: 'string',
-      validation: (Rule: any) => Rule.required()
-    },
-    {
-      name: 'subtitle',
-      title: 'Subtítulo',
-      type: 'text'
+      validation: (Rule: any) => Rule.required(),
+      initialValue: 'DESCUBRA SEUS limites. CADA AGARRA.'
     },
     {
       name: 'backgroundImage',

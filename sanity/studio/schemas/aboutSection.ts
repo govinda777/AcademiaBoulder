@@ -10,10 +10,16 @@ export default {
       type: 'object',
       fields: [
         {
-          name: 'title',
-          title: 'Título',
+          name: 'label',
+          title: 'Rótulo da Seção',
           type: 'string',
-          validation: (Rule: any) => Rule.required()
+          initialValue: 'SOBRE A ACADEMIA BOULDER'
+        },
+        {
+          name: 'title',
+          title: 'Título Principal',
+          type: 'string',
+          initialValue: 'TRANSFORMANDO vidas ATRAVÉS DO ESPORTE E DA SUPERAÇÃO.'
         },
         {
           name: 'description',
@@ -49,6 +55,24 @@ export default {
           validation: (Rule: any) => Rule.required()
         },
         {
+          name: 'missionLabel',
+          title: 'Rótulo Missão',
+          type: 'string',
+          initialValue: 'Missão'
+        },
+        {
+          name: 'visionLabel',
+          title: 'Rótulo Visão',
+          type: 'string',
+          initialValue: 'Visão'
+        },
+        {
+          name: 'valuesLabel',
+          title: 'Rótulo Valores',
+          type: 'string',
+          initialValue: 'Valores'
+        },
+        {
           name: 'mainImage',
           title: 'Imagem Principal',
           type: 'image',
@@ -65,10 +89,34 @@ export default {
       type: 'object',
       fields: [
         {
-          name: 'title',
-          title: 'Título da Seção',
+          name: 'label',
+          title: 'Rótulo da Seção',
           type: 'string',
-          initialValue: 'Nossa Equipe Técnica'
+          initialValue: 'NOSSA EQUIPE TÉCNICA'
+        },
+        {
+          name: 'title',
+          title: 'Título Principal',
+          type: 'string',
+          initialValue: 'QUEM ABRE os caminhos.'
+        },
+        {
+          name: 'description',
+          title: 'Descrição da Seção',
+          type: 'text',
+          initialValue: 'Profissionais que ainda treinam — porque o trabalho começa subindo. Mais de quatro décadas somadas de parede e técnica.'
+        },
+        {
+          name: 'modalExpertiseLabel',
+          title: 'Rótulo de Expertise (Modal)',
+          type: 'string',
+          initialValue: 'Trajetória e Expertise'
+        },
+        {
+          name: 'modalCloseLabel',
+          title: 'Rótulo de Fechar (Modal)',
+          type: 'string',
+          initialValue: 'Fechar Perfil'
         },
         {
           name: 'members',
@@ -110,132 +158,64 @@ export default {
       ]
     },
 
-    // Seção de Segurança
+    // Seção de Instalações
     {
-      name: 'safetySection',
-      title: 'Seção de Segurança',
+      name: 'facilitiesSection',
+      title: 'Seção de Instalações',
       type: 'object',
       fields: [
         {
-          name: 'title',
-          title: 'Título',
+          name: 'label',
+          title: 'Rótulo da Seção',
           type: 'string',
-          initialValue: 'Relatório Anual de Segurança'
+          initialValue: 'NOSSAS INSTALAÇÕES'
+        },
+        {
+          name: 'title',
+          title: 'Título Principal',
+          type: 'string',
+          initialValue: 'UM GINÁSIO desenhado COMO UMA ROTA.'
         },
         {
           name: 'description',
-          title: 'Descrição',
+          title: 'Descrição de Apoio',
           type: 'text',
-          initialValue: 'Nosso compromisso com a segurança é prioridade. Confira nossos protocolos e estatísticas de acidentes.'
+          initialValue: 'Dois ambientes complementares, um só projeto pedagógico. Escalada e cross training se conversam a cada ciclo de treino.'
         },
         {
-          name: 'stats',
-          title: 'Estatísticas de Segurança',
+          name: 'capacityLabel',
+          title: 'Rótulo de Capacidade',
+          type: 'string',
+          initialValue: 'Capacidade Máxima'
+        },
+        {
+          name: 'items',
+          title: 'Lista de Instalações',
           type: 'array',
           of: [
             {
               type: 'object',
               fields: [
                 {
-                  name: 'value',
-                  title: 'Valor',
-                  type: 'string',
-                  validation: (Rule: any) => Rule.required()
-                },
-                {
-                  name: 'label',
-                  title: 'Rótulo',
+                  name: 'name',
+                  title: 'Nome',
                   type: 'string',
                   validation: (Rule: any) => Rule.required()
                 },
                 {
                   name: 'description',
                   title: 'Descrição',
-                  type: 'string',
+                  type: 'text',
+                  validation: (Rule: any) => Rule.required()
+                },
+                {
+                  name: 'image',
+                  title: 'Imagem',
+                  type: 'image',
+                  options: { hotspot: true },
                   validation: (Rule: any) => Rule.required()
                 }
               ]
-            }
-          ],
-          validation: (Rule: any) => Rule.required().min(1)
-        },
-        {
-          name: 'buttonText',
-          title: 'Texto do Botão',
-          type: 'string',
-          initialValue: 'Ver Relatório Completo'
-        }
-      ]
-    },
-
-    // Seção de Destaques
-    {
-      name: 'highlights',
-      title: 'Destaques',
-      type: 'array',
-      of: [
-        {
-          type: 'object',
-          fields: [
-            {
-              name: 'title',
-              title: 'Título',
-              type: 'string',
-              validation: (Rule: any) => Rule.required()
-            },
-            {
-              name: 'description',
-              title: 'Descrição',
-              type: 'string',
-              validation: (Rule: any) => Rule.required()
-            },
-            {
-              name: 'icon',
-              title: 'Ícone',
-              type: 'string',
-              options: {
-                list: [
-                  { title: 'Usuários', value: 'users' },
-                  { title: 'Graduação', value: 'graduation' },
-                  { title: 'Escudo', value: 'shield' }
-                ]
-              },
-              validation: (Rule: any) => Rule.required()
-            }
-          ]
-        }
-      ]
-    },
-
-    // Seção de Instalações
-    {
-      name: 'facilities',
-      title: 'Instalações',
-      type: 'array',
-      of: [
-        {
-          type: 'object',
-          fields: [
-            {
-              name: 'name',
-              title: 'Nome',
-              type: 'string',
-              validation: (Rule: any) => Rule.required()
-            },
-            {
-              name: 'description',
-              title: 'Descrição',
-              type: 'text',
-              validation: (Rule: any) => Rule.required()
-            },
-            {
-              name: 'image',
-              title: 'Imagem',
-              type: 'image',
-              options: {
-                hotspot: true
-              },
-              validation: (Rule: any) => Rule.required()
             }
           ]
         }

@@ -4,7 +4,7 @@ import { urlFor } from "@/lib/sanity";
 import { ImageWithFallback } from "@/components/ui/ImageWithFallback";
 import { motion, AnimatePresence } from "framer-motion";
 
-function TeamModal({ m, onClose, index }: { m: any; onClose: () => void, index: number }) {
+function TeamModal({ m, onClose, index, labels }: { m: any; onClose: () => void, index: number, labels?: any }) {
   useEffect(() => {
     document.body.style.overflow = 'hidden';
     return () => { document.body.style.overflow = 'unset'; };
@@ -67,7 +67,9 @@ function TeamModal({ m, onClose, index }: { m: any; onClose: () => void, index: 
             <div className="flex-1">
               <div className="flex items-center gap-6 mb-10 md:mb-14">
                 <div className="w-10 h-px bg-[var(--azul)]" />
-                <span className="font-mono text-[11px] tracking-[0.3em] text-[var(--azul)] uppercase font-extrabold italic">Trajetória e Expertise</span>
+                <span className="font-mono text-[11px] tracking-[0.3em] text-[var(--azul)] uppercase font-extrabold italic">
+                  {labels?.modalExpertiseLabel || "Trajetória e Expertise"}
+                </span>
               </div>
               
               {m.bio && (
@@ -83,7 +85,7 @@ function TeamModal({ m, onClose, index }: { m: any; onClose: () => void, index: 
 
             <div className="mt-16">
               <button className="px-14 py-7 rounded-full bg-[var(--ink)] text-white font-mono text-[12px] tracking-[0.4em] uppercase hover:bg-[var(--azul)] hover:-translate-y-1 transition-all duration-300 shadow-2xl" onClick={onClose}>
-                Fechar Perfil
+                {labels?.modalCloseLabel || "Fechar Perfil"}
               </button>
             </div>
           </div>
@@ -96,38 +98,63 @@ function TeamModal({ m, onClose, index }: { m: any; onClose: () => void, index: 
 export default function TeamSection(){
   const { data: aboutData, isLoading } = useAboutSection();
   const [active, setActive] = useState<{ member: any, index: number } | null>(null);
-  const team = aboutData?.teamSection?.members || [];
+  
+  const section = aboutData?.teamSection;
+  const team = section?.members || [];
 
   if (isLoading) return null;
 
   return (
-    <section id="equipe" className="relative min-h-screen bg-[var(--paper)] overflow-x-hidden flex flex-col justify-center py-20 md:py-0 md:h-screen">
-      <div className="px-8 max-w-[1500px] mx-auto w-full flex flex-col h-full pt-[clamp(70px,9vh,110px)] pb-10 md:pb-16">
+    <section id="equipe" className="relative min-h-screen bg-[var(--paper)] overflow-x-hidden md:overflow-y-hidden flex flex-col justify-center py-20 md:py-0 md:h-screen">
+      <div className="px-8 max-w-[1500px] mx-auto w-full flex flex-col h-full pt-[clamp(60px,7vh,90px)] pb-10 md:pb-16">
         
         <div className="flex flex-col gap-2 mb-8 md:mb-10 shrink-0">
           <div className="flex items-center gap-4">
             <span className="font-mono text-[11px] tracking-[0.4em] opacity-30 uppercase">Cap / 03</span>
             <div className="w-8 h-px bg-[var(--ink)]/20" />
-            <span className="font-mono text-[12px] tracking-[0.3em] font-bold uppercase">Nossa Equipe Técnica</span>
+            <span className="font-mono text-[11px] tracking-[0.3em] opacity-70 uppercase">
+              {section?.label || "Nossa Equipe Técnica"}
+            </span>
           </div>
         </div>
 
         <div className="grid grid-cols-12 gap-8 items-end mb-8 md:mb-12 shrink-0">
           <div className="col-span-12 md:col-span-8">
-            <h2 className="font-display font-extrabold leading-[1.0] tracking-[-0.04em] text-[clamp(28px,4.5vw,52px)]">
-              <span className="block uppercase">QUEM ABRE</span>
-              <span className="font-serif-it italic text-[var(--azul)]" style={{fontFamily:'Fraunces',fontStyle:'italic',fontWeight:300}}>os caminhos.</span>
+            <h2 className="font-display font-extrabold leading-[1.0] tracking-[-0.04em] text-[clamp(40px,6vw,80px)]">
+              {section?.title ? (
+                <>
+                  {(() => {
+                    const parts = section.title.split(' ').filter(Boolean);
+                    if (parts.length >= 2) {
+                      return (
+                        <>
+                          <span className="block uppercase">{parts.slice(0, -2).join(' ')} {parts[parts.length-2]}</span>
+                          <span className="font-serif-it italic text-[var(--azul)]" style={{fontFamily:'Fraunces',fontStyle:'italic',fontWeight:300, display:'block', textTransform: 'none'}}>
+                            {parts[parts.length-1].toLowerCase()}
+                          </span>
+                        </>
+                      );
+                    }
+                    return <span className="block uppercase">{section.title}</span>;
+                  })()}
+                </>
+              ) : (
+                <>
+                  <span className="block uppercase">QUEM ABRE</span>
+                  <span className="font-serif-it italic text-[var(--azul)]" style={{fontFamily:'Fraunces',fontStyle:'italic',fontWeight:300}}>os caminhos.</span>
+                </>
+              )}
             </h2>
           </div>
           <div className="col-span-12 md:col-span-4 self-center">
             <p className="text-[12px] md:text-[14px] leading-[1.6] opacity-65 max-w-[36ch]">
-              Profissionais que ainda treinam — porque o trabalho começa subindo. Mais de quatro décadas somadas de parede e técnica.
+              {section?.description || "Profissionais que ainda treinam — porque o trabalho começa subindo. Mais de quatro décadas somadas de parede e técnica."}
             </p>
           </div>
         </div>
 
         <div className="flex-1 flex items-center justify-center min-h-0 py-2">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-14 w-full max-w-[950px] mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10 w-full max-w-[950px] mx-auto">
             {team.map((m: any, i: number) => {
               const rotations = [-2.5, 2, -1.8];
               const offsets = ['md:mt-0', 'md:mt-12', 'md:mt-6'];
@@ -170,7 +197,7 @@ export default function TeamSection(){
 
       <AnimatePresence>
         {active && (
-          <TeamModal m={active.member} index={active.index} onClose={() => setActive(null)} />
+          <TeamModal m={active.member} index={active.index} onClose={() => setActive(null)} labels={section} />
         )}
       </AnimatePresence>
     </section>

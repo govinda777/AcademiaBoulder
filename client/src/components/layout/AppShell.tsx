@@ -76,9 +76,9 @@ function RadialMenu(){
              style={{transform: open?'rotate(135deg) scale(1.05)':'rotate(0deg)'}}>
           <defs>
             <radialGradient id="grip-rg2" cx="35%" cy="35%" r="80%">
-              <stop offset="0%" stopColor="#FFE25C"/>
-              <stop offset="55%" stopColor="#FFD700"/>
-              <stop offset="100%" stopColor="#C28800"/>
+              <stop offset="0%" stopColor="#6BB6FF"/>
+              <stop offset="55%" stopColor="#1E88E5"/>
+              <stop offset="100%" stopColor="#0E4F8E"/>
             </radialGradient>
           </defs>
           <path d="M50 6 C70 6, 92 22, 92 46 C94 68, 76 92, 52 92 C28 96, 6 78, 6 54 C4 30, 30 6, 50 6Z"
@@ -96,7 +96,7 @@ function RadialMenu(){
         <div onClick={()=>setOpen(false)}
              className={`absolute inset-0 transition-all duration-700 ${open?'opacity-100':'opacity-0'}`}
              style={{
-               background: 'radial-gradient(circle at calc(100% - 48px) 48px, rgba(255,215,0,0.20), rgba(5,28,54,0.92) 40%, rgba(5,28,54,0.97) 70%)',
+               background: 'radial-gradient(circle at calc(100% - 48px) 48px, rgba(30,136,229,0.20), rgba(5,28,54,0.92) 40%, rgba(5,28,54,0.97) 70%)',
                backdropFilter: open?'blur(2px)':'none'
              }}/>
         <div className="absolute top-12 right-12">
@@ -115,12 +115,12 @@ function RadialMenu(){
                  }}>
                 <div className="flex items-center gap-3 -translate-x-full -translate-y-1/2">
                   <div className="text-right">
-                    <div className="font-mono text-[10px] tracking-[0.2em] text-[var(--gold)] opacity-90">{n.sub}</div>
-                    <div className="font-display font-extrabold text-[40px] leading-[0.85] text-[var(--paper)] hover:text-[var(--gold)] transition-colors whitespace-nowrap">
+                    <div className="font-mono text-[10px] tracking-[0.2em] text-[var(--azul)] opacity-90">{n.sub}</div>
+                    <div className="font-display font-extrabold text-[40px] leading-[0.85] text-[var(--paper)] hover:text-[var(--azul)] transition-colors whitespace-nowrap">
                       {n.label}
                     </div>
                   </div>
-                  <div className="w-3 h-3 rounded-full bg-[var(--gold)]"/>
+                  <div className="w-3 h-3 rounded-full bg-[var(--azul)]"/>
                 </div>
               </a>
             );
@@ -138,21 +138,14 @@ function TopStrip(){
     <div className="fixed top-0 left-0 right-0 z-[50] mix-blend-difference">
       <div className="flex items-center justify-between px-6 py-4">
         <a href="#inicio" data-cursor="link" className="flex items-center gap-4">
-          {siteSettings?.logo ? (
-            <div className="bg-white/90 p-1 rounded-lg md:p-1.5 md:rounded-xl">
-              <ImageWithFallback
-                src={urlFor(siteSettings.logo).url()}
-                fallbackSrc="/placeholder-image.jpg"
-                alt={siteSettings?.siteName || "Academia Boulder"}
-                className="h-8 md:h-10 w-auto object-contain"
-              />
-            </div>
-          ) : (
-            <svg width="38" height="38" viewBox="0 0 40 40">
-              <path d="M6 8 C8 4, 18 2, 26 4 C36 6, 40 16, 36 24 C34 34, 22 40, 12 36 C2 34, 0 22, 6 8Z" fill="#FAFAF7"/>
-              <path d="M14 12 L14 30 L23 30 C29 30, 30 22, 24 21 C29 20, 28 12, 22 12 Z" fill="#0F1116"/>
-            </svg>
-          )}
+          <div className="bg-white/90 p-1 rounded-lg md:p-1.5 md:rounded-xl">
+            <ImageWithFallback
+              src="/logo.png"
+              fallbackSrc="/placeholder-image.jpg"
+              alt={siteSettings?.siteName || "Academia Boulder"}
+              className="h-8 md:h-10 w-auto object-contain"
+            />
+          </div>
           <div className="leading-none text-[var(--paper)]">
             <div className="font-display font-extrabold text-[14px] md:text-[20px] tracking-tight">{siteSettings?.siteName?.split(' ')[0]?.toUpperCase() || "ACADEMIA"}</div>
             <div className="font-mono text-[8px] md:text-[11px] tracking-[0.25em] md:tracking-[0.35em] opacity-90 -mt-0.5">{siteSettings?.siteName?.split(' ')[1]?.toUpperCase().split('').join(' · ') || "B · O · U · L · D · E · R"}</div>

@@ -25,6 +25,14 @@ export function usePrograms() {
   })
 }
 
+export function useProgramSection() {
+  return useQuery({
+    queryKey: ['sanity', 'programSection'],
+    queryFn: () => client.fetch(queries.programSection),
+    staleTime: 1000 * 60 * 5,
+  })
+}
+
 export function useProgram(slug: string) {
   return useQuery({
     queryKey: ['sanity', 'program', slug],
@@ -34,26 +42,10 @@ export function useProgram(slug: string) {
   })
 }
 
-export function useEvents() {
-  return useQuery({
-    queryKey: ['sanity', 'events'],
-    queryFn: () => client.fetch(queries.events),
-    staleTime: 1000 * 60 * 5,
-  })
-}
-
 export function useAboutSection() {
   return useQuery({
     queryKey: ['sanity', 'about'],
     queryFn: () => client.fetch(queries.about),
-    staleTime: 1000 * 60 * 5,
-  })
-}
-
-export function useCommunitySection() {
-  return useQuery({
-    queryKey: ['sanity', 'community'],
-    queryFn: () => client.fetch(queries.community),
     staleTime: 1000 * 60 * 5,
   })
 }
@@ -70,14 +62,6 @@ export function useContactSection() {
   return useQuery({
     queryKey: ['sanity', 'contact'],
     queryFn: () => client.fetch(queries.contact),
-    staleTime: 1000 * 60 * 5,
-  })
-}
-
-export function useSchedulingSection() {
-  return useQuery({
-    queryKey: ['sanity', 'scheduling'],
-    queryFn: () => client.fetch(queries.scheduling),
     staleTime: 1000 * 60 * 5,
   })
 }
