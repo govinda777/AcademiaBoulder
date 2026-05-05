@@ -205,7 +205,7 @@ export default function ProgramsSection(){
           </div>
           <div className="col-span-12 md:col-span-4 self-center">
             <p className="text-[13px] md:text-[15px] leading-[1.6] opacity-60 max-w-[36ch]">
-              {sectionData?.description || "Programas pensados para encontrar você onde você está — do primeiro contato com a parede ao próximo grade."}
+              {sectionData?.description}
             </p>
           </div>
         </div>

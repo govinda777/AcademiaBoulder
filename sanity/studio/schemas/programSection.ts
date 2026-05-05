@@ -25,8 +25,7 @@ export default {
     {
       name: 'description',
       title: 'Descrição Curta',
-      type: 'text',
-      initialValue: 'Programas pensados para encontrar você onde você está — do primeiro contato com a parede ao próximo grade.'
+      type: 'text'
     }
   ]
 }

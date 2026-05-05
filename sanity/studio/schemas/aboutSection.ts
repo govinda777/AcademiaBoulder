@@ -103,8 +103,7 @@ export default {
         {
           name: 'description',
           title: 'Descrição da Seção',
-          type: 'text',
-          initialValue: 'Profissionais que ainda treinam — porque o trabalho começa subindo. Mais de quatro décadas somadas de parede e técnica.'
+          type: 'text'
         },
         {
           name: 'modalExpertiseLabel',
