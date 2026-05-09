@@ -27,23 +27,6 @@ export default {
       options: {
         hotspot: true
       }
-    },
-    {
-      name: 'specialties',
-      title: 'Especialidades',
-      type: 'array',
-      of: [{ type: 'string' }]
-    },
-    {
-      name: 'certifications',
-      title: 'Certificações',
-      type: 'array',
-      of: [{ type: 'string' }]
-    },
-    {
-      name: 'experience',
-      title: 'Experiência',
-      type: 'string'
     }
   ]
 }

@@ -3,6 +3,9 @@ import { useAboutSection } from "@/hooks/useSanity";
 import { urlFor } from "@/lib/sanity";
 import { ImageWithFallback } from "@/components/ui/ImageWithFallback";
 import { motion, AnimatePresence } from "framer-motion";
+import { SectionContainer } from "@/components/ui/SectionContainer";
+import { SectionHeader } from "@/components/ui/SectionHeader";
+import { SectionTitle } from "@/components/ui/SectionTitle";
 
 function ImageLightbox({ src, onClose }: { src: string; onClose: () => void }) {
   return (
@@ -39,115 +42,84 @@ export default function FacilitiesSection(){
   if (isLoading) return null;
 
   return (
-    <section id="instalacoes" className="relative min-h-[130vh] bg-[var(--paper)] overflow-hidden flex flex-col justify-center py-20">
-      <div className="px-8 max-w-[1780px] mx-auto w-full flex flex-col pt-[clamp(70px,9vh,110px)]">
-        
-        <div className="flex flex-col gap-2 mb-8 md:mb-10 shrink-0">
-          <div className="flex items-center gap-4">
-            <span className="font-mono text-[11px] tracking-[0.4em] opacity-30 uppercase">Cap / 04</span>
-            <div className="w-8 h-px bg-[var(--ink)]/20" />
-            <span className="font-mono text-[11px] tracking-[0.3em] opacity-70 uppercase">
-              {section?.label || "Nossas Instalações"}
+    <SectionContainer id="instalacoes">
+      <SectionHeader chapter="04" label={section?.label || "Nossas Instalações"} className="mb-8 md:mb-10" />
+
+      <div className="grid grid-cols-12 gap-8 items-end mb-12 md:mb-20 shrink-0">
+        <div className="col-span-12 md:col-span-8">
+          <SectionTitle>
+            <span className="block uppercase">
+              {section?.title || "UM GINÁSIO"}{" "}
+              <span className="font-serif-it italic text-[var(--azul)]" style={{fontFamily:'Fraunces',fontStyle:'italic',fontWeight:300, textTransform:'none'}}>
+                {section?.highlightedTitle || "desenhado"}
+              </span>
             </span>
-          </div>
+            <span className="block uppercase">
+              {section?.titlePart2 || "COMO UMA ROTA."}
+            </span>
+          </SectionTitle>
         </div>
-
-        <div className="grid grid-cols-12 gap-8 items-end mb-12 md:mb-20 shrink-0">
-          <div className="col-span-12 md:col-span-8">
-            <h2 className="font-display font-extrabold leading-[1.0] tracking-[-0.04em] text-[clamp(40px,6vw,80px)]">
-              {section?.title ? (
-                <>
-                  {(() => {
-                    const parts = section.title.split(' ').filter(Boolean);
-                    // Logic to split "UM GINÁSIO DESENHADO COMO UMA ROTA."
-                    return (
-                      <>
-                        <span className="block uppercase">
-                          {parts.slice(0, 2).join(' ')}{" "}
-                          {parts[2] && (
-                            <span className="font-serif-it italic text-[var(--azul)]" style={{fontFamily:'Fraunces',fontStyle:'italic',fontWeight:300, textTransform:'none'}}>
-                              {parts[2].toLowerCase()}
-                            </span>
-                          )}
-                        </span>
-                        <span className="block uppercase">
-                          {parts.slice(3).join(' ')}
-                        </span>
-                      </>
-                    );
-                  })()}
-                </>
-              ) : (
-                <>
-                  <span className="block uppercase">UM GINÁSIO <span className="font-serif-it italic text-[var(--azul)]" style={{fontFamily:'Fraunces',fontStyle:'italic',fontWeight:300}}>desenhado</span></span>
-                  <span className="block uppercase">COMO UMA <span className="text-[var(--azul)]">ROTA.</span></span>
-                </>
-              )}
-            </h2>
-          </div>
-          <div className="col-span-12 md:col-span-4 self-center">
-            <p className="text-[14px] md:text-[16px] leading-[1.6] opacity-65 max-w-[36ch]">
-              {section?.description || "Dois ambientes complementares, um só projeto pedagógico. Escalada e cross training se conversam a cada ciclo de treino."}
-            </p>
-          </div>
+        <div className="col-span-12 md:col-span-4 self-center">
+          <p className="text-[14px] md:text-[16px] leading-[1.6] opacity-65 max-w-[36ch]">
+            {section?.description || "Dois ambientes complementares, um só projeto pedagógico. Escalada e cross training se conversam a cada ciclo de treino."}
+          </p>
         </div>
+      </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 w-full">
-          {facilities.map((f: any, i: number) => {
-            const imageUrl = f.image ? urlFor(f.image).url() : '';
-            return (
-              <div key={i} 
-                   onClick={() => imageUrl && setLightbox(imageUrl)}
-                   data-cursor="expand"
-                   className={`relative ${i % 2 !== 0 ? 'md:mt-32' : ''} group overflow-hidden rounded-[32px] bg-[var(--ink)] cursor-pointer grain`}
-                   style={{ 
-                     boxShadow: '0 30px 80px rgba(0,0,0,0.4)',
-                     minHeight: '480px',
-                     transform: `rotate(${i % 2 === 0 ? -1.5 : 1.5}deg)`,
-                     transition: 'transform 0.8s cubic-bezier(0.2, 0, 0, 1)'
-                   }}>
-                
-                <div className="absolute inset-0">
-                  {f.image ? (
-                    <ImageWithFallback
-                      src={imageUrl}
-                      fallbackSrc="/placeholder-facility.jpg"
-                      alt={f.name}
-                      className="w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 group-hover:scale-110 group-hover:opacity-100 transition-all duration-1000"
-                    />
-                  ) : (
-                    <div className="w-full h-full bg-gradient-to-br from-neutral-800 to-black opacity-40" />
-                  )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/10 to-transparent" />
-                </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 w-full">
+        {facilities.map((f: any, i: number) => {
+          const imageUrl = f.image ? urlFor(f.image).url() : '';
+          return (
+            <div key={i}
+                  onClick={() => imageUrl && setLightbox(imageUrl)}
+                  data-cursor="expand"
+                  className={`relative ${i % 2 !== 0 ? 'md:mt-32' : ''} group overflow-hidden rounded-[32px] bg-[var(--ink)] cursor-pointer grain`}
+                  style={{
+                    boxShadow: '0 30px 80px rgba(0,0,0,0.4)',
+                    minHeight: '480px',
+                    transform: `rotate(${i % 2 === 0 ? -1.5 : 1.5}deg)`,
+                    transition: 'transform 0.8s cubic-bezier(0.2, 0, 0, 1)'
+                  }}>
 
-                <svg viewBox="0 0 600 400" className="absolute inset-0 w-full h-full mix-blend-overlay opacity-40 pointer-events-none" preserveAspectRatio="none">
-                  <path d="M40 320 C100 280, 220 300, 280 240 C340 180, 420 220, 500 160 C560 120, 600 80, 600 40 L600 400 L0 400 Z" fill="rgba(0,0,0,0.5)"/>
-                </svg>
-
-                <div className="absolute top-10 left-10 font-mono text-[11px] tracking-[0.4em] text-white/40 uppercase">Setor · 0{i+1}</div>
-
-                <div className="absolute bottom-12 left-12 right-12">
-                  <div className="font-mono text-[11px] tracking-[0.3em] uppercase text-[var(--gold)] mb-4 font-bold">
-                    {section?.capacityLabel || "Capacidade Máxima"}
-                  </div>
-                  <div className="font-display font-extrabold text-white text-[clamp(40px,5.5vw,82px)] leading-[0.85] tracking-tighter mb-6">
-                    {f.name.split(' · ').map((w: string, j: number) => (
-                      <span key={j} className="block uppercase">{w}</span>
-                    ))}
-                  </div>
-                  <p className="text-white/80 text-[16px] md:text-[18px] leading-relaxed max-w-[40ch] opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">{f.description}</p>
-                </div>
+              <div className="absolute inset-0">
+                {f.image ? (
+                  <ImageWithFallback
+                    src={imageUrl}
+                    fallbackSrc="/placeholder-facility.jpg"
+                    alt={f.name}
+                    className="w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 group-hover:scale-110 group-hover:opacity-100 transition-all duration-1000"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-gradient-to-br from-neutral-800 to-black opacity-40" />
+                )}
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/10 to-transparent" />
               </div>
-            );
-          })}
-        </div>
 
+              <svg viewBox="0 0 600 400" className="absolute inset-0 w-full h-full mix-blend-overlay opacity-40 pointer-events-none" preserveAspectRatio="none">
+                <path d="M40 320 C100 280, 220 300, 280 240 C340 180, 420 220, 500 160 C560 120, 600 80, 600 40 L600 400 L0 400 Z" fill="rgba(0,0,0,0.5)"/>
+              </svg>
+
+              <div className="absolute top-10 left-10 font-mono text-[11px] tracking-[0.4em] text-white/40 uppercase">Setor · 0{i+1}</div>
+
+              <div className="absolute bottom-12 left-12 right-12">
+                <div className="font-mono text-[11px] tracking-[0.3em] uppercase text-[var(--gold)] mb-4 font-bold">
+                  {section?.capacityLabel || "Capacidade Máxima"}
+                </div>
+                <div className="font-display font-extrabold text-white text-[clamp(40px,5.5vw,82px)] leading-[0.85] tracking-tighter mb-6">
+                  {f.name.split(' · ').map((w: string, j: number) => (
+                    <span key={j} className="block uppercase">{w}</span>
+                  ))}
+                </div>
+                <p className="text-white/80 text-[16px] md:text-[18px] leading-relaxed max-w-[40ch] opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">{f.description}</p>
+              </div>
+            </div>
+          );
+        })}
       </div>
 
       <AnimatePresence>
         {lightbox && <ImageLightbox src={lightbox} onClose={() => setLightbox(null)} />}
       </AnimatePresence>
-    </section>
+    </SectionContainer>
   );
 }
