@@ -21,7 +21,7 @@ export default {
       name: 'subtitle',
       title: 'Subtítulo / Descrição',
       type: 'text',
-      initialValue: 'Em Sorocaba desde 2008, somos um centro de boulder e cross training que trata cada via como um problema a ser lido com o corpo.'
+      initialValue: 'Em Sorocaba desde 2018, somos um centro de boulder e cross training que trata cada via como um problema a ser lido com o corpo.'
     },
     {
       name: 'backgroundImage',
