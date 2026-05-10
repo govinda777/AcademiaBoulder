@@ -71,13 +71,13 @@ export default function HeroSection(){
       {/* Floating grips */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden>
         <div className="hidden md:block absolute pointer-events-auto drift" style={{...tFg, top:'15vh', left:'55vw', width:'110px', height:'110px'}} data-cursor="grip">
-          <GripBlobH fill="url(#g-grip)" label="V8"/>
+          <GripBlobH fill="url(#g-grip)" label={heroData?.gripLabels?.[0] || "V8"}/>
         </div>
         <div className="hidden md:block absolute pointer-events-auto" style={{...tFg, top:'25vh', right:'15vw', width:'70px', height:'70px', animation:'drift-y 9s ease-in-out infinite -3s'}} data-cursor="grip">
-          <GripBlobH fill="var(--azul)" label="V3"/>
+          <GripBlobH fill="var(--azul)" label={heroData?.gripLabels?.[1] || "V3"}/>
         </div>
         <div className="hidden md:block absolute pointer-events-auto" style={{...tFg, bottom:'15vh', right:'25vw', width:'100px', height:'100px'}} data-cursor="grip">
-          <GripBlobH fill="#FAFAF7" label="V0"/>
+          <GripBlobH fill="#FAFAF7" label={heroData?.gripLabels?.[2] || "V0"}/>
         </div>
       </div>
 
@@ -157,17 +157,43 @@ export default function HeroSection(){
                 </p>
               </div>
               <div className="col-span-12 md:col-span-4 md:col-start-9 flex md:justify-end items-end gap-3 flex-wrap">
-                <a data-cursor="link" href="#programas"
-                   className="group relative inline-flex items-center gap-4 pl-5 pr-3 py-2.5 bg-[var(--azul)] text-[var(--paper)] rounded-full hover:scale-[1.02] transition-transform">
-                  <span className="font-display font-extrabold text-[18px] tracking-tight">COMECE AGORA</span>
-                  <span className="relative w-8 h-8 grid place-items-center rounded-full bg-[var(--paper)] text-[var(--azul)]">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                  </span>
-                </a>
-                <a data-cursor="link" href="#sobre"
-                   className="inline-flex items-center gap-3 pl-5 pr-5 py-2.5 border border-white/40 hover:border-[var(--azul)] rounded-full text-[var(--paper)]">
-                  <span className="font-display font-extrabold text-[16px] tracking-tight">SAIBA MAIS</span>
-                </a>
+                {heroData?.ctaButtons?.map((btn: any, i: number) => {
+                  const isPrimary = btn.variant === 'primary' || btn.variant === 'accent';
+                  return (
+                    <a
+                      key={i}
+                      data-cursor="link"
+                      href={btn.link}
+                      className={isPrimary
+                        ? "group relative inline-flex items-center gap-4 pl-5 pr-3 py-2.5 bg-[var(--azul)] text-[var(--paper)] rounded-full hover:scale-[1.02] transition-transform"
+                        : "inline-flex items-center gap-3 pl-5 pr-5 py-2.5 border border-white/40 hover:border-[var(--azul)] rounded-full text-[var(--paper)]"
+                      }
+                    >
+                      <span className={`font-display font-extrabold tracking-tight ${isPrimary ? 'text-[18px]' : 'text-[16px]'}`}>
+                        {btn.text}
+                      </span>
+                      {isPrimary && (
+                        <span className="relative w-8 h-8 grid place-items-center rounded-full bg-[var(--paper)] text-[var(--azul)]">
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                        </span>
+                      )}
+                    </a>
+                  );
+                }) || (
+                  <>
+                    <a data-cursor="link" href="#programas"
+                       className="group relative inline-flex items-center gap-4 pl-5 pr-3 py-2.5 bg-[var(--azul)] text-[var(--paper)] rounded-full hover:scale-[1.02] transition-transform">
+                      <span className="font-display font-extrabold text-[18px] tracking-tight">COMECE AGORA</span>
+                      <span className="relative w-8 h-8 grid place-items-center rounded-full bg-[var(--paper)] text-[var(--azul)]">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                      </span>
+                    </a>
+                    <a data-cursor="link" href="#sobre"
+                       className="inline-flex items-center gap-3 pl-5 pr-5 py-2.5 border border-white/40 hover:border-[var(--azul)] rounded-full text-[var(--paper)]">
+                      <span className="font-display font-extrabold text-[16px] tracking-tight">SAIBA MAIS</span>
+                    </a>
+                  </>
+                )}
               </div>
             </div>
           </div>

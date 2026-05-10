@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { useSiteSettings, useContactSection } from "@/hooks/useSanity";
+import { SectionContainer } from "@/components/ui/SectionContainer";
+import { SectionHeader } from "@/components/ui/SectionHeader";
+import { SectionTitle } from "@/components/ui/SectionTitle";
 
 export default function ContactSection(){
   const { data: siteSettings } = useSiteSettings();
@@ -10,48 +13,65 @@ export default function ContactSection(){
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const phone = contactData?.contactInfo?.phone?.replace(/\D/g, '');
+    const phone = siteSettings?.contactInfo?.phone?.replace(/\D/g, '');
     if (!phone) return;
     const text = `*Nova Mensagem - Academia Boulder*\n\n*Nome:* ${form.name}\n*Email:* ${form.email}\n*Interesse:* ${form.interest}\n*Mensagem:* ${form.message}`;
     window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text)}`, '_blank');
   };
 
-  const address = contactData?.contactInfo?.address || "";
+  const address = siteSettings?.contactInfo?.address || "";
   const instagram = siteSettings?.socialMedia?.instagram || "#";
-  const whatsappNumber = contactData?.contactInfo?.phone?.replace(/\D/g, '') || "";
+  const whatsappNumber = siteSettings?.contactInfo?.phone?.replace(/\D/g, '') || "";
   const whatsappLink = whatsappNumber ? `https://wa.me/${whatsappNumber}` : "#";
   const safeMapUrl = address ? `https://maps.google.com/maps?q=${encodeURIComponent(address)}&t=&z=16&ie=UTF8&iwloc=&output=embed` : "";
 
+  const interests = contactData?.formInterests || ['Aula Aberta (Grátis)', 'Cross Training', 'Escalada', 'Outro'];
+
   return (
-    <section id="contato" data-theme="dark" className="relative min-h-screen bg-[var(--ink)] overflow-x-hidden grain flex flex-col py-20 md:py-0 md:h-screen"
-             style={{background:'linear-gradient(180deg, #051C36 0%, #0F1116 100%)', color:'var(--paper)'}}>
+    <SectionContainer
+      id="contato"
+      dark
+      fullHeight
+      className="grain"
+      style={{ background: 'linear-gradient(180deg, #051C36 0%, #0F1116 100%)' }}
+    >
       <div className="absolute -top-32 -left-20 w-[480px] h-[480px] rounded-full pointer-events-none"
            style={{background:'radial-gradient(closest-side, rgba(30,136,229,0.12), rgba(0,0,0,0) 70%)'}}/>
 
-      <div className="relative px-8 max-w-[1780px] mx-auto w-full flex flex-col h-auto md:h-full pt-[clamp(70px,9vh,100px)] pb-6">
+      <div className="flex flex-col h-full">
         {/* Header */}
-        <div className="flex flex-col gap-1 mb-6 md:mb-10 shrink-0">
-          <div className="flex items-center gap-4">
-            <span className="font-mono text-[11px] tracking-[0.4em] text-[var(--azul)] uppercase opacity-50">Cap / 05</span>
-            <div className="w-8 h-px bg-white/20" />
-            <span className="font-mono text-[11px] tracking-[0.3em] font-bold uppercase">Entre em Contato</span>
-          </div>
-        </div>
+        <SectionHeader chapter="05" label={contactData?.label || "Entre em Contato"} dark className="mb-6 md:mb-10 shrink-0" />
 
         {/* 3-Column Layout */}
         <div className="grid grid-cols-12 gap-8 md:gap-12 flex-1 min-h-0 items-start">
           {/* Column 1: Title + Social */}
           <div className="col-span-12 md:col-span-4 flex flex-col h-full justify-between pb-8">
             <div>
-              <h2 className="font-display font-extrabold leading-[1.03] tracking-[-0.04em] text-[clamp(28px,4.5vw,52px)] mb-12">
-                <span className="block uppercase">SUA <span className="font-serif-it italic text-[var(--azul)]" style={{fontFamily:'Fraunces',fontStyle:'italic',fontWeight:300}}>primeira</span></span>
-                <span className="block uppercase stroke-text-light">SUBIDA COMEÇA</span>
-                <span className="block uppercase">COM UM <span className="text-[var(--azul)]">OI.</span></span>
-              </h2>
+              <SectionTitle className="mb-12">
+                {contactData?.title ? (
+                  <>
+                    <span className="block uppercase">
+                      {contactData.title} <span className="font-serif-it italic text-[var(--azul)]" style={{fontFamily:'Fraunces',fontStyle:'italic',fontWeight:300, textTransform: 'none'}}>{contactData.subtitle}</span>
+                    </span>
+                    <span className="block uppercase stroke-text-light">{contactData.titlePart2}</span>
+                    <span className="block uppercase">
+                      {contactData.titlePart3} <span className="text-[var(--azul)]">{contactData.titlePart3Accent}</span>
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <span className="block uppercase">SUA <span className="font-serif-it italic text-[var(--azul)]" style={{fontFamily:'Fraunces',fontStyle:'italic',fontWeight:300, textTransform: 'none'}}>primeira</span></span>
+                    <span className="block uppercase stroke-text-light">SUBIDA COMEÇA</span>
+                    <span className="block uppercase">COM UM <span className="text-[var(--azul)]">OI.</span></span>
+                  </>
+                )}
+              </SectionTitle>
 
               <div className="space-y-8">
                 <div>
-                  <div className="font-mono text-[10px] tracking-[0.3em] opacity-40 mb-4 uppercase text-[var(--azul)] font-bold">01 · Social</div>
+                  <div className="font-mono text-[10px] tracking-[0.3em] opacity-40 mb-4 uppercase text-[var(--azul)] font-bold">
+                    {contactData?.column1Label || "01 · Social"}
+                  </div>
                   <div className="flex flex-col gap-3">
                     <a href={instagram} target="_blank" rel="noopener noreferrer" data-cursor="link" className="flex items-center justify-between group hover:text-[var(--azul)] transition-colors border-b border-white/5 pb-2">
                       <span className="font-display font-extrabold text-[20px] tracking-tight uppercase">INSTAGRAM</span>
@@ -79,7 +99,9 @@ export default function ContactSection(){
 
           {/* Column 2: Form */}
           <div className="col-span-12 md:col-span-4 flex flex-col pt-2 border-x border-white/5 px-0 md:px-12 h-full">
-            <div className="font-mono text-[10px] tracking-[0.3em] opacity-40 mb-6 uppercase text-[var(--azul)] font-bold">02 · Envie uma mensagem</div>
+            <div className="font-mono text-[10px] tracking-[0.3em] opacity-40 mb-6 uppercase text-[var(--azul)] font-bold">
+              {contactData?.column2Label || "02 · Envie uma mensagem"}
+            </div>
             <form className="space-y-5" onSubmit={handleSubmit}>
               <div className="group">
                 <label className="font-mono text-[9px] tracking-[0.3em] opacity-50 block mb-1.5 uppercase">NOME</label>
@@ -95,7 +117,7 @@ export default function ContactSection(){
                 <label className="font-mono text-[9px] tracking-[0.3em] opacity-50 block mb-1.5 uppercase">INTERESSE</label>
                 <select value={form.interest} onChange={e=>setForm({...form, interest:e.target.value})} data-cursor="link"
                   className="w-full bg-transparent border-b border-white/20 focus:border-[var(--azul)] outline-none py-2 text-[17px] transition-all">
-                  {['Aula Aberta (Grátis)','Cross Training','Escalada','Outro'].map((o,j)=><option key={j} value={o} className="bg-[var(--azul-ink)]">{o}</option>)}
+                  {interests.map((o: string, j: number)=><option key={j} value={o} className="bg-[var(--azul-ink)]">{o}</option>)}
                 </select>
               </div>
               <div className="group">
@@ -115,7 +137,9 @@ export default function ContactSection(){
 
           {/* Column 3: Address + Map */}
           <div className="col-span-12 md:col-span-4 flex flex-col h-full pt-2">
-            <div className="font-mono text-[10px] tracking-[0.3em] opacity-40 mb-6 uppercase text-[var(--azul)] font-bold">03 · Unidade</div>
+            <div className="font-mono text-[10px] tracking-[0.3em] opacity-40 mb-6 uppercase text-[var(--azul)] font-bold">
+              {contactData?.column3Label || "03 · Unidade"}
+            </div>
             <div className="mb-6">
               <div 
                 data-cursor="link"
@@ -156,6 +180,6 @@ export default function ContactSection(){
           </div>
         </div>
       </div>
-    </section>
+    </SectionContainer>
   );
 }
