@@ -151,7 +151,7 @@ export default function HeroSection(){
                     ))
                   ) : (
                     <>
-                      Em <span className="text-[var(--azul)]">Sorocaba</span> desde 2008, somos um centro de boulder e cross training que trata cada via como um <span className="font-serif-it italic" style={{fontFamily:'Fraunces',fontStyle:'italic',fontWeight:300}}>problema</span> a ser lido com o corpo.
+                      Em <span className="text-[var(--azul)]">Sorocaba</span> desde 2018, somos um centro de boulder e cross training que trata cada via como um <span className="font-serif-it italic" style={{fontFamily:'Fraunces',fontStyle:'italic',fontWeight:300}}>problema</span> a ser lido com o corpo.
                     </>
                   )}
                 </p>
