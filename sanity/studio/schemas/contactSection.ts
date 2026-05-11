@@ -66,6 +66,24 @@ export default {
       type: 'array',
       of: [{ type: 'string' }],
       initialValue: ['Aula Aberta (Grátis)', 'Cross Training', 'Escalada', 'Outro']
+    },
+    // --- ADICIONE ESTES CAMPOS ABAIXO PARA RECUPERAR OS DADOS ---
+    {
+      name: 'contactInfo',
+      title: 'Informações de Contato (Dados Atuais)',
+      type: 'object',
+      fields: [
+        { name: 'address', title: 'Endereço', type: 'string' },
+        { name: 'email', title: 'E-mail', type: 'string' },
+        { name: 'hours', title: 'Horário de Funcionamento', type: 'string' },
+        { name: 'phone', title: 'Telefone', type: 'string' },
+      ]
+    },
+    {
+      name: 'mapEmbed',
+      title: 'URL do Mapa (Google Maps)',
+      type: 'text',
+      description: 'Cole aqui o link do iframe ou a URL do mapa.'
     }
   ]
 }

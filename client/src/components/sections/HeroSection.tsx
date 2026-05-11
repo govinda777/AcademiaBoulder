@@ -134,7 +134,7 @@ export default function HeroSection(){
             <div className="grid grid-cols-12 mt-8 md:mt-10 gap-8">
               <div className="col-span-12 md:col-span-6 md:col-start-2">
                 <p className="font-mono text-[11px] tracking-[0.3em] uppercase opacity-70 mb-4">
-                  {heroData?.label || "ESCALADA · CROSS · TRAINING"}
+                  {heroData?.tagline}
                 </p>
                 <p className="text-[16px] md:text-[18px] leading-[1.6] max-w-[44ch]" style={{textWrap:'pretty'}}>
                   {heroData?.subtitle ? (

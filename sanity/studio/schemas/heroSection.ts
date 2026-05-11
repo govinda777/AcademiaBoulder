@@ -2,13 +2,15 @@ export default {
   name: 'heroSection',
   title: 'Seção Hero',
   type: 'document',
+  // Se estiver usando Sanity v3, __experimental_actions pode não ser mais necessário, 
+  // mas manterei conforme seu código original.
   __experimental_actions: ['update', 'publish'],
   fields: [
     {
-      name: 'label',
+      name: 'tagline',
       title: 'Rótulo Superior (Tagline)',
       type: 'string',
-      initialValue: 'ESCALADA · CROSS · TRAINING'
+      initialValue: 'ESCALADA · CROSS TRAINING · PERSONAL TRAINER'
     },
     {
       name: 'title',
@@ -18,7 +20,7 @@ export default {
       initialValue: 'DESCUBRA SEUS limites. CADA AGARRA.'
     },
     {
-      name: 'subtitle',
+      name: 'subtitle', // Removido o campo duplicado que causava o erro
       title: 'Subtítulo / Descrição',
       type: 'text',
       initialValue: 'Em Sorocaba desde 2018, somos um centro de boulder e cross training que trata cada via como um problema a ser lido com o corpo.'
