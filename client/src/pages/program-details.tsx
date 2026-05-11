@@ -105,14 +105,7 @@ const ProgramDetails = () => {
                 Níveis e Habilidades
               </TabsTrigger>
             )}
-            {program.instructors && program.instructors.length > 0 && (
-              <TabsTrigger
-                value="instrutores"
-                className="px-6 py-2 data-[state=active]:text-primary data-[state=active]:border-b-2 data-[state=active]:border-primary rounded-none"
-              >
-                Instrutores
-              </TabsTrigger>
-            )}
+
             {program.schedule && (
               <TabsTrigger
                 value="horarios"
@@ -237,38 +230,7 @@ const ProgramDetails = () => {
             </motion.div>
           </TabsContent>
           
-          <TabsContent value="instrutores" className="mt-0 outline-none">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              <h2 className="text-2xl font-bold text-secondary mb-6">Conheça Nossos Instrutores</h2>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {program.instructors?.map((instructor: any, index: number) => (
-                  <Card key={index} className="overflow-hidden">
-                    {instructor.image && (
-                      <ImageWithFallback
-                        src={urlFor(instructor.image).url()}
-                        fallbackSrc=""
-                        alt={instructor.name}
-                        className="w-full h-64 object-cover"
-                      />
-                    )}
-                    <CardContent className="p-6">
-                      <h3 className="text-xl font-semibold text-secondary mb-1">{instructor.name}</h3>
-                      <p className="text-primary text-sm mb-3">{instructor.role}</p>
-                      <div className="text-neutral-700 text-sm">
-                        <SanityBlockContent blocks={instructor.bio} />
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </motion.div>
-          </TabsContent>
-          
+
           <TabsContent value="horarios" className="mt-0 outline-none">
             <motion.div
               initial={{ opacity: 0, y: 20 }}

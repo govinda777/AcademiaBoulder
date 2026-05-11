@@ -5,10 +5,16 @@ export default {
   __experimental_actions: ['update', 'publish'],
   fields: [
     {
-      name: 'label',
+      name: 'tagline',
       title: 'Rótulo Superior (Tagline)',
       type: 'string',
-      initialValue: 'ESCALADA · CROSS · TRAINING'
+      initialValue: 'ESCALADA · CROSS TRAINING · PERSONAL TRAINER'
+    },
+    {
+      name: 'subtitle',
+      title: 'Subtítulo',
+      type: 'text',
+      initialValue: 'Em Sorocaba desde 2018, somos um centro de boulder e cross training que trata cada via como um problema a ser lido com o corpo.'
     },
     {
       name: 'title',

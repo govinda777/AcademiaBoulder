@@ -26,7 +26,8 @@ export const queries = {
   }`,
   
   heroSection: `*[_type == "heroSection"][0]{
-    label,
+    tagline,
+    subtitle,
     title,
     backgroundImage,
     backgroundVideo {
@@ -63,12 +64,6 @@ export const queries = {
       monthly,
       quarterly,
       annual
-    },
-    instructors[]->{
-      name,
-      role,
-      bio,
-      image
     }
   }`,
 
@@ -94,12 +89,6 @@ export const queries = {
       monthly,
       quarterly,
       annual
-    },
-    instructors[]->{
-      name,
-      role,
-      bio,
-      image
     }
   }`,
   

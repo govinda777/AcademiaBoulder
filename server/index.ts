@@ -44,27 +44,39 @@ app.use((req, res, next) => {
     const message = err.message || "Internal Server Error";
 
     res.status(status).json({ message });
-    throw err;
+    // Removido o throw err para não derrubar o servidor em erros de rota
   });
 
-  // importantly only setup vite in development and after
-  // setting up all the other routes so the catch-all route
-  // doesn't interfere with the other routes
   if (app.get("env") === "development") {
     await setupVite(app, server);
   } else {
     serveStatic(app);
   }
 
-  // ALWAYS serve the app on port 3000
-  // this serves both the API and the client.
-  // It is the only port that is not firewalled.
   const port = 3000;
+
+  // Gerenciamento de erro específico para porta em uso
+  server.on('error', (e: any) => {
+    if (e.code === 'EADDRINUSE') {
+      log(`ERRO: A porta ${port} já está sendo usada. Tente rodar 'npx kill-port ${port}' ou feche outros terminais.`);
+      process.exit(1);
+    } else {
+      log(`Erro no servidor: ${e.message}`);
+    }
+  });
+
   server.listen({
     port,
     host: "0.0.0.0",
-    reusePort: true,
   }, () => {
     log(`serving on port ${port}`);
+  });
+
+  // Limpeza ao fechar o processo (Ctrl+C)
+  process.on('SIGINT', () => {
+    server.close(() => {
+      log('Servidor encerrado com sucesso.');
+      process.exit(0);
+    });
   });
 })();

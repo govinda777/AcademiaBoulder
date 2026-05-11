@@ -123,11 +123,6 @@ export default {
         }
       ]
     },
-    {
-      name: 'instructors',
-      title: 'Instrutores',
-      type: 'array',
-      of: [{ type: 'reference', to: [{ type: 'instructor' }] }]
-    }
+
   ]
 }

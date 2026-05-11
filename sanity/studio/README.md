@@ -129,3 +129,35 @@ npx sanity dataset import   # Importa dataset
 ## Suporte
 
 Para questões relacionadas ao projeto, abra uma issue no repositório ou entre em contato com a equipe de desenvolvimento.
+
+## Resolução de Problemas (Troubleshooting)
+
+### Aviso "Unknown fields found"
+
+Este aviso aparece no Sanity Studio quando existem dados gravados em um documento que não estão mais definidos no seu schema (`.ts` na pasta `schemas/`). Isso acontece tipicamente quando um campo é renomeado ou removido do código, mas os dados antigos ainda existem no banco de dados do Sanity.
+
+**Para resolver de vez esse problema (Sincronizar ou Refatorar):**
+
+Existem duas formas de corrigir esse aviso, dependendo da sua intenção:
+
+**Opção 1: Remover os campos obsoletos (Refatorar / Limpar)**
+Se os campos não são mais usados no projeto (ex: antiga entidade "instrutores"):
+1. Abra o documento no Sanity Studio onde o aviso aparece.
+2. Expanda a seção "Developer info" (Informações do desenvolvedor) no card de aviso amarelo.
+3. Você verá os nomes dos campos que não estão no schema.
+4. Clique no botão **"Remove field"** abaixo de cada campo não utilizado.
+5. Publique as alterações do documento.
+
+**Opção 2: Adicionar os campos de volta ao schema (Sincronizar)**
+Se os campos ainda são importantes e devem ser editados pelo painel:
+1. Anote o nome exato dos campos listados em "Developer info" (ex: `subtitle`, `tagline`).
+2. Abra o arquivo de schema correspondente em `sanity/studio/schemas/` (ex: `heroSection.ts`).
+3. Adicione as definições dos campos no array `fields`. Certifique-se de que a propriedade `name` seja idêntica ao que está no painel.
+   ```typescript
+   {
+     name: 'subtitle',
+     title: 'Subtítulo',
+     type: 'text' // ou 'string', dependendo do dado
+   }
+   ```
+4. Salve o arquivo. O servidor de desenvolvimento atualizará automaticamente, e o aviso desaparecerá. Lembre-se de atualizar as queries do frontend (`client/src/lib/sanity.ts`) para usar os campos sincronizados!
