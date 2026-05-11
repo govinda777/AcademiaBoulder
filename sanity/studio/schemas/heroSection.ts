@@ -2,6 +2,8 @@ export default {
   name: 'heroSection',
   title: 'Seção Hero',
   type: 'document',
+  // Se estiver usando Sanity v3, __experimental_actions pode não ser mais necessário, 
+  // mas manterei conforme seu código original.
   __experimental_actions: ['update', 'publish'],
   fields: [
     {
@@ -11,17 +13,17 @@ export default {
       initialValue: 'ESCALADA · CROSS TRAINING · PERSONAL TRAINER'
     },
     {
-      name: 'subtitle',
-      title: 'Subtítulo',
-      type: 'text',
-      initialValue: 'Em Sorocaba desde 2018, somos um centro de boulder e cross training que trata cada via como um problema a ser lido com o corpo.'
-    },
-    {
       name: 'title',
       title: 'Título Principal',
       type: 'string',
       validation: (Rule: any) => Rule.required(),
       initialValue: 'DESCUBRA SEUS limites. CADA AGARRA.'
+    },
+    {
+      name: 'subtitle', // Removido o campo duplicado que causava o erro
+      title: 'Subtítulo / Descrição',
+      type: 'text',
+      initialValue: 'Em Sorocaba desde 2018, somos um centro de boulder e cross training que trata cada via como um problema a ser lido com o corpo.'
     },
     {
       name: 'backgroundImage',
@@ -48,6 +50,13 @@ export default {
       options: {
         accept: 'video/*'
       }
+    },
+    {
+      name: 'gripLabels',
+      title: 'Etiquetas dos Agarras (Grips)',
+      type: 'array',
+      of: [{ type: 'string' }],
+      initialValue: ['V8', 'V3', 'V0']
     },
     {
       name: 'ctaButtons',

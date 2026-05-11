@@ -17,9 +17,15 @@ export default {
         },
         {
           name: 'title',
-          title: 'Título Principal',
+          title: 'Título Principal (Parte Superior)',
           type: 'string',
-          initialValue: 'TRANSFORMANDO vidas ATRAVÉS DO ESPORTE E DA SUPERAÇÃO.'
+          initialValue: 'TRANSFORMANDO vidas ATRAVÉS DO ESPORTE E DA'
+        },
+        {
+          name: 'highlightedTitle',
+          title: 'Título Destacado (Parte Inferior/Itálico)',
+          type: 'string',
+          initialValue: 'SUPERAÇÃO.'
         },
         {
           name: 'description',
@@ -55,6 +61,20 @@ export default {
           validation: (Rule: any) => Rule.required()
         },
         {
+          name: 'pillarIcons',
+          title: 'Ícones dos Pilares',
+          type: 'array',
+          of: [{ type: 'string' }],
+          initialValue: ['target', 'eye', 'heart'],
+          options: {
+            list: [
+              { title: 'Alvo (Missão)', value: 'target' },
+              { title: 'Olho (Visão)', value: 'eye' },
+              { title: 'Coração (Valores)', value: 'heart' }
+            ]
+          }
+        },
+        {
           name: 'missionLabel',
           title: 'Rótulo Missão',
           type: 'string',
@@ -71,13 +91,6 @@ export default {
           title: 'Rótulo Valores',
           type: 'string',
           initialValue: 'Valores'
-        },
-        {
-          name: 'mainImage',
-          title: 'Imagem Principal',
-          type: 'image',
-          options: { hotspot: true },
-          validation: (Rule: any) => Rule.required()
         }
       ]
     },
@@ -98,7 +111,13 @@ export default {
           name: 'title',
           title: 'Título Principal',
           type: 'string',
-          initialValue: 'QUEM ABRE os caminhos.'
+          initialValue: 'QUEM ABRE'
+        },
+        {
+          name: 'highlightedTitle',
+          title: 'Título Destacado (Itálico)',
+          type: 'string',
+          initialValue: 'os caminhos.'
         },
         {
           name: 'description',
@@ -116,6 +135,18 @@ export default {
           title: 'Rótulo de Fechar (Modal)',
           type: 'string',
           initialValue: 'Fechar Perfil'
+        },
+        {
+          name: 'cardLabel',
+          title: 'Rótulo do Card',
+          type: 'string',
+          initialValue: 'COACH · 0X'
+        },
+        {
+          name: 'technicalLabel',
+          title: 'Rótulo Ficha Técnica',
+          type: 'string',
+          initialValue: 'Ficha Técnica'
         },
         {
           name: 'members',
@@ -173,7 +204,19 @@ export default {
           name: 'title',
           title: 'Título Principal',
           type: 'string',
-          initialValue: 'UM GINÁSIO desenhado COMO UMA ROTA.'
+          initialValue: 'UM GINÁSIO'
+        },
+        {
+          name: 'highlightedTitle',
+          title: 'Título Destacado (Itálico)',
+          type: 'string',
+          initialValue: 'desenhado'
+        },
+        {
+          name: 'titlePart2',
+          title: 'Título Parte 2',
+          type: 'string',
+          initialValue: 'COMO UMA ROTA.'
         },
         {
           name: 'description',

@@ -35,6 +35,7 @@ export const queries = {
         url
       }
     },
+    gripLabels,
     ctaButtons[]{
       text,
       link,
@@ -100,10 +101,10 @@ export const queries = {
       mission,
       vision,
       values[],
+      pillarIcons,
       missionLabel,
       visionLabel,
-      valuesLabel,
-      mainImage
+      valuesLabel
     },
     teamSection {
       label,
@@ -111,6 +112,8 @@ export const queries = {
       description,
       modalExpertiseLabel,
       modalCloseLabel,
+      cardLabel,
+      technicalLabel,
       members[] {
         name,
         role,
@@ -140,7 +143,18 @@ export const queries = {
     label,
     title,
     subtitle,
-    description
+    description,
+    cardPalettes[]{
+      bg,
+      text
+    },
+    modalLabels{
+      summary,
+      included,
+      questions,
+      contactUs,
+      cta
+    }
   }`,
   
   faq: `*[_type == "faqSection"][0]{
@@ -155,14 +169,16 @@ export const queries = {
   }`,
   
   contact: `*[_type == "contactSection"][0]{
+    label,
     title,
+    subtitle,
+    titlePart2,
+    titlePart3,
+    titlePart3Accent,
     description,
-    contactInfo{
-      address,
-      phone,
-      email,
-      hours
-    },
-    mapEmbed
+    column1Label,
+    column2Label,
+    column3Label,
+    formInterests
   }`
 }
